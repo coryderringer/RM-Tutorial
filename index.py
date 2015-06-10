@@ -294,17 +294,21 @@ class LoginHandler(webapp.RequestHandler):
 			
 		exists = False
 		
-		for p in q.run(limit=5):
-			if username == p.username()
-				exists = True
-
-		if exists == True:
-			print "existing user"
-		else:
-			print "new user"
+		for p in q.run(limit=1):
+			if len(p.username) > 0:
+				
+				password = p.password
+				if password == self.request.get('password'):
+					doRender(self, 'congratulations.htm')
+				else:
+					doRender(self, 'loginfailed.htm')
+		# if exists == True:
+		# 	print "existing user"
+		# else:
+		# 	print "new user"
 	
 
-		doRender(self, 'congratulations.htm')
+		# doRender(self, 'congratulations.htm')
 
 
 
