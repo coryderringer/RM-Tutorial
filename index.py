@@ -261,6 +261,7 @@ class DNQHandler(webapp.RequestHandler):
 # correct race number
 
 class LogoutHandler(webapp.RequestHandler):
+	
 	def get(self):	
 		self.session = get_current_session()
 		self.session['Logged_In'] = False	
@@ -324,7 +325,8 @@ class LoginHandler(webapp.RequestHandler):
 						doRender(self, 'adminview.htm')
 					else:
 						self.session['Logged_In'] = True 
-						doRender(self, 'congratulations.htm')
+						doRender(self, 'congratulations.htm',
+							{'username':username})
 				else:
 					doRender(self, 'loginfailed.htm')
 
