@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+
+		<title>
+			{% block title %}AppEngine!!!{% endblock %}
+		</title>
+
+		<link rel="stylesheet" href="/static/glike.css" type="text/css" />
+		<link rel="stylesheet" href="/static/tooltipster.css" type="text/css">
+
+
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+
+
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<script src="/static/jquery.tooltipster.min.js"></script>
+					<!-- Jquery...here goes nothing -->
+
+ </head>
+ <body>
+	 <div id="bodycontent">
+		{% block bodycontent %}
+				 Replace this
+		{% endblock %}
+	 </div>
+ </body>
+</html>

@@ -1,0 +1,322 @@
+div.pg
+{
+    margin:auto;
+    width:650px;
+    /*height:440px; */
+    border:5px solid gray;
+
+    padding:20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+div.Drug1
+{
+margin:auto;
+width:100px;
+height:125px;
+border:5px solid gray;
+
+position: relative;
+left:-250px;
+top: 165px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+
+div.Drug2
+{
+margin:auto;
+width:100px;
+height:125px;
+border:5px solid gray;
+
+position: relative;
+left: -85px;
+top: -160px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+
+div.Drug3
+{
+margin:auto;
+width:100px;
+height:125px;
+border:5px solid gray;
+
+position: relative;
+left: 85px;
+top: -350px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+
+div.Drug4
+{
+margin:auto;
+width:100px;
+height:125px;
+border:5px solid gray;
+
+position: relative;
+left: 250px;
+top: -410px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+
+div.SmallPG
+{
+margin:auto;
+width:30px;
+height:30px;
+border:5px solid gray;
+
+
+/*display:inline-block;*/
+/*position: relative;*/
+/*left:-50px;*/
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#SuccessButton
+{
+    width:60px;
+}
+
+#FailButton
+{
+    width:60px;
+}
+
+#Instructions
+{
+margin:auto;
+height:130px;
+
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#feedback
+{
+margin:auto;
+height:75px;
+
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#LeftForm
+{
+margin:auto;
+width:150px;
+height:50px;
+/*border:5px solid gray;*/
+
+
+display:inline-block;
+position: relative;
+left:-65px;
+/*padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;*/
+}
+
+#RightForm
+{
+margin:auto;
+width:150px;
+height:50px;
+/*border:5px solid gray;*/
+
+
+display:inline-block;
+position: relative;
+left:65px;
+/*padding:20px;*/
+/*-moz-border-radius: 20px;*/
+/*border-radius: 20px;*/
+}
+
+div.Instructions
+
+{
+height:120px;
+}
+
+div.divPractice
+{
+margin:auto;
+width:100px;
+height:90px;
+border:5px solid gray;
+
+
+display:inline-block;
+position: relative;
+/*left:+10px;*/
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+/*Can I do this with if statements within a single div.node definition?*/
+#divA
+{
+margin:auto;
+width:120px;
+height:120px;
+border:5px solid gray;
+
+
+display:inline-block;
+position: relative;
+left:-50px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#divB
+{
+margin:auto;
+width:120px;
+height:120px;
+border:5px solid gray;
+
+display:inline-block;
+position:relative;
+left:50px;
+padding:20px;
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#divE
+{
+margin:auto;
+width:350px;
+height:150px;
+/*border:5px solid gray;*/
+
+
+top: 250px;
+left: 125px;
+/*padding:20px;*/
+/*  */
+}
+
+#LeftImage
+{
+margin:auto;
+width:115px;
+height:75px;
+/*border:5px solid gray;*/
+
+
+display:inline-block;
+position: relative;
+left:-50px;
+/*padding:20px;*/
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+#RightImage
+{
+margin:auto;
+width:115px;
+height:75px;
+/*border:5px solid gray;*/
+
+
+display:inline-block;
+position: relative;
+left:50px;
+/*padding:20px;*/
+-moz-border-radius: 20px;
+border-radius: 20px;
+}
+
+
+
+
+
+body {
+    font-family: arial, sans serif;
+}
+
+a
+{
+    color: blue;
+}
+
+#header h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 0;
+}
+
+#header {
+    background-color: #dde;
+    border-top: 3px solid #36c;
+    height: 100%;
+    overflow:hidden;
+    padding: 7px;
+    margin-top: 5px;
+}
+
+#header h1 {
+    font-size: 20px;
+    float: left;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0 0 0 .3em;
+}
+
+#header li {
+    font-size: 14px;
+    display: inline;
+    padding: .5em;
+}
+
+#header ul {
+    list-style: none;
+    text-align: right;
+    float:right;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+}
+
+#header li a.selected {
+    color: black;
+    text-decoration: none;
+}
+
+
+table
+{
+border:1px solid black;
+border-collapse:collapse;
+}
+
+th,td
+{
+border:1px solid black;
+}

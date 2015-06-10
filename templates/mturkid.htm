@@ -1,0 +1,25 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Qualify for HIT
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center>Verify Whether You Qualify:</center></h2>
+<p>
+Copy and paste your MTurk ID below.<br>
+<br>
+It is critical that you use your correct MTurk ID. If your ID below is wrong <u>your work may be rejected and you will not be paid</u>.
+
+
+</p>
+<form method="post" action="/mturkid">
+MTurk ID: <input type="text" name="ID"/>
+<input type="submit" value="Submit"/> 
+</form>
+</p>
+</div>
+{% endblock %}

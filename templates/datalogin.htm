@@ -1,0 +1,18 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+	Enter password
+{% endblock %}
+
+{% block bodycontent %}
+
+<div class="pg">
+	<p>Enter password to view data</p>
+	<form method="post" action="/data">
+		<input type="password" name="password">
+		<input type="submit" name="Submit">
+	</form>
+</div>
+
+
+{% endblock %}

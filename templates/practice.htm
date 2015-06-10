@@ -1,0 +1,236 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+	Instructions
+{% endblock%}
+
+{% block bodycontent %}
+
+
+<div id="PracticeDiv" class="pg" style="height:440px;visibility:hidden">
+	<center>
+		<b>Practice Patient: John D.</b> Day <span id="TrialNumber">1</span>
+		<br>
+		<br>
+		<span id="Druglist">The patient took the following medications today:</span>
+
+
+		<div id= "Drug1" class="Drug1">
+			<center>
+				<IMG src="static/images/BlackWhiteCap.png" height="100px" width="100px"></IMG><br>
+				Drug 1
+			</center>
+		</div>
+		<div id="slider1" class="slider tooltip" 
+			style="top:170px;
+			left:-250px">
+		</div>
+	
+
+		<div id="Drug2" class="Drug2">
+			<center>
+				<IMG src="static/images/PurpleWhiteCap.png" height="100px" width="100px"></IMG><br>
+				Drug 2
+			</center>
+		</div>
+		<div id="slider2" class="slider tooltip" 
+			style="top:-155px;
+			left:-85px">
+		</div>
+
+
+		<div id="Drug3" class="Drug3">
+			<center>
+				<IMG src="static/images/RedCap.png" height="100px" width="100px"></IMG><br>
+				Drug 3
+			</center>
+		</div>
+		<div id="slider3" class="slider tooltip"
+			style="top:-345px;
+			left:85px">
+		</div>
+
+
+		<div id="Drug4" class="Drug4" style="opacity:0.1">
+			<center>
+				<IMG src="static/images/TealWhiteCap.png" height="100px" width="100px"></IMG><br>
+				Drug 4
+			</center>
+		</div>
+		<div id="slider4" class="slider tooltip"
+			
+			style="top:-405px;
+			left: 250px">
+		</div>
+
+
+		<div id="TJDiv" style="position:relative;top:-470px">
+			<span id="TrialInstructions">Will the patient sleep well tonight?</span><br><br>
+		
+
+			<button id="SuccessButton">
+				Yes
+			</button>
+			
+			<button id="FailButton">
+				No
+			</button>
+		</div>
+
+		<div class="pg" id="SuccessDiv" style="position:relative;top:-505px;width:275px;padding:5px;border-width:1px">
+			<center>
+				<span id="SuccessSpan"></span><br>
+				You may now adjust your beliefs about each drug. Click below to proceed to the next day.
+				<br>
+				<br>
+				<button id="Button2">Next Day</button>
+			</center>
+		</div>
+
+	</center>
+</div>
+<center>
+	<div id="InstructionDiv" style="visibility:hidden;width:600px">
+		<span id="Instructions1">
+			<p>You will be asked to predict whether each patient will sleep well based on which medications they took that day. Medications with pictures that are greyed-out (like Drug 4 here) were not taken by the patient that day.</p>
+			<button id="Button1">Okay</button>
+		</span>
+
+		<span id="Instructions2">
+			<p>The patient slept well! After each night, you may adjust a sliding scale below each drug to indicate your present beliefs about that drug's effectiveness, from Strong Sleep Inhibitor (often prevents patients from sleeping well) to Strong Sleep Enhancer (often causes patients to sleep well), or anywhere in between. <b>These sliding scales are your recommendations to the nursing home about each drug's effect on quality of sleep.</b></p> 
+		</span>
+
+		<span id="Instructions3">
+			<p>The sliders will turn <b>yellow</b> when you can adjust them. You cannot adjust a slider any time its background color is <b>white</b> (like they are right now). Let's look at data from a few more nights with this patient so you can get the hang of it.</p>
+
+			<form method="get" action="/practice">
+				<button id="Button3">Okay</button>
+			</form>
+		</span>
+	</div>
+</center>
+
+
+
+	
+
+<script>
+
+// VISUALIZING WITHOUT MAKING JUMPY DIVS:
+// 1. Make everything style:"visibility:hidden" when you first render it.
+// 2. use jquery to 'hide' the things you don't want to show up right away (do this at the top)
+// 3. Change css of all elements to 'visible', then toggle with show and hide.
+
+
+
+
+// Define variables
+var practice = {{practice}};
+
+
+
+// Formatting and initialization:
+$("#TJDiv").hide();
+$("#SuccessDiv").hide();
+$("#Instructions2").hide();
+$("#Instructions3").hide();
+$("#PracticeDiv").css("visibility", "visible");
+$("#InstructionDiv").css("visibility", "visible");
+
+// Slider range and values:
+$(".slider").slider({
+	min: -10
+});
+$(".slider").slider({
+	max: 10
+});
+$(".slider").slider({
+	value: 0
+});
+
+// Slider styling
+$(".slider").slider("disable");
+$(".slider").css("width", "110px");
+$(".slider").css("position", "relative");
+$(".slider").css("opacity", "0.0");
+$("#slider1").css("background", "#FFFF00");
+$("#slider2").css("background", "#FFFF00");
+$("#slider3").css("background", "#FFFF00");
+$("#slider4").css("background", "#FFFF00");
+
+
+// Functions to progress throught the practice:
+$("#Button1").click(function(){
+	$("#Instructions1").hide();
+	$("#TJDiv").show();
+});
+
+
+$("#SuccessButton").click(function(){
+	$("#TJDiv").hide();
+	$("#Instructions2").show();	
+	$("#SuccessSpan").html('<font size="4pt" color="green"><u>The Patient Slept Well!</u></font>');
+	$("#SuccessDiv").show();
+	
+	$(".slider").slider("enable");
+	$(".slider").css("opacity", "1.0");
+
+	// Tooltip activation
+	$("#slider1").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider2").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider3").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider4").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$('.tooltip').tooltipster({
+		position: 'bottom'
+	});
+
+});
+
+$("#FailButton").click(function(){
+	$("#TJDiv").hide();
+	$("#Instructions2").show();	
+	$("#SuccessSpan").html('<font size="4pt" color="green"><u>The Patient Slept Well!</u></font>');
+	$("#SuccessDiv").show();
+	
+	$(".slider").slider("enable");
+	$(".slider").css("opacity", "1.0");
+
+	// Tooltip activation
+	$("#slider1").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider2").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider3").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$("#slider4").attr("title", "Sleep Inhibitor - Neutral - Sleep Enhancer");
+	$('.tooltip').tooltipster({
+		position: 'bottom'
+	});
+});
+
+$("#Button2").click(function(){
+	$("#TrialNumber").html("2");
+	$("#Drug1").fadeTo("slow", "0.1");
+	$("#SuccessSpan").hide();
+	$("#SuccessDiv").hide();
+	$("#Instructions2").hide();
+	$("#Instructions3").show();
+	$(".slider").slider("disable");
+	$("#slider1").css("background", "#FFFFFF");
+	$("#slider2").css("background", "#FFFFFF");
+	$("#slider3").css("background", "#FFFFFF");
+	$("#slider4").css("background", "#FFFFFF");
+});
+
+
+// Go to practice 2 (with a dataset)
+$("#Button3").click(function(){
+	$("#practiceform").submit();
+});
+
+
+
+
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,580 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+	Patient Data
+{% endblock%}
+
+{% block bodycontent %}
+
+<!-- Hidden div to preload images -->
+<div class="hidden">
+	<script>
+			var images = new Array()
+			function preload(){
+				for (i = 0; i < preload.arguments.length; i++) {
+				images[i] = new Image()
+				images[i].src = preload.arguments[i]
+				}
+			}
+			preload(
+			"BlackWhiteCap.png",
+			"BlueYellowCap.png",
+			"BrownWhiteCap.png",
+			"GreenCap.png",
+			"GreenWhiteCap.png",
+			"GreyWhiteCap.png",
+			"NavyCap.png",
+			"NavyYellowCap.png",
+			"OrangeWhiteCap.png",
+			"PurpleNavyCap.png",
+			"PurpleWhiteCap.png",
+			"RedCap.png",
+			"RedWhiteCap.png",
+			"TealWhiteCap.png",
+			"YellowCap.png",
+			"YellowWhiteCap.png"
+			)
+
+	</script>
+</div>
+
+<!-- Hidden input for the completed data -->
+<form id="dataform" method="post" action="/scenario">
+	<input id="TJInput" name="TJInput" type="hidden">
+	<input id="DrugArrayInput" name="DrugArrayInput" type="hidden">
+	<input id="BonusInput" name="BonusInput" type="hidden">
+	<input id="DrugIDs" name="DrugIDs" type="hidden">
+		<!-- data[13] -->
+	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
+</form>
+
+
+
+<div id="DataDiv" style="position:absolute;top:0px;left:0px">
+	Dataset number: <span id="DatasetSpan"></span>
+	<br>
+	Trial Data: <span id="TrialDataSpan"></span>
+	<br>
+	Day number: <span id="DataRow"></span>
+</div>
+
+
+<div id="DisplayDiv" class="pg" style="width:650px;height:440px;visibility:hidden">
+	<center>
+		<b>Patient: <span id="PatientName"></span></b> Day <span id="TrialNumber"></span>
+		<br>
+		<br>
+		The patient took the following medications today:
+
+
+		<div id= "Drug1" class="Drug1">
+			<center>
+				<IMG id="IMG1" style="width:100px;height:100px"></IMG><br>
+				Drug 1
+			</center>
+		</div>
+		<div id="slider1" class="slider tooltip"
+			title="Sleep Inhibitor - Neutral - Sleep Enhancer" 
+			style="top:170px;
+			left:-250px">
+		</div>
+	
+
+		<div id="Drug2" class="Drug2">
+			<center>
+				<IMG id="IMG2" style="width:100px;height:100px"></IMG><br>
+				Drug 2
+			</center>
+		</div>
+		<div id="slider2" class="slider tooltip" 
+			title="Sleep Inhibitor - Neutral - Sleep Enhancer"
+			style="top:-155px;
+			left:-85px">
+		</div>
+
+
+		<div id="Drug3" class="Drug3">
+			<center>
+				<IMG id="IMG3" style="width:100px;height:100px"></IMG><br>
+				Drug 3
+			</center>
+		</div>
+		<div id="slider3" class="slider tooltip"
+			title="Sleep Inhibitor - Neutral - Sleep Enhancer"
+			style="top:-345px;
+			left:85px">
+		</div>
+
+
+		<div id="Drug4" class="Drug4">
+			<center>
+				<IMG id="IMG4" style="width:100px;height:100px"></IMG><br>
+				Drug 4
+			</center>
+		</div>
+		<div id="slider4" class="slider tooltip"
+			title="Sleep Inhibitor - Neutral - Sleep Enhancer"
+			style="top:-405px;
+			left: 250px">
+		</div>
+
+
+		<div id="TJDiv" style="position:relative;top:-470px">
+			<span id="TrialInstructions">Will the patient sleep well tonight?</span><br><br>
+		
+
+			<button id="SuccessButton">
+				Yes
+			</button>
+			
+			<button id="FailButton">
+				No
+			</button>
+		</div>
+
+		<div class="pg" id="SuccessDiv" style="position:relative;top:-560px;width:275px;padding:5px;border-width:1px">
+			<center>
+				<span id="SuccessSpan"></span><br>
+				You may now adjust your beliefs about each drug. Click below when you're finished.
+				<br>
+				<br>
+				<button id="NextButton">Next</button>
+			</center>
+		</div>
+
+	</center>
+</div>
+
+<script>
+
+// Variables
+var drugphotos = new Array()
+	// list of the photos you're going to use, to be randomized later 
+for (i = 0; i <= 3; i++){
+	drugphotos[i] = ({{drugphotos}}*4)+i
+}
+
+var imgArray = new Array();
+var scenario = {{scenario}};
+var data = {{CurrentData}};
+var datanumber = {{n}};
+var LengthOfData = {{LengthOfData}};
+var condition = {{condition}};
+var TRIALNUMBER = 0;
+	// will be incremented before displaying the pictures
+var TJs = new Array();
+var DrugArray = new Array();
+var Bonus = new Array();
+
+
+
+var OrderTag = [1,2,3,4,5,6]
+if (datanumber <= 20){
+	var StructureTag = [1,0,0,-1,2,3]
+}else{
+	var StructureTag = [1,1,-1,0,2,3]
+}
+	// Effect coded as 2 and row number as 3...because I had to put something there
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// FUNCTIONS //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// shuffle data for randomized condition (from Stack Overflow)
+function shuffle(array){
+	var currentIndex = array.length, temporaryValue, randomIndex;
+		// not sure what temporaryValue or randomIndex are, might get into trouble with that.
+
+	// While there remain elements to shuffle...
+	while(0 !== currentIndex){
+
+		// Randomly choose a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And switch it with the current element
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array
+
+}
+
+// Shuffle the columns (runs when the page loads)
+function ColumnShuffle(array){
+	var order = [0,1,2,3];
+	shuffle(order);
+	order.push(4);
+	order.push(5);
+
+	for (var i = 0; i <= (array.length-1); i++) {
+		x = array[i] // Because that's a lot of freaking brackets
+		x = [x[order[0]],x[order[1]],x[order[2]],x[order[3]],x[order[4]],x[order[5]]]
+		array[i] = x
+	}
+	return(array)
+} 
+
+// Changes opacity for the spies in accordance with the data. Runs for every trial
+function DisplaySpies(){
+	$("#PatientName").html('{{CurrentPatient}}');
+
+	// if finished, finalize judgments
+	if(TRIALNUMBER >= LengthOfData){
+		$("#SuccessDiv").html(
+			'<b>Patient data completed!</b><br> Please finalize your '+ 
+			'judgments about each drug.'+
+			'<br>'+
+			'<br>'+
+			'<button id="SubmitButton" onclick="MySubmit()">Finished</button>'
+		);
+		alert("Patient data completed! Please finalize your judgments about each drug.");
+	}
+
+	// if not finished, next trial
+	else{
+		// increment TRIALNUMBER:
+		TRIALNUMBER += 1;
+		$("#TrialNumber").html(TRIALNUMBER);
+	
+		// set/reset visibility:
+		$("#TJDiv").css("visibility", "visible");
+		$("#SuccessDiv").css("visibility", "hidden");
+		$("#SuccessSpan").css("visibility", "hidden");
+	
+		// Drug 1
+		if(data[TRIALNUMBER-1][0] == 0){
+			$("#Drug1").fadeTo("slow", "0.1");
+		}
+		else {
+			$("#Drug1").fadeTo("slow", "1.0");
+		}
+		
+		// Drug 2
+		if(data[TRIALNUMBER-1][1] == 0){
+			$("#Drug2").fadeTo("slow", "0.1");
+		}
+		else {
+			$("#Drug2").fadeTo("slow", "1.0");
+		}
+	
+		// Drug 3
+		if(data[TRIALNUMBER-1][2] == 0){
+			$("#Drug3").fadeTo("slow", "0.1");
+		}
+		else{
+			$("#Drug3").fadeTo("slow", "1.0");
+		}
+	
+		// Drug 4
+		if(data[TRIALNUMBER-1][3] == 0){
+			$("#Drug4").fadeTo("slow", "0.1");
+		}
+		else {
+			$("#Drug4").fadeTo("slow", "1.0");
+		}
+		$(".slider").slider("disable");
+		$(".slider").css("opacity", "1.0");
+		// there HAS to be an easier way to do this. I'm going to have 100 lines of code for sliders :/
+	
+		$("#slider1").css("background", "#FFFFFF");
+		$("#slider2").css("background", "#FFFFFF");
+		$("#slider3").css("background", "#FFFFFF");
+		$("#slider4").css("background", "#FFFFFF");
+	
+		// data span, for testing only
+		document.getElementById("TrialDataSpan").innerHTML = data[TRIALNUMBER-1];
+		document.getElementById("DataRow").innerHTML = data[TRIALNUMBER-1][5];
+	}	
+}
+
+function DisplayResult(){
+	
+	$("#TJDiv").css("visibility", "hidden");
+
+	if(data[TRIALNUMBER-1][4] == 0){
+		$("#SuccessSpan").html(
+			'<font size="4pt" color="red"><u>The Patient Did Not Sleep Well!</u></font>'
+		)
+	}
+	else if (data[TRIALNUMBER-1][4] == 1){
+		$("#SuccessSpan").html(
+			'<font size="4pt" color="green"><u>The Patient Slept Well!</u></font>'
+		)
+	}
+	$("#SuccessDiv").css("visibility", "visible");
+	$("#SuccessSpan").css("visibility", "visible");
+
+	// unfreeze sliders
+	$(".slider").slider("enable");
+	$("#slider1").css("background", "#FFFF00");
+	$("#slider2").css("background", "#FFFF00");
+	$("#slider3").css("background", "#FFFF00");
+	$("#slider4").css("background", "#FFFF00");
+
+
+}
+
+
+
+
+// get images into an array
+
+imgArray[0] = new Image();
+imgArray[0].src = "static/images/LightGrey.png";
+
+imgArray[1] = new Image();
+imgArray[1].src = "static/images/DarkYellow.png";
+
+imgArray[2] = new Image();
+imgArray[2].src = "static/images/Red.png";
+
+imgArray[3] = new Image();
+imgArray[3].src = "static/images/LightGreen.png";
+
+imgArray[4] = new Image();
+imgArray[4].src = "static/images/DarkGreen.png";
+
+imgArray[5] = new Image();
+imgArray[5].src = "static/images/LightBlue.png";
+
+imgArray[6] = new Image();
+imgArray[6].src = "static/images/LightYellow.png";
+
+imgArray[7] = new Image();
+imgArray[7].src = "static/images/LightPurple.png";
+
+imgArray[8] = new Image();
+imgArray[8].src = "static/images/DarkBlue.png";
+
+imgArray[9] = new Image();
+imgArray[9].src = "static/images/Brown.png";
+
+imgArray[10] = new Image();
+imgArray[10].src = "static/images/White.png";
+
+imgArray[11] = new Image();
+imgArray[11].src = "static/images/Pink.png";
+
+imgArray[12] = new Image();
+imgArray[12].src = "static/images/Orange.png";
+
+imgArray[13] = new Image();
+imgArray[13].src = "static/images/Black.png";
+
+imgArray[14] = new Image();
+imgArray[14].src = "static/images/DarkPurple.png";
+
+imgArray[15] = new Image();
+imgArray[15].src = "static/images/DarkGrey.png";
+
+
+// Get correct images into the IMG spots
+
+drugphotos = shuffle(drugphotos);
+$("#IMG1").attr("src", imgArray[drugphotos[0]].src);
+$("#IMG2").attr("src", imgArray[drugphotos[1]].src);
+$("#IMG3").attr("src", imgArray[drugphotos[2]].src);
+$("#IMG4").attr("src", imgArray[drugphotos[3]].src);
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// RANDOMIZATIONS ///////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// shuffle for condition 1
+if(condition == 1){
+	data = shuffle(data);
+}
+
+// add tags to keep track of which drug is which, as well as original column order
+data.push(StructureTag);
+data.push(OrderTag);
+
+// shuffle columns:
+data = ColumnShuffle(data);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// SLIDER FORMATTING ////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+$(".slider").slider({
+	min: -10
+});
+$(".slider").slider({
+	max: 10
+});
+$(".slider").slider({
+	value: 0
+});
+$(".slider").css("width", "110px");
+$(".slider").css("position", "relative");
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// BUTTONS ///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// Success guess (slept well)
+$("#SuccessButton").click(function(){
+	TJs[TRIALNUMBER-1] = 1;
+	if(data[TRIALNUMBER-1][4] == 1){
+		Bonus[TRIALNUMBER-1] = 1
+	}
+	else{
+		Bonus[TRIALNUMBER-1] = 0
+	}
+
+	DisplayResult();
+})
+
+// Failure guess (slept poorly)
+$("#FailButton").click(function(){
+	TJs[TRIALNUMBER-1] = 0;
+	if(data[TRIALNUMBER-1][4] == 0){
+		Bonus[TRIALNUMBER-1] = 1
+	}
+	else{
+		Bonus[TRIALNUMBER-1] = 0
+	}
+	DisplayResult();
+});
+
+// Next trial 
+$("#NextButton").click(function(){
+	
+	// update DrugArray (judgments about each drug at each timepoint)
+	var RawJudgments = new Array();
+	RawJudgments[0] = $("#slider1").slider("option", "value");
+	RawJudgments[1] = $("#slider2").slider("option", "value");
+	RawJudgments[2] = $("#slider3").slider("option", "value");
+	RawJudgments[3] = $("#slider4").slider("option", "value");
+	// ^These are the raw judgments, before being reordered
+
+	var update = new Array();
+
+	// Unscramble columns as each judgment is submitted.
+	// IMPORTANT: DrugArray IS IN THE SAME COLUMN ORDER AS THE ORIGINAL CSV FILE!!!
+	for (var i = 0; i <= 3; i++) {
+		// data[15] is the original order in the main csv
+		update[i] = RawJudgments[data[15].indexOf(i+1)]
+	}
+
+	DrugArray.push(update)
+
+
+
+
+	DisplaySpies();
+
+});
+
+
+// submit form
+
+function MySubmit(){
+		
+	var RawJudgments = new Array();
+	RawJudgments[0] = $("#slider1").slider("option", "value");
+	RawJudgments[1] = $("#slider2").slider("option", "value");
+	RawJudgments[2] = $("#slider3").slider("option", "value");
+	RawJudgments[3] = $("#slider4").slider("option", "value");
+	// ^These are the raw judgments, before being reordered
+
+	var update = new Array();
+
+	// Unscramble columns as each judgment is submitted.
+	// IMPORTANT: DrugArray IS IN THE SAME COLUMN ORDER AS THE ORIGINAL CSV FILE!!!
+	for (var i = 0; i <= 3; i++) {
+		// data[15] is the original order in the main csv
+		update[i] = RawJudgments[data[15].indexOf(i+1)]
+	}
+
+	DrugArray.push(update)
+
+
+	var x = new Array();
+	for(var i = 0; i <= 3; i++){
+		x[i] = data[14][data[15].indexOf(i+1)]
+	}
+
+	$("#TJInput").val(String(TJs));
+	$("#DrugArrayInput").val(String(DrugArray));
+	$("#BonusInput").val(String(Bonus));
+	$("#DrugIDs").val(x);
+	$("#dataform").submit();
+}
+
+// Initial drug displays (so it won't fade when it loads up):
+// Drug 1
+if(data[TRIALNUMBER][0] == 0){
+	$("#Drug1").css("opacity", "0.1");
+}
+else {
+	$("#Drug1").css("opacity", "1.0");
+}
+
+// Drug 2
+if(data[TRIALNUMBER][1] == 0){
+	$("#Drug2").css("opacity", "0.1");
+}
+else {
+	$("#Drug2").css("opacity", "1.0");
+}
+
+// Drug 3
+if(data[TRIALNUMBER][2] == 0){
+	$("#Drug3").css("opacity", "0.1");
+}
+else{
+	$("#Drug3").css("opacity", "1.0");
+}
+
+// Drug 4
+if(data[TRIALNUMBER][3] == 0){
+	$("#Drug4").css("opacity", "0.1");
+}
+else {
+	$("#Drug4").css("opacity", "1.0");
+}
+
+
+//Activate tooltips
+$(document).ready(function(){
+	$('.tooltip').tooltipster({
+		position: 'bottom'
+	});
+});
+
+$("#DisplayDiv").css("visibility", "visible");
+DisplaySpies();
+
+// for testing
+$("#DatasetSpan").html(datanumber);
+$("#DataDiv").css("visibility", "visible");
+
+
+
+
+
+</script>
+
+
+
+
+
+{% endblock %}
