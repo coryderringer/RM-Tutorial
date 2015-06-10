@@ -138,7 +138,7 @@ class SignupHandler(webapp.RequestHandler):
 			self.session['password']    = password1
 			self.session['Module1']   	= 'Incomplete'
 			self.session['Module2']  	= 'Incomplete'
-
+			self.session['Logged_In']	= True
 
 			doRender(self, 'congratulations.htm')
 
@@ -261,14 +261,16 @@ class DNQHandler(webapp.RequestHandler):
 # correct race number
 
 class LogoutHandler(webapp.RequestHandler):
-	def post(self):		
+	def post(self):	
+		self.session = get_current_session()
+		self.session['Logged_In'] = False	
 		# kill all the session stuff that would identify them (username, password, etc)
 		self.session.__delitem__('usernum')
 		self.session.__delitem__('username')
-		self.session.__delitem__('userkey')
-		self.session.__delitem__('scenario')
-		self.session.__delitem__('BonusList')
-		self.session.__delitem__('datalist')
+		self.session.__delitem__('password')
+		self.session.__delitem__('Module1')
+		self.session.__delitem__('Module')
+		self.session.__delitem__('Module2')
 
 		# Send them back to the login page
 		doRender(self, 'login.htm')
@@ -282,9 +284,15 @@ class LogoutHandler(webapp.RequestHandler):
 	  
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, 'login.htm')
+		self.session = get_current_session()
+		self.session['Logged_In'] = False
+		if self.session['Logged_In'] == True:
+			doRender(self, 'congratulations.htm')
+		else:
+			doRender(self, 'login.htm')
 
 	def post(self):
+		self.session = get_current_session()
 		username = self.request.get('ID')
 
 
@@ -299,7 +307,12 @@ class LoginHandler(webapp.RequestHandler):
 				
 				password = p.password
 				if password == self.request.get('password'):
-					doRender(self, 'congratulations.htm')
+					if username == 'admin':
+						self.session['Logged_In'] = True 
+						doRender(self, 'adminview.htm')
+					else:
+						self.session['Logged_In'] = True 
+						doRender(self, 'congratulations.htm')
 				else:
 					doRender(self, 'loginfailed.htm')
 		# if exists == True:
