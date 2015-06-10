@@ -261,16 +261,16 @@ class DNQHandler(webapp.RequestHandler):
 # correct race number
 
 class LogoutHandler(webapp.RequestHandler):
-	def post(self):	
+	def get(self):	
 		self.session = get_current_session()
 		self.session['Logged_In'] = False	
 		# kill all the session stuff that would identify them (username, password, etc)
-		self.session.__delitem__('usernum')
-		self.session.__delitem__('username')
-		self.session.__delitem__('password')
-		self.session.__delitem__('Module1')
-		self.session.__delitem__('Module')
-		self.session.__delitem__('Module2')
+		
+		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In']
+
+		for i in sessionlist:
+			if i in self.session:
+				self.session.__delitem__(i)
 
 		# Send them back to the login page
 		doRender(self, 'login.htm')
@@ -285,10 +285,16 @@ class LogoutHandler(webapp.RequestHandler):
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
-		self.session['Logged_In'] = False
-		if self.session['Logged_In'] == True:
-			doRender(self, 'congratulations.htm')
+
+		# If they're logged in, take them to the main menu
+		if 'Logged_In' in self.session:
+			if self.session['Logged_In'] == True:
+				doRender(self, 'congratulations.htm')
+			else:
+				doRender(self, 'login.htm')
+		# If they aren't, take them to the login page
 		else:
+			self.session['Logged_In'] = False
 			doRender(self, 'login.htm')
 
 	def post(self):
@@ -306,6 +312,12 @@ class LoginHandler(webapp.RequestHandler):
 			if len(p.username) > 0:
 				
 				password = p.password
+				self.session['username'] = username
+				self.session['password'] = password
+				self.session['usernum'] = p.usernum
+				self.session['Module1'] = p.Module1
+				self.session['Module2'] = p.Module2
+
 				if password == self.request.get('password'):
 					if username == 'admin':
 						self.session['Logged_In'] = True 
@@ -315,34 +327,8 @@ class LoginHandler(webapp.RequestHandler):
 						doRender(self, 'congratulations.htm')
 				else:
 					doRender(self, 'loginfailed.htm')
-		# if exists == True:
-		# 	print "existing user"
-		# else:
-		# 	print "new user"
-	
 
-		# doRender(self, 'congratulations.htm')
-
-
-
-		# password_input = self.request.get('password')
-
-		# # Pull username and password from user database.
-		# password = "password" # just for now
-		# exists = True # just for now
-
-		# # check if account exists
-
-		# if exists == False:
-		# 	doRender(self, 'no_account.htm')
-		# else:
-		# 	if password_input != password:
-		# 		doRender(self, 'loginfailed.htm')
-		# 	else:
-		# 		if username == 'admin': 	# Pull data from the user database
-		# 			doRender(self, 'adminview.htm')
-		# 		else:
-		# 			doRender(self,'congratulations.htm')
+# Have to link their username to a row in the data, so we can modify that row
 
 
 
