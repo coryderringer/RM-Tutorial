@@ -1,7 +1,7 @@
 {% extends "_base.htm" %}
 
 {% block title %}
-	Data Viewer
+	User Data
 {% endblock %}
 
 {% block bodycontent %}
@@ -10,98 +10,26 @@
 <body>
 
 
-<!-- ########## Data For Each Scenario ########## -->
-ScenarioData:
-<table>
-
-<!-- Header Row -->
-<tr>
-<th>usernum</th>
-<th>account</th>
-<th>created</th>
-<th>scenario</th>
-<th colspan={{NumScenarios}}>FinalJudgments</th>
-<th colspan={{NumScenarios}}>Drug IDs</th>
-<th colspan={{LengthOfData}}>TJs</th>
-<th colspan=60>DrugArray</th>
-<th>dataset</th>
-<th>Bonus</th>
-<th colspan={{LengthOfData}}>Photos</th>
-</tr>
-
-<!-- Subsequent Rows -->
-{% for i in d %}
-<tr>
-<th>{{ i.usernum }}</th>
-<th>{{ i.account }}</th>
-<th>{{ i.created }}</th>
-<th>{{ i.scenario }}</th>
-
-{% for j in i.FinalJudgments %}
-<th>{{j}}</th>
-{% endfor %}
-
-{% for j in i.DrugIDs %}
-<th>{{j}}</th>
-{% endfor %}
-
-{% for j in i.TJs %}
-<th>{{j}}</th>
-{% endfor %}
-
-{% for j in i.DrugArray %}
-<th>{{j}}</th>
-{% endfor %}
-
-<th>{{ i.dataset }}</th>
-<th>{{ i.Bonus }}</th>
-
-{% for j in i.spyphotos %}
-<th>{{j}}</th>
-{% endfor %}
-
-
-</tr>
-{% endfor %}
-</table>
-<br>
-<br>
-
-
-<!-- ########## User Table ########## -->
+<!-- ########## User Data ########## -->
 User:
 <table>
 <!-- Header Row -->
 <tr>
-<th>usernum</th>
-<th>account</th>
+<th>username</th>
+<th>password</th>
 <th>created</th>
-<th>datalist</th>
-<th>condition</th>
-<th>completion_code</th>
-<th>sex</th>
-<th>ethnicity</th>
-<th>race</th>
-<th colspan={{NumScenarios}}>BonusList</th>
-</tr>
+<th>Module1</th>
+<th>Module2</th>
+
 
 <!-- Subsequent Rows -->
-{% for i in u %}
+{% for i in users %}
 <tr>
-<th>{{ i.usernum }}</th>
-<th>{{ i.account }}</th>
+<th>{{ i.username }}</th>
+<th>{{ i.password }}</th>
 <th>{{ i.created }}</th>
-<th>{{ i.datalist }}</th>
-<th>{{ i.condition }}</th>
-<th>{{ i.Completion_Code }}</th>
-<th>{{ i.sex }}</th>
-<th>{{ i.ethnicity }}</th>
-<th>{{ i.race }}</th>
-
-{% for j in i.BonusList %}
-<th>{{j}}</th>
-{% endfor %}
-
+<th>{{ i.Module1 }}</th>
+<th>{{ i.Module2 }}</th>
 </tr>
 {% endfor %}
 </table>
@@ -110,34 +38,6 @@ User:
 <br>
 <br>
 <br>
-
-
-<!-- Practice Table -->
-Practice:
-<table>
-<!-- Header Row -->
-<tr>
-<th>usernum</th>
-<th colspan=5>PracticeTrialJudgments</th>
-<th colspan=24>PracticeDrugArray</th>
-</tr>
-
-<!-- Subsequent Rows -->
-{% for i in p %}
-<tr>
-<th>{{ i.usernum }}</th>
-
-{% for j in i.PJs %}
-<th>{{j}}</th>
-{% endfor %}
-
-{% for j in i.PracticeArray %}
-<th>{{j}}</th>
-{% endfor %}
-
-</tr>
-{% endfor %}
-</table>
 
 
 </body>

@@ -1,0 +1,22 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Login failed!
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center>Your username and password do not match!</center></h2>
+<br>
+
+
+<form method="post" action="/login">
+Pitt credential <i>(ex: abc12)</i>: <input type="text" name="ID"/><br><br>
+Password: <input type="password" name="password"/><br><br>
+<input type="submit" value="Submit"/>
+</form>
+
+</div>
+{% endblock %}

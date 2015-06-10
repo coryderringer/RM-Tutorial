@@ -1,0 +1,24 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Login
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center>Please log in to continue</center></h2>
+<br>
+
+
+<form method="post" action="/login">
+Pitt credential <i>(ex: abc12)</i>: <input type="text" name="ID"/><br><br>
+Password: <input type="password" name="password"/><br><br>
+<input type="submit" value="Submit"/>
+</form>
+
+<center>Or <a href="/signup">create an account.</a></center>
+
+</div>
+{% endblock %}

@@ -22,36 +22,13 @@ NumScenarios=4
 ################################################################################
 
 class User(db.Model):
-	account = 			db.StringProperty()
-	usernum =			db.IntegerProperty()
-	created =			db.DateTimeProperty(auto_now=True)
-	datalist =			db.ListProperty(int)
-	Completion_Code = 	db.IntegerProperty()
-	sex =				db.IntegerProperty()
-	ethnicity =			db.IntegerProperty()
-	race =				db.IntegerProperty()	
-	BonusList =			db.ListProperty(int)
-	condition =			db.IntegerProperty()
+	username = 			db.StringProperty()
+	usernum = 			db.IntegerProperty()
+	password =			db.StringProperty()
+	created =			db.StringProperty()
+	Module1 =			db.StringProperty()
+	Module2 = 			db.StringProperty()
 
-class ScenarioData(db.Model):
-	user  =				db.ReferenceProperty(User)
-	usernum =			db.IntegerProperty()
-	account =			db.StringProperty()
-	created =			db.DateTimeProperty(auto_now=True)
-	scenario =			db.IntegerProperty()
-	dataset =			db.IntegerProperty()
-	DrugArray =			db.ListProperty(int)
-	DrugIDs = 			db.ListProperty(int)
-	FinalJudgments = 	db.ListProperty(int)
-	TJs =				db.ListProperty(int)
-	Bonus =				db.IntegerProperty()
-	drugphotos =		db.ListProperty(int)
-
-	
-class PracticeData(db.Model):
-	usernum =			db.IntegerProperty()
-	PJs =				db.ListProperty(int)
-	PracticeArray =		db.ListProperty(int)
 	
 
 #This stores the current number of participants who have ever taken the study.
@@ -114,118 +91,75 @@ def doRender(handler, tname = 'index.htm', values = { }):
 # The main handler for all the "scenarios" (e.g., one patient)
 class ScenarioHandler(webapp.RequestHandler):
 	def get(self):
-		self.session = get_current_session()
-		scenario = self.session['scenario']
-		datalist = self.session['datalist']
-		PatientNames = self.session['PatientNames']
-		photolist = self.session['photolist']
-		
-		#identify the photos participants will see
-		drugphotos = photolist[scenario]
-		self.session['drugphotos'] = drugphotos
-		logging.info(drugphotos)
-
-
-		CurrentPatient = PatientNames[scenario]
-
-		#identify current dataset
-		n = datalist[scenario]
-		
-		#placeholder data, 6th row is order within the dataset (1-14)
-		CurrentData = [[0,0,0,0,0,0]] * 14
-
-		# Open the csv file, read in the appropriate data for this scenario
-		f = open('data.csv', 'rU')
-		mycsv = csv.reader(f)
-		mycsv = list(mycsv)   
-
-		for x in range(0,14):
-			CurrentData[x] = [int(mycsv[((n-1)*14)+x][0]), int(mycsv[((n-1)*14)+x][1]), int(mycsv[((n-1)*14)+x][2]), int(mycsv[((n-1)*14)+x][3]), int(mycsv[((n-1)*14)+x][4]), int(mycsv[((n-1)*14)+x][5])]
-
-		# Data goes into JS unscrambled. All of the randomizations are done in JS, which makes it easier to keep track.
-		# condition = self.session['condition']
-		
-		# for testing
-		condition = 0
-
-		doRender(
-			self, 'scenario.htm',
-			{'scenario':scenario,
-			'CurrentData':CurrentData,
-			'n':n,
-			'LengthOfData':LengthOfData,
-			'condition':condition,
-			'CurrentPatient':CurrentPatient,
-			'drugphotos':drugphotos})
-				#get rid of spy photos
+		doRender(self, 'scenario.htm')
 	
 
 	def post(self):
-
-		self.session = get_current_session()
-		scenario = self.session['scenario']
-		datalist = self.session['datalist']
-		PatientNames = self.session['PatientNames']
-		BonusList = self.session['BonusList']
-		n = datalist[scenario]
-
-
-		TJs = self.request.get('TJInput')
-		TJs = map(int,TJs.split(",")) 
-
-
-		Bonus = self.request.get('BonusInput')
-		Bonus = map(int,Bonus.split(","))
-		Bonus = sum(Bonus)
-
-		#update bonuslist
-		BonusList.append(Bonus)
-		self.session['BonusList'] = BonusList
-
-		DrugArray = self.request.get('DrugArrayInput')
-		DrugArray = map(int,DrugArray.split(","))
-
-		DrugIDs = self.request.get('DrugIDs')
-		DrugIDs = map(int,DrugIDs.split(","))
-
-		FinalJudgments = DrugArray[(len(DrugArray)-4):len(DrugArray)]
-
-		
-		#This is how we send collected data to datastore
-		newinput = ScenarioData(user=self.session['userkey'],
-			usernum=self.session['usernum'],
-			account=self.session['username'],
-			scenario=scenario,
-			dataset=n, 
-			DrugArray=DrugArray,
-			FinalJudgments=FinalJudgments,
-			Bonus=Bonus,
-			TJs=TJs,
-			drugphotos=self.session['drugphotos'],
-			DrugIDs=DrugIDs);
-
-		newinput.put();
-
-
-		logging.info(Bonus)
-		self.session['scenario']+=1
-		scenario=self.session['scenario']
-		
-
-		if scenario<=NumScenarios-1: #have more scenarios to go
-			CurrentPatient = PatientNames[scenario]
-			doRender(self, 'newscenario.htm',
-				{'scenario':scenario,
-				'CurrentPatient':CurrentPatient})
-		
-		else: 
-			doRender(self, 'demographics.htm')
+		doRender(self, 'scenario.htm')
 
 
 
 ################################################################################
 ############################## Small Handlers ##################################
 ################################################################################
+
+class SignupHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, 'signup.htm')
+
+	def post(self):
+		self.session = get_current_session()
+		username = self.request.get('username')
+		password1 = self.request.get('password1')
+		password2 = self.request.get('password2')
+
+		if password1 != password2:
+			doRender(self, 'error.htm')
+		else:
+			usernum = create_or_increment_NumOfUsers()
+			newuser = User(usernum=usernum, 
+				username=username,
+				password=password1,
+				Module1="Incomplete",
+				Module2="Incomplete");
+
+
+			# dataframe modeling, but I'm not sure what exactly
+			userkey = newuser.put()
+			# this stores the new user in the datastore
+			newuser.put()
+
+			# store these variables in the session
+			self.session=get_current_session() #initialize sessions
+			self.session['usernum']    	= usernum
+			self.session['username']   	= username
+			self.session['password']    = password1
+			self.session['Module1']   	= 'Incomplete'
+			self.session['Module2']  	= 'Incomplete'
+
+
+			doRender(self, 'congratulations.htm')
+
+
+
+
+			
+
+			# #This is how we send user's data to datastore
+			# newuser = User(usernum=usernum,
+	  #           username=self.request.get('username'),
+	  #           password=password1,
+	  #           Module1='Incomplete',
+	  #           Module2='Incomplete');
+
+   #          # dataframe modeling, but I'm not sure what exactly
+	  #       userkey = newuser.put()
+	  #       # this stores the new user in the datastore
+	  #       newuser.put()
+
+			# doRender(self, 'congratulations.htm') # for now
+		
+
 
 
 class InstructionsHandler(webapp.RequestHandler):
@@ -295,31 +229,17 @@ class DataHandler(webapp.RequestHandler):
 	def post(self):
 		password=self.request.get('password')
 
-		if password == "gZ2BYJxfCY5SiyttS8zl":
-
-			que=db.Query(ScenarioData)
-			que.order("usernum").order("scenario")
-			
-			d=que.fetch(limit=10000)
-				
+		if password == " ": # just for now
 
 
 			que2=db.Query(User)
 			que2.order("usernum")
-			u=que2.fetch(limit=10000)
-			
-			que3=db.Query(PracticeData)
-			que3.order("usernum")
-			p=que3.fetch(limit=10000)
+			users=que2.fetch(limit=10000)
 
 			doRender(
 				self, 
 				'data.htm',
-				{'u':u,
-				'd':d,
-				'p':p,
-				'LengthOfData':LengthOfData,
-				'NumScenarios':NumScenarios})
+				{'users':users})
 		else:
 			doRender(self, 'dataloginfail.htm')
 
@@ -333,67 +253,14 @@ class DNQHandler(webapp.RequestHandler):
 		doRender(self, 'do_not_qualify.htm')    
 
 ################################################################################
-############################ DemographicsHandler ###############################
+############################### LogoutHandler ##################################
 ################################################################################
 # This handler is a bit confusing - it has all this code to calculate the
 # correct race number
 
-class DemographicsHandler(webapp.RequestHandler):
-	def get(self):
-		doRender(self, 'demographics.htm')
-		
-	def post(self):
-		self.session=get_current_session()
-		
-		sex=int(self.request.get('sex'))
-		ethnicity=int(self.request.get('ethnicity'))
-		racel=map(int,self.request.get_all('race')) #race list
-		logging.info("race list")   
-		logging.info(racel)
-
-		rl1=int(1 in racel)
-		rl2=int(2 in racel)
-		rl3=int(3 in racel)
-		rl4=int(4 in racel)
-		rl5=int(5 in racel)
-		rl6=int(6 in racel)
-		rl7=int(7 in racel)
-		
-#Amer Indian, Asian, Native Hawaiian, Black, White, More than one, No Report
-#race_num is a number corresponding to a single race AmerInd (1) - White(5)
-		race_num=rl1*1+rl2*2+rl3*3+rl4*4+rl5*5
-		
-		morethanonerace=0
-		for i in [rl1,rl2,rl3,rl4,rl5]:
-				if i==1:
-						morethanonerace+=1
-		if rl6==1:
-				morethanonerace+=2
-				
-		if rl7==1:  #dont want to report
-				race=7
-		elif morethanonerace>1:
-				race=6
-		elif morethanonerace==1:
-				race=race_num
-		
-		logging.info("race")
-		logging.info(race)
-		
-		
-		
-		Completion_Code=random.randint(10000000,99999999)
-		
-		
-		obj = User.get(self.session['userkey']);
-		obj.Completion_Code = Completion_Code
-		obj.BonusList = self.session['BonusList']
-		obj.sex = sex
-		obj.ethnicity = ethnicity
-		obj.race = race
-		obj.put();
-		
-		
+class LogoutHandler(webapp.RequestHandler):
+	def post(self):		
+		# kill all the session stuff that would identify them (username, password, etc)
 		self.session.__delitem__('usernum')
 		self.session.__delitem__('username')
 		self.session.__delitem__('userkey')
@@ -401,98 +268,54 @@ class DemographicsHandler(webapp.RequestHandler):
 		self.session.__delitem__('BonusList')
 		self.session.__delitem__('datalist')
 
-		doRender(self, 'logout.htm', {'Completion_Code': Completion_Code, })
+		# Send them back to the login page
+		doRender(self, 'login.htm')
+
+
 		
 
 ################################################################################
-############################### MturkIDHandler #################################
+############################### LoginHandler ###################################
 ################################################################################
 	  
-class MturkIDHandler(webapp.RequestHandler):
+class LoginHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, 'mturkid.htm')
+		doRender(self, 'login.htm')
 
 	def post(self):
-		ID=self.request.get('ID')
-		acct=ID ##no reason
-
-		form_fields = {
-			"ID": ID,
-			"ClassOfStudies": 'Cory Experiment 3',
-			"StudyNumber": 1
-			}
-
-		form_data = urllib.urlencode(form_fields)
-		url="http://www.mturk-qualify.appspot.com"
-		result = urlfetch.fetch(url=url,
-								payload=form_data,
-								method=urlfetch.POST,
-								headers={'Content-Type': 'application/x-www-form-urlencoded'})
-
-		if result.content=="0":
-			#self.response.out.write("ID is in global database.")
-			doRender(self, 'do_not_qualify.htm')
-		
-		elif result.content=="1":
-			# Check if the user already exists
-			que = db.Query(User).filter('account =',ID)
-			results = que.fetch(limit=1)
-		
-			logging.info('test')
-
-			# Allows username 'ben' to pass. You can't just allow other names to pass - it needs to be changed in http://www.mturk-qualify.appspot.com too
-			if (len(results) > 0) & (ID!='ben'):   
-				doRender(self, 'do_not_qualify.htm')
-
-			# If user is qualified (http://www.mturk-qualify.appspot.com returns 1)
-			else:
-				#Create the User object and log the user in.
-				usernum = create_or_increment_NumOfUsers()
-
-				#Make the data that this subject will see.
-				#It is made once and stored both in self.session and in database				
-
-				datalistLO = random.sample(xrange(1,21), 2)
-				datalistHI = random.sample(xrange(21,41), 2)
-				datalist = [datalistLO[0], datalistLO[1], datalistHI[0], datalistHI[1]]
-				random.shuffle(datalist)
-
-				# create a randomly ordered list from 0-15 (Python is weird...yes you use xrange(0,16) even though it only goes to 15).
-				photolist = random.sample(xrange(0,4),4)
+		username = self.request.get('ID')
 
 
-				PatientNames = ['Robert S.', 'James W.', 'Mary G.', 'Betty J.']
-				random.shuffle(PatientNames)
+		que2=db.Query(User)
+		que2.order("usernum")
+		users=que2.fetch(limit=10000)
 
-				randomizations = [0,1]
-				condition = random.choice(randomizations)
+		print users[0]
 
-				newuser = User(account=acct, usernum=usernum, condition=condition, datalist=datalist);
-
-				# dataframe modeling, but I'm not sure what exactly
-				userkey = newuser.put()
-				# this stores the new user in the datastore
-				newuser.put()
-
-				# store these variables in the session
-				self.session=get_current_session() #initialize sessions
-				self.session['usernum']		= usernum
-				self.session['username']	= acct
-				self.session['userkey']		= userkey
-				self.session['scenario']	= 0
-				self.session['BonusList']	= []
-				self.session['practice']	= 0
-				self.session['condition'] = condition
-				self.session['PatientNames'] = PatientNames
-				self.session['datalist']	= datalist
-				self.session['photolist'] = photolist
-				doRender(self, 'qualify.htm')
+		doRender(self, 'congratulations.htm')
 
 
-		# If got no response back from http://www.mturk-qualify.appspot.com
-		else:
-		  error="The server is going slowly. Please reload and try again."
-		  self.response.out.write(result.content)
+
+		# password_input = self.request.get('password')
+
+		# # Pull username and password from user database.
+		# password = "password" # just for now
+		# exists = True # just for now
+
+		# # check if account exists
+
+		# if exists == False:
+		# 	doRender(self, 'no_account.htm')
+		# else:
+		# 	if password_input != password:
+		# 		doRender(self, 'loginfailed.htm')
+		# 	else:
+		# 		if username == 'admin': 	# Pull data from the user database
+		# 			doRender(self, 'adminview.htm')
+		# 		else:
+		# 			doRender(self,'congratulations.htm')
+
+
 
 		
 ################################################################################
@@ -506,9 +329,10 @@ application = webapp.WSGIApplication([
 	('/do_not_qualify', DNQHandler),
 	('/scenario', ScenarioHandler),
 	('/qualify', QualifyHandler),
-	('/demographics', DemographicsHandler),
-	('/mturkid', MturkIDHandler), 
-	('/.*',      MturkIDHandler)],  #default page
+	('/logout', LogoutHandler),
+	('/login', LoginHandler),
+	('/signup', SignupHandler),
+	('/.*',  LoginHandler)],  #default page
 	debug=True)
 
 def main():

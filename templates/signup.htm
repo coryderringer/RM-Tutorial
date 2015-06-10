@@ -1,0 +1,24 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Create an account
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center>Create an account:</center></h2>
+<br>
+
+<p>Please use your Pitt username, but create a new password for these tutorials</p>
+
+<form method="post" action="/signup">
+Pitt credential <i>(ex: abc12)</i>: <input type="text" name="username"/><br><br>
+Password: <input type="password" name="password1"/><br><br>
+Re-type Password: <input type="password" name="password2"/><br><br>
+<input type="submit" value="Submit"/>
+</form>
+
+</div>
+{% endblock %}
