@@ -1,5 +1,5 @@
-application: ifoloaeveht
-version: 5
+application: rmtutorial
+version: 0
 runtime: python27
 api_version: 1
 threadsafe: false
