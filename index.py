@@ -114,8 +114,11 @@ class SignupHandler(webapp.RequestHandler):
 		password2 = self.request.get('password2')
 
 		if password1 != password2:
-			doRender(self, 'error.htm')
+			doRender(self, 'password_mismatch.htm')
+			# lets them try again
 		else:
+			
+			# Create user in dataframe
 			usernum = create_or_increment_NumOfUsers()
 			newuser = User(usernum=usernum, 
 				username=username,
@@ -125,8 +128,7 @@ class SignupHandler(webapp.RequestHandler):
 
 
 			# dataframe modeling, but I'm not sure what exactly
-			userkey = newuser.put()
-			# this stores the new user in the datastore
+			# userkey = newuser.put()
 			newuser.put()
 
 			# store these variables in the session
@@ -289,12 +291,11 @@ class LoginHandler(webapp.RequestHandler):
 		q = db.GqlQuery("SELECT * FROM User " +
 			"WHERE username = :1 AND usernum > :2 ",
 			username, 0)
-		print "hello"
-		
+			
 		exists = False
 		
 		for p in q.run(limit=5):
-			if len(p.username) > 0:
+			if username == p.username()
 				exists = True
 
 		if exists == True:
