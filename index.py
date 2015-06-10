@@ -286,11 +286,22 @@ class LoginHandler(webapp.RequestHandler):
 		username = self.request.get('ID')
 
 
-		que2=db.Query(User)
-		que2.order("usernum")
-		users=que2.fetch(limit=10000)
+		q = db.GqlQuery("SELECT * FROM User " +
+			"WHERE username = :1 AND usernum > :2 ",
+			username, 0)
+		print "hello"
+		
+		exists = False
+		
+		for p in q.run(limit=5):
+			if len(p.username) > 0:
+				exists = True
 
-		print users[0]
+		if exists == True:
+			print "existing user"
+		else:
+			print "new user"
+	
 
 		doRender(self, 'congratulations.htm')
 

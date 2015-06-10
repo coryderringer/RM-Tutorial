@@ -24,3 +24,8 @@ indexes:
   properties:
   - name: usernum
   - name: scenario
+
+- kind: User
+  properties:
+  - name: username
+  - name: usernum
