@@ -193,14 +193,9 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
+		# Need it to replace the data in the datastore instead of just adding another row. Maybe the problem is with the put() function? It does what we need it to do right now, but it would be a pain in the ass to have to delete duplicate rows.
+
 		
-
-
-
-
-
-
-
 
 class DataHandler(webapp.RequestHandler):
 	def get(self):
