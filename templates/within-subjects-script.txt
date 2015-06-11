@@ -1,0 +1,30 @@
+
+
+Page 1
+
+Before we dive into the tutorial, let's do a brief thought experiment. Imagine you hear about a new trend among swanky restaurants here in Pittsburgh: the most successful restaurants have started putting pancakes on the dinner menu. 
+
+Let's imagine that you hear evidence from two sources supporting the idea that serving pancakes causes restaurants' popularity to increase.
+
+Source 1: When asked about it, local food and business experts agree that among the fine dining establishments in Pittsburgh, the ones who serve pancakes are overall more popular than the ones who do not.
+
+Source 2: A local foodie website interviewed the owners of some of the pancake-serving establishments. The owners said the increase in popularity since adding pancakes to the menu was larger than expected. The average restaurant improved its popularity by 15% after adding pancakes to the menu.
+
+
+
+Which is more compelling to you: Source 1 or Source 2?
+	(multiple choice)
+	(If they choose source 1:) Well, they are the experts! Most people are actually more convinced by the second form of evidence. Take a minute to try to figure out why they would feel that way.
+
+
+	(If they choose source 2:) Most people tend to agree that Source 2 is more convincing. Take a second to read them again and try to figure out why you feel this way.
+
+	(button that takes them to the next page)
+
+
+
+Page 2 (But keep each Source text at the top so they can reference it and we can talk about it.)
+
+The reason most people find Source 2 more convincing is that the comparison is between the same restaurants rather than different ones. Instead of looking at restaurants that serve pancakes and restaurants that don't, Source 2 interviewed owners of restaurants that currently serve pancakes in order to compare the difference between their popularity pre- and post-pancake.
+
+At this point you might be wondering how any of this relates to research methods. Don't worry: we didn't make you hungry for nothing! Underlying the preference for source 2 kinds of comparisons over source 1 kinds of comparisons is the same principle that underlies most of experimental design: the preference for experimental designs that isolate experimental variance. 
