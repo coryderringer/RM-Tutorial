@@ -2,3 +2,4 @@
 	* Can we use another site's login system (Pitt? Google?)
 		(don't worry about this for now, but we need to think of something eventually)
 2. Main menu: eventually make this a table? If we have more than two (or if we want them to take them in order), numbering them would be a good idea. 
+3. Dataframe fix: look in "user", updates the user info without creating a new row
