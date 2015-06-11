@@ -141,7 +141,7 @@ class SignupHandler(webapp.RequestHandler):
 			self.session['Logged_In']	= True
 
 			doRender(self, 'menu.htm',
-				{'username':username,
+				{'username':self.session['username'],
 				'Module1':self.session['Module1'],
 				'Module2':self.session['Module2']})
 
@@ -150,13 +150,27 @@ class SingleSubjectHandler(webapp.RequestHandler):
 	def get(self):
 		doRender(self, "single_subject.htm")
 
+	def post(self):
+		self.session = get_current_session()
+		self.session['Module1'] = 'Complete'
+		doRender(self, 'menu.htm',
+			{'username':self.session['username'],
+			'Module1':self.session['Module1'],
+			'Module2':self.session['Module2']})
+
 
 
 class WithinSubjectHandler(webapp.RequestHandler):
 	def get(self):
 		doRender(self, "within_subject.htm")
 
-			
+	def post(self):
+		self.session = get_current_session()
+		self.session['Module2'] = 'Complete'
+		doRender(self, 'menu.htm',
+			{'username':self.session['username'],
+			'Module1':self.session['Module1'],
+			'Module2':self.session['Module2']})	
 
 		
 
@@ -274,13 +288,15 @@ class LoginHandler(webapp.RequestHandler):
 					else:
 						self.session['Logged_In'] = True 
 						doRender(self, 'menu.htm',
-							{'username':username,
+							{'username':self.session['username'],
 							'Module1':self.session['Module1'],
 							'Module2':self.session['Module2']})
 				else:
 					doRender(self, 'loginfailed.htm')
 
-# Have to link their username to a row in the data, so we can modify that row
+# Right now it has no memory after you logout. Need to link to the row in the datastore so it will:
+	# 1. Reject your new account if the name is taken.
+	# 2. Remember which of the modules you have completed when you come back.
 
 
 
