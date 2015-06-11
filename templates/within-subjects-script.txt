@@ -1,3 +1,11 @@
+Cover story ideas: 
+	Calorie counting vs no counting, DV is body weight
+		(have to have random assignment in the between subjects scenario)
+Other notes:
+	Compare pre-post to other pre-post where the means of the groups themselves are the same, but for one it improves for every person (parallelish lines) and the other it doesn't (tangled lines). Also compare the former to post only. (Not sure which one to do first, Ben thinks the post only comparison first because it's easier.)
+		Datasets for these comparisons generated when ppts press a button (should also do a t test for them). Should let them do this as many times as they want. 
+
+
 NOTE: I chose this example because it was slightly silly and therefore (hopefully) engaging. We can change it if it doesn't make sense (or if it's TOO silly).
 
 Page 1
@@ -60,7 +68,10 @@ We might be able to control for these differences if we tested both groups befor
 
 (Button to switch graphic to a pre-post version). 
 
-Imagine that instead of restaurants serving pancakes, we have people 
+Using this kind of comparison, which is closer to Source 2 from before (maybe we could have the actual text from Sources 1 and 2 come up if you hover over the words "Source 1" or "Source 2"?), we can control for the kind of confound that we saw earlier with the vegan food example. Instead of comparing the mean of the pancake group with the mean of the non-pancake group, we're comparing the mean difference in popularity from timepoint 1 to timepoint 2. If we see a larger increase in the pancake group than in the non-pancake group, we infer that pancakes were the cause of the increase. 
+
+Question: While this feels like an improvement over the group comparisons in Source 1, which of these is one possible problem? (multiple choice)
+	
 
 
 
