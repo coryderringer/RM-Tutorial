@@ -140,86 +140,20 @@ class SignupHandler(webapp.RequestHandler):
 			self.session['Module2']  	= 'Incomplete'
 			self.session['Logged_In']	= True
 
-			doRender(self, 'congratulations.htm')
+			doRender(self, 'menu.htm')
 
-
+class MenuHandler
 
 
 			
 
-			# #This is how we send user's data to datastore
-			# newuser = User(usernum=usernum,
-	  #           username=self.request.get('username'),
-	  #           password=password1,
-	  #           Module1='Incomplete',
-	  #           Module2='Incomplete');
-
-   #          # dataframe modeling, but I'm not sure what exactly
-	  #       userkey = newuser.put()
-	  #       # this stores the new user in the datastore
-	  #       newuser.put()
-
-			# doRender(self, 'congratulations.htm') # for now
 		
 
 
 
-class InstructionsHandler(webapp.RequestHandler):
-	def get(self):
-		self.session = get_current_session()
-		self.session['practice'] = 0
-		doRender(self, 'instructions.htm')
-
-
-class PracticeHandler(webapp.RequestHandler):
-	def get(self):
-		self.session = get_current_session()
-		
-		
-		self.session['practice'] += 1
-
-		if self.session['practice'] == 1:
-			practice = self.session['practice']
-			doRender(self, 'practice.htm',
-			{'practice':practice})
-		else:
-			# Make the data for the practice session:
-
-			#placeholder data, 6th row is order within the dataset (1-14)
-			CurrentData = [[0,0,0,0,0]] * 14
-
-			# Open the csv file, read in the appropriate data for this scenario
-			f = open('practicedata.csv', 'rU')
-			mycsv = csv.reader(f)
-			mycsv = list(mycsv)   
-
-			for x in range(0,7):
-				CurrentData[x] = [int(mycsv[x][0]), int(mycsv[x][1]), int(mycsv[x][2]), int(mycsv[x][3]), int(mycsv[x][4])]
 
 
 
-			doRender(self, 'practice2.htm',
-					{'CurrentData':CurrentData})
-
-	def post(self):
-
-		self.session=get_current_session()
-		PJs = self.request.get('PJInput')
-		PJs = map(int, PJs.split(","))
-
-		PracticeArray = self.request.get('PracticeArrayInput')
-		PracticeArray = map(int, PracticeArray.split(","))
-
-		newinput = PracticeData(user=self.session['userkey'],
-			usernum=self.session['usernum'],
-			PJs = PJs,
-			PracticeArray = PracticeArray);
-
-		logging.info(PracticeArray)
-
-		newinput.put();
-
-		doRender(self,'bonus.htm')
 
 
 class DataHandler(webapp.RequestHandler):
@@ -290,7 +224,7 @@ class LoginHandler(webapp.RequestHandler):
 		# If they're logged in, take them to the main menu
 		if 'Logged_In' in self.session:
 			if self.session['Logged_In'] == True:
-				doRender(self, 'congratulations.htm')
+				doRender(self, 'menu.htm')
 			else:
 				doRender(self, 'login.htm')
 		# If they aren't, take them to the login page
@@ -325,8 +259,10 @@ class LoginHandler(webapp.RequestHandler):
 						doRender(self, 'adminview.htm')
 					else:
 						self.session['Logged_In'] = True 
-						doRender(self, 'congratulations.htm',
-							{'username':username})
+						doRender(self, 'menu.htm',
+							{'username':username,
+							'Module1':Module1,
+							'Module2':Module2})
 				else:
 					doRender(self, 'loginfailed.htm')
 
