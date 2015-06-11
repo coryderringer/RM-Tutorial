@@ -163,10 +163,23 @@ class SingleSubjectHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		self.session['Module1'] = 'Complete'
+
+		newinput = User(usernum=self.session['usernum'],
+			username=self.session['username'],
+			password=self.session['password'],
+			Module1=self.session['Module1'],
+			Module2=self.session['Module2']);
+
+		newinput.put();
+		logging.info('Data Added')
+
+
 		doRender(self, 'menu.htm',
 			{'username':self.session['username'],
 			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2']})
+			'Module2':self.session['Module2']})	
+
+		# Need it to replace the data in the datastore instead of just adding another row. Maybe the problem is with the put() function? It does what we need it to do right now, but it would be a pain in the ass to have to delete duplicate rows.
 
 
 
