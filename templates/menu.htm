@@ -8,13 +8,25 @@
 
 
 <div class="pg">
-<h2><center>This page is a placeholder, {{username}}.</center></h2>
+<h2><center>Welcome {{username}}!</center></h2>
 
-<p>You are currently logged in. Would you like to <a href="/logout">log out?</a>
+<p><span id="status_span">Span</span></p>
+
+<center>
+	<form id="Module1_Form" method="get" action="/SingleSubject">
+		<button id="Module1_Button">Button text</button>
+	</form>
+	<br>
+	<form id="Module2_Form" method="get" action="/WithinSubject">
+		<button id="Module2_Button">Button text</button>
+	</form>
+</center>
+
+<p>You are currently logged in. Would you like to <a href="/logout">log out?</a></p>
 
 
 </div>
-{% endblock %}
+
 
 
 
@@ -22,15 +34,43 @@
 
 <script>
 
+// Variables
+var Module1 = '{{Module1}}';
+var Module2 = '{{Module2}}';
 
-var Module1 = {{Module1}};
-var Module2 = {{Module2}};
+function MainDisplay(){
+	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
+		$('#status_span').html('You have not Completed either module yet. What would you like to do?');
+		$('#Module1_Button').html('Begin Single Subject Designs Module');
+		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
+	}else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
 
+		$('#status_span').html('You have Completed Single Subject Module, but not Within-Subjects Module. What would you like to do?');
+		$('#Module1_Button').html('Redo Single Subject Designs Module');
+		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
 
+	}else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
+		$('#status_span').html('You have Completed the Within-Subjects Module, but not the Single Subject Module. What would you like to do?');
+		$('#Module1_Button').html('Begin Single Subject Designs Module');
+		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
 
+	}else if (Module1 == 'Complete' && Module2 == 'Complete'){
+		$('#status_span').html('You have Completed both modules! What would you like to do?');
+		$('#Module1_Button').html('Redo Single Subject Designs Module');
+		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
 
+	}
+	// else{
+	// 	$('#status_span').html('Your "if" statement is broken.');
+	// }
+}
+
+MainDisplay();
 
 
 
 
 </script>
+
+
+{% endblock %}

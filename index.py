@@ -140,10 +140,21 @@ class SignupHandler(webapp.RequestHandler):
 			self.session['Module2']  	= 'Incomplete'
 			self.session['Logged_In']	= True
 
-			doRender(self, 'menu.htm')
+			doRender(self, 'menu.htm',
+				{'username':username,
+				'Module1':self.session['Module1'],
+				'Module2':self.session['Module2']})
 
-class MenuHandler
+class SingleSubjectHandler(webapp.RequestHandler):
 
+	def get(self):
+		doRender(self, "single_subject.htm")
+
+
+
+class WithinSubjectHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, "within_subject.htm")
 
 			
 
@@ -224,7 +235,10 @@ class LoginHandler(webapp.RequestHandler):
 		# If they're logged in, take them to the main menu
 		if 'Logged_In' in self.session:
 			if self.session['Logged_In'] == True:
-				doRender(self, 'menu.htm')
+				doRender(self, 'menu.htm',
+					{'username':self.session['username'],
+					'Module1':self.session['Module1'],
+					'Module2':self.session['Module2']})
 			else:
 				doRender(self, 'login.htm')
 		# If they aren't, take them to the login page
@@ -261,8 +275,8 @@ class LoginHandler(webapp.RequestHandler):
 						self.session['Logged_In'] = True 
 						doRender(self, 'menu.htm',
 							{'username':username,
-							'Module1':Module1,
-							'Module2':Module2})
+							'Module1':self.session['Module1'],
+							'Module2':self.session['Module2']})
 				else:
 					doRender(self, 'loginfailed.htm')
 
@@ -276,8 +290,6 @@ class LoginHandler(webapp.RequestHandler):
 ################################################################################ 
 
 application = webapp.WSGIApplication([
-	('/instructions', InstructionsHandler),
-	('/practice', PracticeHandler),
 	('/data', DataHandler),
 	('/do_not_qualify', DNQHandler),
 	('/scenario', ScenarioHandler),
@@ -285,6 +297,8 @@ application = webapp.WSGIApplication([
 	('/logout', LogoutHandler),
 	('/login', LoginHandler),
 	('/signup', SignupHandler),
+	('/SingleSubject', SingleSubjectHandler),
+	('/WithinSubject', WithinSubjectHandler),
 	('/.*',  LoginHandler)],  #default page
 	debug=True)
 
