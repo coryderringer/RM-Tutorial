@@ -3,7 +3,8 @@ Cover story ideas:
 		(have to have random assignment in the between subjects scenario)
 Other notes:
 	Compare pre-post to other pre-post where the means of the groups themselves are the same, but for one it improves for every person (parallelish lines) and the other it doesn't (tangled lines). Also compare the former to post only. (Not sure which one to do first, Ben thinks the post only comparison first because it's easier.)
-		Datasets for these comparisons generated when ppts press a button (should also do a t test for them). Should let them do this as many times as they want. 
+		Datasets for these comparisons generated when ppts press a button (should also do a t test for them). Should let them do this as many times as they want. Talk them through the reasons the t tests are different, as well as Cohen's d. 
+	T-tests: can do in Javascript somehow, I'm sure (just use like 5 or 6 datapoints on each side)
 
 
 NOTE: I chose this example because it was slightly silly and therefore (hopefully) engaging. We can change it if it doesn't make sense (or if it's TOO silly).
