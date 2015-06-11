@@ -1,0 +1,43 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Login failed!
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center><span id="problemspan">TEST</span></center></h2>
+<br>
+
+<form method="post" action="/signup">
+	Pitt credential <i>(ex: abc12)</i>: <input type="text" name="username"/><br><br>
+	Password: <input type="password" name="password1"/><br><br>
+	Re-type Password: <input type="password" name="password2"/><br><br>
+<input type="submit" value="Submit"/>
+</form>
+
+</div>
+
+
+
+<script>
+
+var problem = '{{problem}}'
+
+// var problem = 'username taken';
+
+if (problem == 'username taken'){
+	$('#problemspan').html('Sorry, this username has been taken!');
+}
+else if(problem == 'password mismatch'){
+	$('#problemspan').html('Your passwords do not match. Please try again.');
+}
+else{
+	$('#problemspan').html('Sorry, there was a problem. Please try again later! If this problem persists, please contact Dr. Rottman.');
+}	
+
+</script>
+
+{% endblock %}

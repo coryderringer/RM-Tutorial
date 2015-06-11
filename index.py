@@ -8,18 +8,11 @@ from google.appengine.api import urlfetch
 
 
 
-LengthOfData=15    
-NumScenarios=4
-
-
-
-
-
-################################################################################
-################################################################################
-######################## Data Classes for Database #############################
-################################################################################
-################################################################################
+###############################################################################
+###############################################################################
+######################## Data Classes for Database ############################
+###############################################################################
+###############################################################################
 
 class User(db.Model):
 	username = 			db.StringProperty()
@@ -52,11 +45,11 @@ def create_or_increment_NumOfUsers():
 
 
 
-################################################################################
-################################################################################
-########################### From Book Don't Touch ##############################
-################################################################################
-################################################################################
+###############################################################################
+###############################################################################
+########################### From Book Don't Touch #############################
+###############################################################################
+###############################################################################
 # One line had to be updated for Python 2.7
 #http://stackoverflow.com/questions/16004135/python-gae-assert-typedata-is-stringtype-write-argument-must-be-string
 # A helper to do the rendering and to add the necessary
@@ -79,15 +72,15 @@ def doRender(handler, tname = 'index.htm', values = { }):
 	return True
 
 
-################################################################################
-################################################################################
-###################### Handlers for Individual Pages ###########################
-################################################################################
-################################################################################
+###############################################################################
+###############################################################################
+###################### Handlers for Individual Pages ##########################
+###############################################################################
+###############################################################################
 
-################################################################################
-############################## ScenarioHandler #################################
-################################################################################
+###############################################################################
+############################## ScenarioHandler ################################
+###############################################################################
 # The main handler for all the "scenarios" (e.g., one patient)
 class ScenarioHandler(webapp.RequestHandler):
 	def get(self):
@@ -99,9 +92,8 @@ class ScenarioHandler(webapp.RequestHandler):
 
 
 
-################################################################################
-############################## Small Handlers ##################################
-################################################################################
+###############################################################################
+############################## Small Handlers ################################################################################################################
 
 class SignupHandler(webapp.RequestHandler):
 	def get(self):
@@ -112,38 +104,56 @@ class SignupHandler(webapp.RequestHandler):
 		username = self.request.get('username')
 		password1 = self.request.get('password1')
 		password2 = self.request.get('password2')
+		exists = 2
 
-		if password1 != password2:
-			doRender(self, 'password_mismatch.htm')
-			# lets them try again
+		logging.info('session variables are in')
+		q3 = db.GqlQuery("SELECT * FROM User " +
+			"WHERE username = :1 AND usernum > :2 ",
+			username, 0)
+		
+		logging.info('datastore is queried')
+		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
+		for p in q3.run(limit=1):
+			# if the username already exists
+			new_username = p.username
+			if username == new_username:
+				exists = 1
+
+		if exists == 1:
+			problem = 'username taken'
+			doRender(self, 'signupfail.htm',
+				{'problem':problem})
 		else:
-			
-			# Create user in dataframe
-			usernum = create_or_increment_NumOfUsers()
-			newuser = User(usernum=usernum, 
-				username=username,
-				password=password1,
-				Module1="Incomplete",
-				Module2="Incomplete");
+			if password1 != password2:
+				problem = 'password mismatch'
+				doRender(self, 'signupfail.htm',
+					{'problem':problem})
+				# lets them try again
+			else:
+				# They're good to go	
+				# Create user in datastore
+				usernum = create_or_increment_NumOfUsers()
+				newuser = User(usernum=usernum, 
+					username=username,
+					password=password1,
+					Module1="Incomplete",
+					Module2="Incomplete");
 
+				newuser.put()
 
-			# dataframe modeling, but I'm not sure what exactly
-			# userkey = newuser.put()
-			newuser.put()
+				# store these variables in the session
+				self.session = get_current_session() 
+				self.session['usernum']    	= usernum
+				self.session['username']   	= username
+				self.session['password']    = password1
+				self.session['Module1']   	= 'Incomplete'
+				self.session['Module2']  	= 'Incomplete'
+				self.session['Logged_In']	= True
 
-			# store these variables in the session
-			self.session=get_current_session() #initialize sessions
-			self.session['usernum']    	= usernum
-			self.session['username']   	= username
-			self.session['password']    = password1
-			self.session['Module1']   	= 'Incomplete'
-			self.session['Module2']  	= 'Incomplete'
-			self.session['Logged_In']	= True
-
-			doRender(self, 'menu.htm',
-				{'username':self.session['username'],
-				'Module1':self.session['Module1'],
-				'Module2':self.session['Module2']})
+				doRender(self, 'menu.htm',
+					{'username':self.session['username'],
+					'Module1':self.session['Module1'],
+					'Module2':self.session['Module2']})
 
 class SingleSubjectHandler(webapp.RequestHandler):
 
@@ -167,6 +177,17 @@ class WithinSubjectHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		self.session['Module2'] = 'Complete'
+		
+		newinput = User(usernum=self.session['usernum'],
+			username=self.session['username'],
+			password=self.session['password'],
+			Module1=self.session['Module1'],
+			Module2=self.session['Module2']);
+
+		newinput.put();
+		logging.info('Data Added')
+
+
 		doRender(self, 'menu.htm',
 			{'username':self.session['username'],
 			'Module1':self.session['Module1'],
@@ -213,9 +234,8 @@ class DNQHandler(webapp.RequestHandler):
 	def get(self):
 		doRender(self, 'do_not_qualify.htm')    
 
-################################################################################
-############################### LogoutHandler ##################################
-################################################################################
+###############################################################################
+############################### LogoutHandler ################################################################################################################
 # This handler is a bit confusing - it has all this code to calculate the
 # correct race number
 
@@ -238,9 +258,8 @@ class LogoutHandler(webapp.RequestHandler):
 
 		
 
-################################################################################
-############################### LoginHandler ###################################
-################################################################################
+###############################################################################
+############################### LoginHandler #################################################################################################################
 	  
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
@@ -262,15 +281,14 @@ class LoginHandler(webapp.RequestHandler):
 
 	def post(self):
 		self.session = get_current_session()
-		username = self.request.get('ID')
+		username = self.request.get('username')
 
-
+		# Query the database for an entry where username is the same name they entered
 		q = db.GqlQuery("SELECT * FROM User " +
 			"WHERE username = :1 AND usernum > :2 ",
 			username, 0)
-			
-		exists = False
 		
+		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
 		for p in q.run(limit=1):
 			if len(p.username) > 0:
 				
@@ -293,17 +311,22 @@ class LoginHandler(webapp.RequestHandler):
 							'Module2':self.session['Module2']})
 				else:
 					doRender(self, 'loginfailed.htm')
+			else:
+				doRender(self, 'loginfailed.htm')
 
 # Right now it has no memory after you logout. Need to link to the row in the datastore so it will:
 	# 1. Reject your new account if the name is taken.
+		# For the Signup handler
+		# DONE
 	# 2. Remember which of the modules you have completed when you come back.
+		# This should fix itself when we log in the datastore that they completed the mission (currently it only stores this in the session).
 
 
 
 		
-################################################################################
-############################### MainAppLoop ####################################
-################################################################################ 
+###############################################################################
+############################### MainAppLoop ###################################
+###############################################################################
 
 application = webapp.WSGIApplication([
 	('/data', DataHandler),
