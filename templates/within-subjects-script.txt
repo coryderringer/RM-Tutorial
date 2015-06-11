@@ -1,4 +1,4 @@
-
+NOTE: I chose this example because it was slightly silly and therefore (hopefully) engaging. We can change it if it doesn't make sense (or if it's TOO silly).
 
 Page 1
 
@@ -12,8 +12,7 @@ Source 2: A local foodie website interviewed the owners of some of the pancake-s
 
 
 
-Which is more compelling to you: Source 1 or Source 2?
-	(multiple choice)
+Question: Which is more compelling to you: Source 1 or Source 2? (multiple choice) 
 	(If they choose source 1:) Well, they are the experts! Most people are actually more convinced by the second form of evidence. Take a minute to try to figure out why they would feel that way.
 
 
@@ -27,4 +26,25 @@ Page 2 (But keep each Source text at the top so they can reference it and we can
 
 The reason most people find Source 2 more convincing is that the comparison is between the same restaurants rather than different ones. Instead of looking at restaurants that serve pancakes and restaurants that don't, Source 2 interviewed owners of restaurants that currently serve pancakes in order to compare the difference between their popularity pre- and post-pancake.
 
-At this point you might be wondering how any of this relates to research methods. Don't worry: we didn't make you hungry for nothing! Underlying the preference for source 2 kinds of comparisons over source 1 kinds of comparisons is the same principle that underlies most of experimental design: the preference for experimental designs that isolate experimental variance. 
+At this point you might be wondering how any of this relates to research methods. Don't worry: we didn't make you hungry for nothing! Underlying the preference for source 2 kinds of comparisons over source 1 kinds of comparisons is the same principle that underlies most of experimental design: the preference for experimental designs that isolate experimental variance. Let's break down what that means.
+
+
+
+Page 3 (with Source text)
+
+First let's think about Source 1. At its core, Source 1 is a comparison between two kinds of restaurants: the kind that serve pancakes and the kind that don't. 
+
+Question: Which of the following could pose a problem for this kind of comparison? (multiple choice, let them guess again if they get it wrong)
+	There could be other differences between pancake and non-pancake restaurants.
+		That's it!
+	We don't know for sure that the restaurants were selected randomly, so they may not be representative of the population of all restaurants. What if this effect only applies to the restaurants in our sample?
+	It's a correlational comparison because we're not actually manipulating the independent variable (pancakes), and correlation doesn't equal causation!
+
+
+
+
+
+
+Page 4 (without Source text)
+
+Imagine that instead of restaurants serving pancakes, we have people 
