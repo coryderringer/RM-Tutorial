@@ -36,15 +36,69 @@ First let's think about Source 1. At its core, Source 1 is a comparison between 
 
 Question: Which of the following could pose a problem for this kind of comparison? (multiple choice, let them guess again if they get it wrong)
 	There could be other differences between pancake and non-pancake restaurants.
-		That's it!
+		That's what we're looking for!
 	We don't know for sure that the restaurants were selected randomly, so they may not be representative of the population of all restaurants. What if this effect only applies to the restaurants in our sample?
+		That's true, but it's also true for Source 2: we didn't randomly select those restaurants either! 
 	It's a correlational comparison because we're not actually manipulating the independent variable (pancakes), and correlation doesn't equal causation!
+		True, but in both cases (Source 1 and Source 2) we're learning about this data secondhand, either from a group or experts or a series of interviews. Even though this isn't an experiment (we can't manipulate the menus at any of the restaurants), there's still a good reason to favor Source 2 over Source 1.
 
 
 
+Page 4 (with Source text)
+
+The key here is that in Source 2 we tend to assume that the restaurants are largely similar from timepoint A (no pancakes) to timepoint B (serving pancakes). By contrast, in Source 1 we're looking at two groups of restaurants, with the only specified connection being that they are "swanky." 
+
+(Button that brings up next <p> as well as the posttest-only graphic with pancake scenario)
+
+If we were to diagram it out, this is what that comparison would look like. Some restaurants serve pancakes, some don't. We compare the mean popularity from each group using a t-test. Pancakes aside, there could be a lot of other differences between the restaurants on the left and on the right. What if more of the pancake restaurants are vegan? In that case, the increased popularity of the pancake group could be due to a **confounding factor**, in this case a surge in the popularity of vegan fare.
 
 
 
-Page 4 (without Source text)
+Page 5 (without Source text but still with the posttest-only graphic)
+
+We might be able to control for these differences if we tested both groups before and after the pancake switch. Instead of only measuring popularity at one time (after half of the restaurants start serving pancakes), we could look at how popular each category was before and after the switch.
+
+(Button to switch graphic to a pre-post version). 
 
 Imagine that instead of restaurants serving pancakes, we have people 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
