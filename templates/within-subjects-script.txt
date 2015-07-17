@@ -7,11 +7,18 @@ Other notes:
 	T-tests: can do in Javascript somehow, I'm sure (just use like 5 or 6 datapoints on each side)
 
 
-NOTE: I chose this example because it was slightly silly and therefore (hopefully) engaging. We can change it if it doesn't make sense (or if it's TOO silly).
 
 Page 1
 
-Before we dive into the tutorial, let's do a brief thought experiment. Imagine you hear about a new trend among swanky restaurants here in Pittsburgh: the most successful restaurants have started putting pancakes on the dinner menu. 
+Imagine you hear about a study being planned at UPMC. The researchers are trying to find out if counting calories leads to weight loss over a 6 month timeframe, but there is disagreement among them as to the best approach to take for this research question. 
+
+Dr. Plotz wants to randomly divide the participants into a control group (who would be told to eat healthy foods) and an experimental group (who would be told to eat healthy foods and count the number of calories they eat). He thinks the best indicator of the effectiveness of calorie counting would be the difference between the group means: if the experimental group weighs less at the end of the 6 months, counting calories is an effective weight loss strategy.
+
+Dr. Bazelon disagrees. She wants to put everyone on two kinds of diet
+
+
+
+
 
 Let's imagine that you hear evidence from two sources supporting the idea that serving pancakes causes restaurants' popularity to increase.
 

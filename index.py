@@ -16,6 +16,8 @@ from google.appengine.api import urlfetch
 
 class User(db.Model):
 	username = 			db.StringProperty()
+	firstname = 		db.StringProperty()
+	lastname = 			db.StringProperty()
 	usernum = 			db.IntegerProperty()
 	password =			db.StringProperty()
 	created =			db.StringProperty()
@@ -102,6 +104,7 @@ class SignupHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		username = self.request.get('username')
+		firstname = self.request.get('firstname')
 		password1 = self.request.get('password1')
 		password2 = self.request.get('password2')
 		exists = 2
@@ -115,8 +118,8 @@ class SignupHandler(webapp.RequestHandler):
 		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
 		for p in q3.run(limit=1):
 			# if the username already exists
-			new_username = p.username
-			if username == new_username:
+			existing_username = p.username
+			if username == existing_username:
 				exists = 1
 
 		if exists == 1:
@@ -135,6 +138,8 @@ class SignupHandler(webapp.RequestHandler):
 				usernum = create_or_increment_NumOfUsers()
 				newuser = User(usernum=usernum, 
 					username=username,
+					firstname=firstname,
+					lastname=self.request.get('lastname'),
 					password=password1,
 					Module1="Incomplete",
 					Module2="Incomplete");
@@ -145,13 +150,14 @@ class SignupHandler(webapp.RequestHandler):
 				self.session = get_current_session() 
 				self.session['usernum']    	= usernum
 				self.session['username']   	= username
+				self.session['firstname']	= firstname
 				self.session['password']    = password1
 				self.session['Module1']   	= 'Incomplete'
 				self.session['Module2']  	= 'Incomplete'
 				self.session['Logged_In']	= True
 
 				doRender(self, 'menu.htm',
-					{'username':self.session['username'],
+					{'firstname':self.session['firstname'],
 					'Module1':self.session['Module1'],
 					'Module2':self.session['Module2']})
 
@@ -267,7 +273,8 @@ class LogoutHandler(webapp.RequestHandler):
 		
 
 ###############################################################################
-############################### LoginHandler #################################################################################################################
+############################### LoginHandler ##################################
+###############################################################################
 	  
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
@@ -290,35 +297,59 @@ class LoginHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		username = self.request.get('username')
+		# password = self.request.get('password')
+		
+
+		q = User.all()
+		q.filter('username =', self.request.get('username'))
+
 
 		# Query the database for an entry where username is the same name they entered
-		q = db.GqlQuery("SELECT * FROM User " +
-			"WHERE username = :1 AND usernum > :2 ",
-			username, 0)
+		# q = db.GqlQuery("SELECT * FROM User " +
+		# 	"WHERE username = :1 AND usernum > :2 ",
+		# 	username, 0)
+
+
+		
 		
 		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
 		for p in q.run(limit=1):
-			if len(p.username) > 0:
+			# I don't know why it does this...
+			if p.username == self.request.get('username'):
 				
-				password = p.password
 				self.session['username'] = username
-				self.session['password'] = password
+				# self.session['password'] = self.request.get(password)
 				self.session['usernum'] = p.usernum
 				self.session['Module1'] = p.Module1
 				self.session['Module2'] = p.Module2
 
-				if password == self.request.get('password'):
-					if username == 'admin':
-						self.session['Logged_In'] = True 
-						doRender(self, 'adminview.htm')
-					else:
-						self.session['Logged_In'] = True 
-						doRender(self, 'menu.htm',
-							{'username':self.session['username'],
-							'Module1':self.session['Module1'],
-							'Module2':self.session['Module2']})
+				# if p.password == self.request.get('password'):
+				# 	if username == 'admin':
+				# 		self.session['Logged_In'] = True 
+				# 		doRender(self, 'adminview.htm')
+				# 	else:
+				# 		self.session['Logged_In'] = True 
+
+				# 		doRender(self, 'menu.htm',
+				# 			{'firstname':self.session['firstname'],
+				# 			'Module1':self.session['Module1'],
+				# 			'Module2':self.session['Module2']})
+				# else:
+				# 	doRender(self, 'loginfailed.htm')
+
+
+				#See if username ane password are getting pulled from DS
+				# if p.password == self.session['password']:
+				if p.password == self.request.get('password'):
+					doRender(self,'menu.htm',
+						{'username':len(p.username),
+						'firstname':p.firstname,
+						'Module1':p.Module1,
+						'Module2':p.Module2,
+						'password':p.password})
 				else:
 					doRender(self, 'loginfailed.htm')
+
 			else:
 				doRender(self, 'loginfailed.htm')
 
