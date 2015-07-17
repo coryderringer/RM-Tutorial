@@ -110,16 +110,18 @@ class SignupHandler(webapp.RequestHandler):
 		exists = 2
 
 		logging.info('session variables are in')
-		q3 = db.GqlQuery("SELECT * FROM User " +
-			"WHERE username = :1 AND usernum > :2 ",
-			username, 0)
+		# q3 = db.GqlQuery("SELECT * FROM User " +
+		# 	"WHERE username = :1 AND usernum > :2 ",
+		# 	username, 0)
 		
+		q3 = db.Query(User)
+		q3.filter('username =', username)
+
 		logging.info('datastore is queried')
 		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
 		for p in q3.run(limit=1):
 			# if the username already exists
-			existing_username = p.username
-			if username == existing_username:
+			if username == p.username:
 				exists = 1
 
 		if exists == 1:
@@ -297,59 +299,45 @@ class LoginHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		username = self.request.get('username')
-		# password = self.request.get('password')
+		password = self.request.get('password')
 		
-
-		q = User.all()
-		q.filter('username =', self.request.get('username'))
-
 
 		# Query the database for an entry where username is the same name they entered
 		# q = db.GqlQuery("SELECT * FROM User " +
 		# 	"WHERE username = :1 AND usernum > :2 ",
 		# 	username, 0)
 
+		q = db.Query(User)
+		q.filter('username =', username)
 
-		
-		
+
+
+		# IT WON'T RECOGNIZE WHEN YOU PUT IN AN UNFAMILIAR USERNAME. GODDAMNIT.
+
 		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
 		for p in q.run(limit=1):
-			# I don't know why it does this...
-			if p.username == self.request.get('username'):
+			# If the password they entered matches the password for entry p
+			if username == p.username:
+				if password == p.password:
+					match = True
 				
-				self.session['username'] = username
-				# self.session['password'] = self.request.get(password)
-				self.session['usernum'] = p.usernum
-				self.session['Module1'] = p.Module1
-				self.session['Module2'] = p.Module2
+				if match:
+					# Store these variables in the session
+					self.session['username'] = p.username
+					self.session['firstname'] = p.firstname
+					self.session['usernum'] = p.usernum
+					self.session['Module1'] = p.Module1
+					self.session['Module2'] = p.Module2
 
-				# if p.password == self.request.get('password'):
-				# 	if username == 'admin':
-				# 		self.session['Logged_In'] = True 
-				# 		doRender(self, 'adminview.htm')
-				# 	else:
-				# 		self.session['Logged_In'] = True 
-
-				# 		doRender(self, 'menu.htm',
-				# 			{'firstname':self.session['firstname'],
-				# 			'Module1':self.session['Module1'],
-				# 			'Module2':self.session['Module2']})
-				# else:
-				# 	doRender(self, 'loginfailed.htm')
-
-
-				#See if username ane password are getting pulled from DS
-				# if p.password == self.session['password']:
-				if p.password == self.request.get('password'):
+					
 					doRender(self,'menu.htm',
-						{'username':len(p.username),
+						{'username':p.username,
 						'firstname':p.firstname,
 						'Module1':p.Module1,
 						'Module2':p.Module2,
 						'password':p.password})
 				else:
-					doRender(self, 'loginfailed.htm')
-
+					doRender(self,'loginfailed.htm')
 			else:
 				doRender(self, 'loginfailed.htm')
 
