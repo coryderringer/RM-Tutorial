@@ -26,19 +26,10 @@ Re-type Password: <input type="password" name="password2"/><br><br>
 
 <script>
 
-var problem = '{{problem}}'
-
+$('#problemspan').html('{{error}}')
 // var problem = 'username taken';
 
-if (problem == 'username taken'){
-	$('#problemspan').html('Sorry, this username has been taken!');
-}
-else if(problem == 'password mismatch'){
-	$('#problemspan').html('Your passwords do not match. Please try again.');
-}
-else{
-	$('#problemspan').html('Sorry, there was a problem. Please try again later! If this problem persists, please contact Dr. Rottman.');
-}	
+
 
 </script>
 

@@ -20,7 +20,6 @@ class User(db.Model):
 	lastname = 			db.StringProperty()
 	usernum = 			db.IntegerProperty()
 	password =			db.StringProperty()
-	created =			db.StringProperty()
 	Module1 =			db.StringProperty()
 	Module2 = 			db.StringProperty()
 
@@ -109,59 +108,58 @@ class SignupHandler(webapp.RequestHandler):
 		password2 = self.request.get('password2')
 		exists = 2
 
-		logging.info('session variables are in')
-		# q3 = db.GqlQuery("SELECT * FROM User " +
-		# 	"WHERE username = :1 AND usernum > :2 ",
-		# 	username, 0)
-		
-		q3 = db.Query(User)
-		q3.filter('username =', username)
+		if username == '' or firstname == '' or password1 == '' or password2 == '':
+			doRender(self,
+				'signupfail.htm',
+				{'error': 'Please fill in all fields.'})
+		# this keeps it from continuing with the rest of the handler if the "if" condition is met
+			return
 
-		logging.info('datastore is queried')
-		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
-		for p in q3.run(limit=1):
-			# if the username already exists
-			if username == p.username:
-				exists = 1
+		# Check whether user already exists
+		que = db.Query(User)
+		que = que.filter('username =', username)
+		results = que.fetch(limit=1)
 
-		if exists == 1:
-			problem = 'username taken'
-			doRender(self, 'signupfail.htm',
-				{'problem':problem})
-		else:
-			if password1 != password2:
-				problem = 'password mismatch'
-				doRender(self, 'signupfail.htm',
-					{'problem':problem})
-				# lets them try again
-			else:
-				# They're good to go	
-				# Create user in datastore
-				usernum = create_or_increment_NumOfUsers()
-				newuser = User(usernum=usernum, 
-					username=username,
-					firstname=firstname,
-					lastname=self.request.get('lastname'),
-					password=password1,
-					Module1="Incomplete",
-					Module2="Incomplete");
+		if len(results) > 0:
+			doRender(self,
+				'signupfail.htm',
+				{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
+			return
 
-				newuser.put()
+		if password1 != password2:
+			doRender(self,
+				'signupfail.htm',
+				{'error': 'Passwords do not match.'})
+			return
 
-				# store these variables in the session
-				self.session = get_current_session() 
-				self.session['usernum']    	= usernum
-				self.session['username']   	= username
-				self.session['firstname']	= firstname
-				self.session['password']    = password1
-				self.session['Module1']   	= 'Incomplete'
-				self.session['Module2']  	= 'Incomplete'
-				self.session['Logged_In']	= True
+		# Create User object and log the user in
+		usernum = create_or_increment_NumOfUsers()
+		newuser = User(usernum=usernum, 
+			username=username,
+			firstname=firstname,
+			lastname=self.request.get('lastname'),
+			password=password1,
+			Module1="Incomplete",
+			Module2="Incomplete");
 
-				doRender(self, 'menu.htm',
-					{'firstname':self.session['firstname'],
-					'Module1':self.session['Module1'],
-					'Module2':self.session['Module2']})
+		newuser.put();
+
+		# store these variables in the session
+		self.session = get_current_session() 
+		self.session['usernum']    	= usernum
+		self.session['username']   	= username
+		self.session['firstname']	= firstname
+		self.session['password']    = password1
+		self.session['Module1']   	= 'Incomplete'
+		self.session['Module2']  	= 'Incomplete'
+		self.session['Logged_In']	= True
+
+		doRender(self, 'menu.htm',
+			{'username': self.session['username'],
+			'password': self.session['password'],
+			'firstname':self.session['firstname'],
+			'Module1':self.session['Module1'],
+			'Module2':self.session['Module2']})
 
 class SingleSubjectHandler(webapp.RequestHandler):
 
@@ -172,20 +170,25 @@ class SingleSubjectHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		self.session['Module1'] = 'Complete'
 
-		newinput = User(usernum=self.session['usernum'],
-			username=self.session['username'],
-			password=self.session['password'],
-			Module1=self.session['Module1'],
-			Module2=self.session['Module2']);
+		# Query the datastore
+		que = db.Query(User)
 
-		newinput.put();
-		logging.info('Data Added')
+		# find the current user
+		que = que.filter('username =', self.session['username'])
+		results = que.fetch(limit=1)
 
+		# change the datastore result for module 1
+		for i in results:
+			i.Module1 = self.session['Module1']
+			i.put()
+
+		logging.info('Datastore updated')
 
 		doRender(self, 'menu.htm',
 			{'username':self.session['username'],
+			'password':self.session['password'],
 			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2']})	
+			'Module2':self.session['Module2']})
 
 		# Need it to replace the data in the datastore instead of just adding another row. Maybe the problem is with the put() function? It does what we need it to do right now, but it would be a pain in the ass to have to delete duplicate rows.
 
@@ -199,18 +202,23 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		self.session['Module2'] = 'Complete'
 		
-		newinput = User(usernum=self.session['usernum'],
-			username=self.session['username'],
-			password=self.session['password'],
-			Module1=self.session['Module1'],
-			Module2=self.session['Module2']);
+		# Query the datastore
+		que = db.Query(User)
 
-		newinput.put();
-		logging.info('Data Added')
+		# find the current user
+		que = que.filter('username =', self.session['username'])
+		results = que.fetch(limit=1)
 
+		# change the datastore result for module 2
+		for i in results:
+			i.Module2 = self.session['Module2']
+			i.put()
+
+		logging.info('Datastore updated')
 
 		doRender(self, 'menu.htm',
 			{'username':self.session['username'],
+			'password':self.session['password'],
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
@@ -301,45 +309,43 @@ class LoginHandler(webapp.RequestHandler):
 		username = self.request.get('username')
 		password = self.request.get('password')
 		
+		# Check whether user already exists
+		que = db.Query(User)
+		que = que.filter('username =', username)
+		results = que.fetch(limit=1)
 
-		# Query the database for an entry where username is the same name they entered
-		# q = db.GqlQuery("SELECT * FROM User " +
-		# 	"WHERE username = :1 AND usernum > :2 ",
-		# 	username, 0)
+		if len(results) == 0:
+			doRender(self,
+				'loginfailed.htm',
+				{'error': 'This username does not exist'})
+			return
 
-		q = db.Query(User)
-		q.filter('username =', username)
+		que = que.filter('password =', password)
+		results = que.fetch(limit=1)
+
+		if len(results) == 0:
+			doRender(self,
+				'loginfailed.htm',
+				{'error': 'Incorrect password'})
+			return
+
+		for i in results:
+			self.session['username'] = i.username
+			self.session['password'] = i.password
+			self.session['firstname'] = i.firstname
+			self.session['usernum'] = i.usernum
+			self.session['Module1'] = i.Module1
+			self.session['Module2'] = i.Module2
 
 
+		
+		doRender(self,'menu.htm',
+			{'username':self.session['username'],
+			'firstname':self.session['firstname'],
+			'Module1':self.session['Module1'],
+			'Module2':self.session['Module2'],
+			'password':self.session['password']})
 
-		# IT WON'T RECOGNIZE WHEN YOU PUT IN AN UNFAMILIAR USERNAME. GODDAMNIT.
-
-		# p is for "pull": this checks to see if the query gave us anything, and pulls out some data if it did
-		for p in q.run(limit=1):
-			# If the password they entered matches the password for entry p
-			if username == p.username:
-				if password == p.password:
-					match = True
-				
-				if match:
-					# Store these variables in the session
-					self.session['username'] = p.username
-					self.session['firstname'] = p.firstname
-					self.session['usernum'] = p.usernum
-					self.session['Module1'] = p.Module1
-					self.session['Module2'] = p.Module2
-
-					
-					doRender(self,'menu.htm',
-						{'username':p.username,
-						'firstname':p.firstname,
-						'Module1':p.Module1,
-						'Module2':p.Module2,
-						'password':p.password})
-				else:
-					doRender(self,'loginfailed.htm')
-			else:
-				doRender(self, 'loginfailed.htm')
 
 # Right now it has no memory after you logout. Need to link to the row in the datastore so it will:
 	# 1. Reject your new account if the name is taken.
