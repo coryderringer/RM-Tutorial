@@ -155,9 +155,7 @@ class SignupHandler(webapp.RequestHandler):
 		self.session['Logged_In']	= True
 
 		doRender(self, 'menu.htm',
-			{'username': self.session['username'],
-			'password': self.session['password'],
-			'firstname':self.session['firstname'],
+			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})
 
@@ -185,8 +183,7 @@ class SingleSubjectHandler(webapp.RequestHandler):
 		logging.info('Datastore updated')
 
 		doRender(self, 'menu.htm',
-			{'username':self.session['username'],
-			'password':self.session['password'],
+			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})
 
@@ -217,8 +214,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		logging.info('Datastore updated')
 
 		doRender(self, 'menu.htm',
-			{'username':self.session['username'],
-			'password':self.session['password'],
+			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
@@ -294,7 +290,7 @@ class LoginHandler(webapp.RequestHandler):
 		if 'Logged_In' in self.session:
 			if self.session['Logged_In'] == True:
 				doRender(self, 'menu.htm',
-					{'username':self.session['username'],
+					{'firstname':self.session['firstname'],
 					'Module1':self.session['Module1'],
 					'Module2':self.session['Module2']})
 			else:
@@ -306,6 +302,7 @@ class LoginHandler(webapp.RequestHandler):
 
 	def post(self):
 		self.session = get_current_session()
+		
 		username = self.request.get('username')
 		password = self.request.get('password')
 		
@@ -340,11 +337,9 @@ class LoginHandler(webapp.RequestHandler):
 
 		
 		doRender(self,'menu.htm',
-			{'username':self.session['username'],
-			'firstname':self.session['firstname'],
+			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2'],
-			'password':self.session['password']})
+			'Module2':self.session['Module2']})
 
 
 # Right now it has no memory after you logout. Need to link to the row in the datastore so it will:
