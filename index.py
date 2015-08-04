@@ -79,22 +79,7 @@ def doRender(handler, tname = 'index.htm', values = { }):
 ###############################################################################
 ###############################################################################
 
-###############################################################################
-############################## ScenarioHandler ################################
-###############################################################################
-# The main handler for all the "scenarios" (e.g., one patient)
-class ScenarioHandler(webapp.RequestHandler):
-	def get(self):
-		doRender(self, 'scenario.htm')
-	
 
-	def post(self):
-		doRender(self, 'scenario.htm')
-
-
-
-###############################################################################
-############################## Small Handlers ################################################################################################################
 
 class SignupHandler(webapp.RequestHandler):
 	def get(self):
@@ -244,44 +229,12 @@ class DataHandler(webapp.RequestHandler):
 				{'users':users})
 		else:
 			doRender(self, 'dataloginfail.htm')
-
-
-class QualifyHandler(webapp.RequestHandler):
-	def get(self):
-		doRender(self, 'qualify.htm')
-		
-class DNQHandler(webapp.RequestHandler):
-	def get(self):
-		doRender(self, 'do_not_qualify.htm')    
+ 
 
 ###############################################################################
-############################### LogoutHandler ################################################################################################################
-# This handler is a bit confusing - it has all this code to calculate the
-# correct race number
-
-class LogoutHandler(webapp.RequestHandler):
-	
-	def get(self):	
-		self.session = get_current_session()
-		self.session['Logged_In'] = False	
-		# kill all the session stuff that would identify them (username, password, etc)
-		
-		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In']
-
-		for i in sessionlist:
-			if i in self.session:
-				self.session.__delitem__(i)
-
-		# Send them back to the login page
-		doRender(self, 'login.htm')
-
-
-		
-
+############################### Logging In and Out ############################
 ###############################################################################
-############################### LoginHandler ##################################
-###############################################################################
-	  
+
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
@@ -342,13 +295,29 @@ class LoginHandler(webapp.RequestHandler):
 			'Module2':self.session['Module2']})
 
 
-# Right now it has no memory after you logout. Need to link to the row in the datastore so it will:
-	# 1. Reject your new account if the name is taken.
-		# For the Signup handler
-		# DONE
-	# 2. Remember which of the modules you have completed when you come back.
-		# This should fix itself when we log in the datastore that they completed the mission (currently it only stores this in the session).
+class LogoutHandler(webapp.RequestHandler):
+	
+	def get(self):	
+		self.session = get_current_session()
+		self.session['Logged_In'] = False	
+		
+		# kill all the session stuff that would identify them (username, password, etc)
+		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In']
 
+		for i in sessionlist:
+			if i in self.session:
+				self.session.__delitem__(i)
+
+		# Send them back to the login page
+		doRender(self, 'login.htm')
+
+
+		
+
+###############################################################################
+############################### LoginHandler ##################################
+###############################################################################
+	  
 
 
 		
@@ -358,9 +327,6 @@ class LoginHandler(webapp.RequestHandler):
 
 application = webapp.WSGIApplication([
 	('/data', DataHandler),
-	('/do_not_qualify', DNQHandler),
-	('/scenario', ScenarioHandler),
-	('/qualify', QualifyHandler),
 	('/logout', LogoutHandler),
 	('/login', LoginHandler),
 	('/signup', SignupHandler),
