@@ -75,11 +75,13 @@ def doRender(handler, tname = 'index.htm', values = { }):
 
 ###############################################################################
 ###############################################################################
-###################### Handlers for Individual Pages ##########################
+################################## Handlers! ##################################
 ###############################################################################
 ###############################################################################
 
-
+###############################################################################
+############################# Sign Up Page Handler ############################
+###############################################################################
 
 class SignupHandler(webapp.RequestHandler):
 	def get(self):
@@ -105,19 +107,21 @@ class SignupHandler(webapp.RequestHandler):
 		que = que.filter('username =', username)
 		results = que.fetch(limit=1)
 
+		# If the user already exists in the datastore
 		if len(results) > 0:
 			doRender(self,
 				'signupfail.htm',
 				{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
 			return
 
+		# If the two passwords they entered do not match
 		if password1 != password2:
 			doRender(self,
 				'signupfail.htm',
 				{'error': 'Passwords do not match.'})
 			return
 
-		# Create User object and log the user in
+		# Create User object in the datastore
 		usernum = create_or_increment_NumOfUsers()
 		newuser = User(usernum=usernum, 
 			username=username,
@@ -129,7 +133,7 @@ class SignupHandler(webapp.RequestHandler):
 
 		newuser.put();
 
-		# store these variables in the session
+		# store these variables in the session, log user in
 		self.session = get_current_session() 
 		self.session['usernum']    	= usernum
 		self.session['username']   	= username
@@ -143,6 +147,12 @@ class SignupHandler(webapp.RequestHandler):
 			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})
+
+
+
+###############################################################################
+######################### Individual Page Handlers ############################
+###############################################################################
 
 class SingleSubjectHandler(webapp.RequestHandler):
 
@@ -172,7 +182,7 @@ class SingleSubjectHandler(webapp.RequestHandler):
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})
 
-		# Need it to replace the data in the datastore instead of just adding another row. Maybe the problem is with the put() function? It does what we need it to do right now, but it would be a pain in the ass to have to delete duplicate rows.
+		
 
 
 
@@ -203,9 +213,12 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
-		# Need it to replace the data in the datastore instead of just adding another row. Maybe the problem is with the put() function? It does what we need it to do right now, but it would be a pain in the ass to have to delete duplicate rows.
+		
 
 		
+###############################################################################
+######################### Data Display Page Handler ###########################
+###############################################################################
 
 class DataHandler(webapp.RequestHandler):
 	def get(self):
@@ -219,9 +232,9 @@ class DataHandler(webapp.RequestHandler):
 		if password == " ": # just for now
 
 
-			que2=db.Query(User)
-			que2.order("usernum")
-			users=que2.fetch(limit=10000)
+			que=db.Query(User)
+			que.order("usernum")
+			users=que.fetch(limit=10000)
 
 			doRender(
 				self, 
@@ -264,21 +277,25 @@ class LoginHandler(webapp.RequestHandler):
 		que = que.filter('username =', username)
 		results = que.fetch(limit=1)
 
+		# If user does not exist
 		if len(results) == 0:
 			doRender(self,
 				'loginfailed.htm',
 				{'error': 'This username does not exist'})
 			return
 
+		# Check if password matches password entry in datastore
 		que = que.filter('password =', password)
 		results = que.fetch(limit=1)
 
+		# If password mismatch
 		if len(results) == 0:
 			doRender(self,
 				'loginfailed.htm',
 				{'error': 'Incorrect password'})
 			return
 
+		# i is a list object (basically a row of data) in the datastore. This loop saves each relevant piece of info from our query into the session.
 		for i in results:
 			self.session['username'] = i.username
 			self.session['password'] = i.password
@@ -310,14 +327,6 @@ class LogoutHandler(webapp.RequestHandler):
 
 		# Send them back to the login page
 		doRender(self, 'login.htm')
-
-
-		
-
-###############################################################################
-############################### LoginHandler ##################################
-###############################################################################
-	  
 
 
 		
