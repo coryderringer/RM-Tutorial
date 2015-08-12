@@ -213,7 +213,11 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
-		
+
+
+class LineGraphTestHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, "linegraph.htm")
 
 		
 ###############################################################################
@@ -341,6 +345,7 @@ application = webapp.WSGIApplication([
 	('/signup', SignupHandler),
 	('/SingleSubject', SingleSubjectHandler),
 	('/WithinSubject', WithinSubjectHandler),
+	('/LineGraphTest', LineGraphTestHandler),
 	('/.*',  LoginHandler)],  #default page
 	debug=True)
 

@@ -1,0 +1,44 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Line Graph
+{% endblock%}
+
+
+{% block bodycontent %}
+
+
+<div class="pg">
+<h2><center>Line graph (using d3)</center></h2>
+
+<div id="graph"></div>
+
+<script type="text/javascript">
+
+// Set size of graph area
+	var margin = {top: 5, right: 80, bottom: 40, left: 80},
+    	width = 640
+    	height = 500*0.9 - margin.top - margin.bottom;
+
+	var svg = d3.select("#graph").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+
+	svg.append("rect")
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.attr("fill", "pink");
+
+</script>
+
+
+
+
+
+<form method="post" action="/SingleSubject">
+	<button>Complete Module</button>
+</form>
+
+<center>Or <a href="/logout">Logout.</a></center>
+
+</div>
+{% endblock %}
