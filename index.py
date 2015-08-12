@@ -250,7 +250,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 class LineGraphTestHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, "linegraph.htm")
+		doRender(self, "linegraph2.htm")
 
 		
 ###############################################################################
