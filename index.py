@@ -203,25 +203,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		logging.info("checkpoint 1")
 		self.session = get_current_session()
 		self.session['Module2'] = 'Complete'
-		
-		# Query the datastore
-		que = db.Query(User)
-
-		# find the current user
-		que = que.filter('username =', self.session['username'])
-		results = que.fetch(limit=1)
-
-		# change the datastore result for module 2
-		for i in results:
-			i.Module2 = self.session['Module2']
-			i.put()
-
-		logging.info('Datastore updated')
-
-		doRender(self, 'menu.htm',
-			{'firstname':self.session['firstname'],
-			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2']})	
 
 		progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = progress
@@ -233,36 +214,36 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			# Record things from sim 1 
 			doRender(self, "WithinSubjectSim2.htm",
 				{'progress':progress})
-		# elif progress == 5:
-		# 	# Record things from sim 2
-		# 	doRender(self, "WithinSubjectSim1.htm",
-		# 		{'progress':progress})
-		# elif progress == 6:
-		# 	# Record results of final quiz
-		# 	doRender(self, "WithinSubjectSim1.htm",
-		# 		{'progress':progress})
+		elif progress == 5:
+			# Record things from sim 2
+			doRender(self, "WithinSubjectSim1.htm",
+				{'progress':progress})
+		elif progress == 6:
+			# Record results of final quiz
+			doRender(self, "WithinSubjectSim1.htm",
+				{'progress':progress})
 
-		# 	# Record that user completed the module
-		# 	self.session['Module2'] = 'Complete'
+			# Record that user completed the module
+			self.session['Module2'] = 'Complete'
 			
-		# 	# Query the datastore
-		# 	que = db.Query(User)
+			# Query the datastore
+			que = db.Query(User)
 
-		# 	# find the current user
-		# 	que = que.filter('username =', self.session['username'])
-		# 	results = que.fetch(limit=1)
+			# find the current user
+			que = que.filter('username =', self.session['username'])
+			results = que.fetch(limit=1)
 
-		# 	# change the datastore result for module 2
-		# 	for i in results:
-		# 		i.Module2 = self.session['Module2']
-		# 		i.put()
+			# change the datastore result for module 2
+			for i in results:
+				i.Module2 = self.session['Module2']
+				i.put()
 
-		# 	logging.info('Datastore updated')
+			logging.info('Datastore updated')
 
-		# 	doRender(self, 'menu.htm',
-		# 		{'firstname':self.session['firstname'],
-		# 		'Module1':self.session['Module1'],
-		# 		'Module2':self.session['Module2']})	
+			doRender(self, 'menu.htm',
+				{'firstname':self.session['firstname'],
+				'Module1':self.session['Module1'],
+				'Module2':self.session['Module2']})	
 		else:
 			logging.info("something is wrong")
 		
