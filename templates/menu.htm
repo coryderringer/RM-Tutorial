@@ -38,6 +38,10 @@
 var Module1 = '{{Module1}}';
 var Module2 = '{{Module2}}';
 
+// Progress markers so we can use one handler per module with conditional statements. This might slow the program a tiny bit, revisit if it becomes a problem?
+var M1_Progress = 0;
+var M2_Progress = 0;
+
 function MainDisplay(){
 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
 		$('#status_span').html('You have not completed either module yet. What would you like to do?');
@@ -60,9 +64,6 @@ function MainDisplay(){
 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
 
 	}
-	// else{
-	// 	$('#status_span').html('Your "if" statement is broken.');
-	// }
 }
 
 MainDisplay();

@@ -1,0 +1,167 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Within-Subjects Designs
+{% endblock%}
+
+
+{% block bodycontent %}
+
+<!-- Hidden input for the completed data -->
+<form id="dataform" method="post" action="/WithinSubject">
+	<input id="Q1" name="Q1" type="hidden">
+	<input id="Q2" name="Q2" type="hidden">
+	<input id="progressinput" name="progressinput" type="hidden">
+	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
+</form>
+
+<h2><center>Within-Subjects Designs</center></h2>
+
+<div id="Text1" class="pg" style="height:700px">
+	<p>Imagine you hear about a study being planned at your local university. The researchers are trying to find out which of two interventions is more effective for weight loss over a 3-month timespan. We’ll call them the Fruit Condition and the Vegetable Condition:</p>
+
+	<ul>
+		<li>Fruit Condition: Each week, a new basket of fresh fruit is delivered to the participants.</li>
+		<li>Vegetable Condition: Each week, a new basket of fresh vegetables is delivered to the participants.</li>
+	</ul>
+
+	<p>If we want to see which of these interventions is more effective, there are a couple of ways we could go about it.</p>
+
+	<p>First, we could use a between-subjects design. We could randomly divide the participants into two groups: one which gets the Fruit Condition and one which gets the Vegetable Condition. If the experimental group weighs less at the end of 3 months, we would conclude that counting calories is an effective weight loss strategy.</p>
+
+	<p>Alternatively, we could use a within-subjects design. Using this approach, we would put everyone in both conditions at different points in time. Each participant would spend 3 months in the Fruit Condition and 3 months in the Vegetable Condition, randomly assigning each participant on the order of the two conditions. Then we could see if people consistently lose more weight in one condition than in the other.</p>
+	<center>
+		<div class="pg" style="padding:5px;width:350px">
+			<IMG src="/static/images/testimage.png" style="width:300px"></IMG>
+		</div>
+		<br>
+		<button onclick="ProgressFunction()">Next</button>
+	</center>
+</div>
+
+<div id="Quiz1" class="pg" style="visibility:hidden;position:relative;top:-749px">
+	<center>
+		<div class="pg" style="padding:5px;width:350px">
+			<IMG src="/static/images/testimage.png" style="width:300px"></IMG>
+		</div>
+	</center>
+
+	<p>Which approach do you think offers more information about the effectiveness of each intervention?</p>
+	<form id="Q1Answers">
+		<input type="radio" name="q1" value="A" id="q1a"><label for="q1a">The between-subjects design</label><br>
+		<input type="radio" name="q1" value="B" id="q1b"><label for="q1b">The within-subjects design</label><br>
+	</form><br>
+	<button id="AnswerButton1" onclick="RecordQuiz1()">Next</button>
+	<br>
+	<div id="ResponseDiv1" style="visibility:hidden"></div>
+
+</div>
+
+<div id="Text2" class="pg">
+
+<b>Fruit Condition:</b> Each week, a new basket of fresh fruit is delivered to the participants.<br>
+<b>Vegetable Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.<br><br>
+
+<p>The defining feature of within subject designs is that they make a comparison within the same group of subjects rather than between different groups. Instead of looking at subjects in the Fruit Condition and subjects in the Vegetable Condition, we can compare subjects with <i>themselves</i>. Instead of having a dedicated control group, <i>each subject serves as a “control” for him/herself!</i></p>
+<br>
+<div id="Quiz2">
+	<p><b>Which of the following could pose a problem for a between-subjects comparison?</b></p>
+	<form id="Q2Answers">
+		<input type="radio" name="q2" value="A" id="q1a"><label for="q2a">There could be individual differences between the participants within each group.</label><br>
+		<input type="radio" name="q2" value="B" id="q1b"><label for="q2b">We don't know for sure that the subjects were selected randomly from the population, so they may not be representative. What if this effect only applies to the subjects in our sample?</label><br>
+		<input type="radio" name="q2" value="C" id="q1c"><label for="q2c">It's a correlational comparison because we're not actually manipulating the independent variable, and correlation doesn't imply causation!</label><br>
+	</form><br>
+	<button id="AnswerButton2" onclick="RecordQuiz2()">Next</button>
+	<div id="ResponseDiv2" style="visibility:hidden"></div>
+</div>
+
+</div>
+
+<!-- 
+
+<form method="post" action="/WithinSubject">
+	<button>Complete Module</button>
+</form>
+
+<center>Or <a href="/logout">Logout.</a></center>
+ -->
+
+<script>
+
+// Variables
+
+var progress = {{progress}};
+var Q1Outcome = "unanswered";
+var Q2Outcome = "unanswered";
+
+
+// Functions
+
+function ProgressFunction(){
+	progress += 1;
+	if(progress==1){
+		$("#Text1").css("visibility", "hidden");
+		$("#Quiz1").css("visibility", "visible");
+	}else if(progress==2){
+		$('#Text2').css("visibility", "visible");
+	}else{
+		MySubmit();
+	}
+	
+}
+
+function RecordQuiz1(){
+	
+	// Record answer as "Q1Outcome"
+	Q1Outcome =	$('input[name=q1]:checked', '#Q1Answers').val();
+
+	$('#ResponseDiv1').css("visibility", "visible");
+	$('#AnswerButton1').css("visibility", "hidden");
+	
+	if(Q1Outcome == 'A'){
+		$('#ResponseDiv1').html(
+			'<b>Not quite, sorry!</b><br><br>'+
+			'The between subjects approach is a common one in psychological research, however many researchers prefer within subjects designs. The reason is that a within subjects design allows for a direct comparison of the two interventions within the same group individuals. In other words, it eliminates individual differences between participants as a factor that could influence the DV (weight). Let’s examine this a bit closer.<br><br>'+
+			'<button onclick="ProgressFunction()">Next</button>');
+	}else{
+		$('#ResponseDiv1').html(
+			'<b>Correct!</b><br><br>'+
+			'Many researchers would agree that the within subjects design is better. The within subjects design allows for a direct comparison between the two interventions within the same individuals. In other words, it eliminates individual differences between participants as a factor that could influence the DV (weight). Let’s examine this a bit closer.<br><br>'+
+			'<button onclick="ProgressFunction()">Next</button>');
+	}
+}
+
+function RecordQuiz2(){
+
+	// Record answer as "Q2Outcome"
+	Q2Outcome = $('input[name=q2]:checked', '#Q2Answers').val();
+
+	$('#ResponseDiv2').css('visibility', 'visible');
+	$('#AnswerButton2').css('visibility', 'visible');
+
+	if(Q2Outcome == 'A'){
+		$('#ResponseDiv2').html(
+			"That's what we're looking for! In a between subjects design, these individual differences are a mysterious nuisance: they increase the statistical noise in each group and thereby reduce our statistical power. Because within subjects designs essentially use each participant as their own control, the variation between participants in either condition is less important.<br><br>"+
+			"<button onclick='ProgressFunction()'>Next</button>");
+	}else if(Q2Outcome == 'B'){
+		$('#ResponseDiv2').html(
+			"We didn’t specify random selection from the population in either case, so while this isn’t ideal, it affects both designs equally.<br><br>"+
+			"<button onclick='ProgressFunction()'>Next</button>");
+	}else if(Q2Outcome == 'C'){
+		$('#ResponseDiv2').html(
+			"Not quite: our IV is the dietary intervention (Fruit Condition or Vegetable Condition). Since in the between subjects design we randomly assign subjects to one of these, we are directly manipulating the IV. Both designs are experimental rather than correlational.<br><br>"+
+			"<button onclick='ProgressFunction()'>Next</button>");
+	}
+	
+}
+
+function MySubmit(){
+	$("#Q1").val(Q1Outcome);
+	$("#Q2").val(Q2Outcome);
+	$("#progressinput").val(progress);
+	$("#dataform").submit();
+}
+
+
+
+</script>
+{% endblock %}
