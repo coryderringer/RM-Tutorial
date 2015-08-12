@@ -202,7 +202,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 	def post(self):
 		logging.info("checkpoint 1")
 		self.session = get_current_session()
-<<<<<<< HEAD
 		self.session['Module2'] = 'Complete'
 		
 		# Query the datastore
@@ -224,12 +223,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			'Module1':self.session['Module1'],
 			'Module2':self.session['Module2']})	
 
-
-
-class LineGraphTestHandler(webapp.RequestHandler):
-	def get(self):
-		doRender(self, "linegraph.htm")
-=======
 		progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = progress
 		logging.info("Progress: "+str(progress))
@@ -273,7 +266,10 @@ class LineGraphTestHandler(webapp.RequestHandler):
 		else:
 			logging.info("something is wrong")
 		
->>>>>>> edf14cea77b73b2ad8aa858b6e1728561c0c1258
+
+class LineGraphTestHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, "linegraph.htm")
 
 		
 ###############################################################################
