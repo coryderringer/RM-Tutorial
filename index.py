@@ -188,10 +188,21 @@ class SingleSubjectHandler(webapp.RequestHandler):
 
 class WithinSubjectHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, "within_subject.htm")
+		self.session = get_current_session()
+		if self.session['M2_Progress'] == 0:
+			doRender(self, "WithinSubjectIntro.htm",
+				{'progress':self.session['M2_Progress']})
+		elif self.session['M2_Progress'] == 1:
+			doRender(self, "WithinSubjectSim1.htm",
+				{'progress':self.session['M2_Progress']})
+		elif self.session['M2_Progress'] == 2:
+			doRender(self, "WithinSubjectSim2.htm",
+				{'progress':self.session['M2_Progress']})
 
 	def post(self):
+		logging.info("checkpoint 1")
 		self.session = get_current_session()
+<<<<<<< HEAD
 		self.session['Module2'] = 'Complete'
 		
 		# Query the datastore
@@ -218,6 +229,51 @@ class WithinSubjectHandler(webapp.RequestHandler):
 class LineGraphTestHandler(webapp.RequestHandler):
 	def get(self):
 		doRender(self, "linegraph.htm")
+=======
+		progress = int(self.request.get('progressinput'))
+		self.session['M2_Progress'] = progress
+		logging.info("Progress: "+str(progress))
+		if progress == 3:
+			# Record things from intro (answers to questions)
+			doRender(self, "WithinSubjectSim1.htm")
+		elif progress == 4:
+			# Record things from sim 1 
+			doRender(self, "WithinSubjectSim2.htm",
+				{'progress':progress})
+		# elif progress == 5:
+		# 	# Record things from sim 2
+		# 	doRender(self, "WithinSubjectSim1.htm",
+		# 		{'progress':progress})
+		# elif progress == 6:
+		# 	# Record results of final quiz
+		# 	doRender(self, "WithinSubjectSim1.htm",
+		# 		{'progress':progress})
+
+		# 	# Record that user completed the module
+		# 	self.session['Module2'] = 'Complete'
+			
+		# 	# Query the datastore
+		# 	que = db.Query(User)
+
+		# 	# find the current user
+		# 	que = que.filter('username =', self.session['username'])
+		# 	results = que.fetch(limit=1)
+
+		# 	# change the datastore result for module 2
+		# 	for i in results:
+		# 		i.Module2 = self.session['Module2']
+		# 		i.put()
+
+		# 	logging.info('Datastore updated')
+
+		# 	doRender(self, 'menu.htm',
+		# 		{'firstname':self.session['firstname'],
+		# 		'Module1':self.session['Module1'],
+		# 		'Module2':self.session['Module2']})	
+		else:
+			logging.info("something is wrong")
+		
+>>>>>>> edf14cea77b73b2ad8aa858b6e1728561c0c1258
 
 		
 ###############################################################################
@@ -299,6 +355,7 @@ class LoginHandler(webapp.RequestHandler):
 				{'error': 'Incorrect password'})
 			return
 
+
 		# i is a list object (basically a row of data) in the datastore. This loop saves each relevant piece of info from our query into the session.
 		for i in results:
 			self.session['username'] = i.username
@@ -307,6 +364,7 @@ class LoginHandler(webapp.RequestHandler):
 			self.session['usernum'] = i.usernum
 			self.session['Module1'] = i.Module1
 			self.session['Module2'] = i.Module2
+			self.session['M2_Progress'] = 0
 
 
 		
