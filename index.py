@@ -1,4 +1,4 @@
-import os, logging, wsgiref.handlers, datetime, random, math, string, urllib, csv
+import os, logging, wsgiref.handlers, datetime, random, math, string, urllib, csv, json
 
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -72,6 +72,30 @@ def doRender(handler, tname = 'index.htm', values = { }):
 	handler.response.out.write(unicode(outstr))  #### Updated for Python 2.7
 	return True
 
+################################################################################
+################################################################################
+################ Function to read data to show participants ####################
+################################################################################
+################################################################################
+
+def readData(module,stimuli):
+	if module=='test':
+		f = open('test.csv', 'rU')
+	
+	data = csv.reader(f)
+	data = list(data)
+
+	condition = [0]*len(data)
+	x = [0]*len(data)
+	y = [0]*len(data)
+	coord = [0,0]*len(data)
+
+	for i in range(0,len(data)):
+		condition[i] = int(data[i][0])
+		x[i] = float(data[i][1])
+		y[i] = float(data[i][2])
+
+	return condition, x, y
 
 ###############################################################################
 ###############################################################################
@@ -250,7 +274,11 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 class LineGraphTestHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, "linegraph2.htm")
+		# condition, x, y = readData('test',1)
+		doRender(self, 'linegraph2.htm')
+			# {'condition' : condition,
+			# 'x' : x,
+			# 'y' : y})
 
 		
 ###############################################################################

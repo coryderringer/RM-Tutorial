@@ -9,7 +9,13 @@
 
 /// Put variables and data here
 	var lineData = [{x: 1, y: 5}, {x: 20, y: 20}, {x: 40, y: 10}, {x: 60, y: 40}, {x: 80, y: 5}, {x: 100, y: 60}];
-	
+	// var	condition = {{condition}};
+	// var	x = {{x}};
+	// var	y = {{y}};
+
+function randomJitter(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 </script>
 
@@ -18,7 +24,7 @@
 	<br>
 
 	<!-- <div id="graph" width="800" height="800"></div> -->
-	<svg id="graph" width="800" height="500"></svg>
+	<div id="graph" width="900" height="600"></svg>
 
 	<form method="post" action="/SingleSubject">
 		<button>Complete Module</button>
@@ -27,75 +33,317 @@
 	<center>Or <a href="/logout">Logout.</a></center>
 </div>
 
+<style>
+
+	body {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.dot {
+	  stroke: #000;
+	}
+
+</style>
+
 <script type="text/javascript">
 
-		// Set size of graph area
-			// var margin = {top: 5, right: 80, bottom: 40, left: 80},
-		 //    	width = 650
-		 //    	height = 500*0.9 - margin.top - margin.bottom;
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-		// var svg = d3.select("#graph").append("svg")
-		// 			.attr("width", "100%")
-		// 			.attr("height", "100%")
+var x = d3.scale.linear()
+    .range([0, width]);
 
-		// svg.append("rect")
-		// 	.attr("width", "100%")
-		// 	.attr("height", "100%")
-		// 	.attr("fill", "pink");
+var y = d3.scale.linear()
+    .range([height, 0]);
 
-		var vis = d3.select('#graph'),
-	    WIDTH = 800,
-	    HEIGHT = 500,
-	    MARGINS = {
-	      top: 20,
-	      right: 20,
-	      bottom: 20,
-	      left: 50
-	    },
-	    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
-	      return d.x;
-	    }), d3.max(lineData, function(d) {
-	      return d.x;
-	    })]),
-	    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
-	      return d.y;
-	    }), d3.max(lineData, function(d) {
-	      return d.y;
-	    })]),
-	    xAxis = d3.svg.axis()
-	      .scale(xRange)
-	      .tickSize(5)
-	      .tickSubdivide(true),
-	    yAxis = d3.svg.axis()
-	      .scale(yRange)
-	      .tickSize(5)
-	      .orient('left')
-	      .tickSubdivide(true);
+var color = d3.scale.category10();
 
-vis.append('svg:g')
-  .attr('class', 'x axis')
-  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-  .call(xAxis);
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
 
-vis.append('svg:g')
-  .attr('class', 'y axis')
-  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-  .call(yAxis);
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
 
-  var lineFunc = d3.svg.line()
-  .x(function(d) {
-    return xRange(d.x);
-  })
-  .y(function(d) {
-    return yRange(d.y);
-  })
-  .interpolate('linear');
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  vis.append('svg:path')
-  .attr('d', lineFunc(lineData))
-  .attr('stroke', 'blue')
-  .attr('stroke-width', 2)
-  .attr('fill', 'none');
+d3.csv("/static/test.csv", function(error, data) {
+  if (error) throw error;
+
+  data.forEach(function(d) {
+    d.B = +d.B;
+    d.A = +d.A + randomJitter(-0.1,0.1);
+  });
+
+  // x.domain(d3.extent(data, function(d) { return d.A; })).nice();
+  // y.domain(d3.extent(data, function(d) { return d.B; })).nice();
+  x.domain([0,10])
+  y.domain([0,12])
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Time");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("DV")
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.A); })
+      .attr("cy", function(d) { return y(d.B); })
+      .style("fill", function(d) { return color(d.condition); });
+
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+});
+
+
+
+// Defines graph area
+
+//	var svg = d3.select('#graph'),
+// 	var	margin = {top: 20, right: 20, bottom: 20, left: 50},
+// 	    width = 800,
+// 	    height = 500;
+
+// 	var x = d3.scale.linear()
+// 	 	.range([margin.left, width-margin.right]);
+
+// 	var y = d3.scale.linear()
+// 		.range([height-margin.top, margin.bottom]);
+
+// 	var xAxis = d3.svg.axis()
+// 		.scale(x)
+//     	.orient("bottom");
+//     	// .ticks(20);
+    
+// 	var yAxis = d3.svg.axis()
+// 		.scale(y)
+// 	    .orient("left");
+// 	    // .ticks(10);
+
+// 	var svg = d3.select("#graph").append("svg")
+//     	.attr("width", width + margin.left + margin.right)
+//     	.attr("height", height + margin.top + margin.bottom)
+//   		.append("g")
+//     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//     d3.csv('/static/stimuli/test.csv', function(error, data) {
+//   		if (error) throw error;
+
+// 		data.forEach(function(d) {
+//     		d.A = +d.A;
+//     		d.B = +d.B;
+//   		});
+
+//   	x.domain(d3.extent(data, function(d) { return d.A; })).nice();
+//   	y.domain(d3.extent(data, function(d) { return d.B; })).nice();
+
+//   svg.append("g")
+//       .attr("class", "x axis")
+//       .attr("transform", "translate(0," + height + ")")
+//       .call(xAxis)
+//     .append("text")
+//       .attr("class", "label")
+//       .attr("x", width)
+//       .attr("y", -6)
+//       .style("text-anchor", "end")
+//       .text("Sepal Width (cm)");
+
+//   svg.append("g")
+//       .attr("class", "y axis")
+//       .call(yAxis)
+//     .append("text")
+//       .attr("class", "label")
+//       .attr("transform", "rotate(-90)")
+//       .attr("y", 6)
+//       .attr("dy", ".71em")
+//       .style("text-anchor", "end")
+//       .text("Sepal Length (cm)")
+
+//   svg.selectAll(".dot")
+//       .data(data)
+//     .enter().append("circle")
+//       .attr("class", "dot")
+//       .attr("r", 3.5)
+//       .attr("cx", function(d) { return x(d.sepalWidth); })
+//       .attr("cy", function(d) { return y(d.sepalLength); })
+//       .style("fill", function(d) { return color(d.species); });
+
+//   var legend = svg.selectAll(".legend")
+//       .data(color.domain())
+//     .enter().append("g")
+//       .attr("class", "legend")
+//       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+//   legend.append("rect")
+//       .attr("x", width - 18)
+//       .attr("width", 18)
+//       .attr("height", 18)
+//       .style("fill", color);
+
+//   legend.append("text")
+//       .attr("x", width - 24)
+//       .attr("y", 9)
+//       .attr("dy", ".35em")
+//       .style("text-anchor", "end")
+//       .text(function(d) { return d; });
+
+// });
+
+
+// 	svg.append('circle')
+// 		.attr('cx',20)
+// 		.attr('cy',20)
+// 		.attr('r',50);
+
+// Read data
+
+	// d3.csv('/static/stimuli/test.csv', function(error, data) {
+ //    	data.forEach(function(d) {
+ //        	d.condition = +d.condition;
+ //        	d.x = +d.x;
+ //        	d.y = +d.y;
+ //    	});
+
+	// svg.append('circle')
+	// 	.attr('r',5)
+	// 	.attr('cx', function(d) { return x(d.x); })
+	// 	.attr('cy', function(d) { return y(d.y); });
+
+ //    });
+
+
+
+// var xAxis = d3.svg.axis().scale(x);
+//     // .orient("bottom")
+//     // .ticks(20);
+    
+// var yAxis = d3.svg.axis().scale(y)
+//     .orient("left")
+//     .ticks(10);
+
+	// Read data
+
+	// d3.csv('/static/test.csv', function(error, data) {
+ //    	data.forEach(function(d) {
+ //        	d.condition = +d.condition;
+ //        	d.x = +d.x;
+ //        	d.y = +d.y;
+ //    });
+
+	// var points = d3.select('#graph')
+	// 				.append('circle')
+	// 				.data(x)
+
+// 	var vis = d3.select('#graph'),
+// 	    width = 800,
+// 	    height = 500,
+// 	    margins = {
+// 	      top: 20,
+// 	      right: 20,
+// 	      bottom: 20,
+// 	      left: 50
+// 	    };
+	
+// 	var xRange = d3.scale.linear().range([margins.left, width - margins.right])
+
+
+// 				.domain([d3.min(lineData, function(d) {
+// 	      return d.x;
+// 	    }), d3.max(lineData, function(d) {
+// 	      return d.x;
+// 	    })]),
+
+// 	yRange = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([d3.min(lineData, function(d) {
+// 	      return d.y;
+// 	    }), d3.max(lineData, function(d) {
+// 	      return d.y;
+// 	    })]),
+	
+// 	xAxis = d3.svg.axis()
+// 	      .scale(xRange)
+// 	      .tickSize(5)
+// 	      .tickSubdivide(true),
+	
+// 	yAxis = d3.svg.axis()
+// 	      .scale(yRange)
+// 	      .tickSize(5)
+// 	      .orient('left')
+// 	      .tickSubdivide(true);
+
+// vis.append('svg:g')
+//   .attr('class', 'x axis')
+//   .attr('transform', 'translate(0,' + (height - margins.bottom) + ')')
+//   .call(xAxis);
+
+// vis.append('svg:g')
+//   .attr('class', 'y axis')
+//   .attr('transform', 'translate(' + (margins.left) + ',0)')
+//   .call(yAxis);
+
+//   var lineFunc = d3.svg.line()
+//   .x(function(d) {
+//     return xRange(d.x);
+//   })
+//   .y(function(d) {
+//     return yRange(d.y);
+//   })
+//   .interpolate('linear');
+
+//   vis.append('svg:path')
+//   .attr('d', lineFunc(lineData))
+//   .attr('stroke', 'blue')
+//   .attr('stroke-width', 2)
+//   .attr('fill', 'none');
 
 </script>
 {% endblock %}
