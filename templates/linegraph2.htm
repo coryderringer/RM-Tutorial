@@ -12,6 +12,7 @@
 	var	yLabel = "Accuracy",
 		condLabel = "Exercise routine",
 		xLabel = "Time (minutes)",
+		covariate = "Arousal"
 		xMax = 20,
 		yMax = 14;
 
@@ -94,9 +95,19 @@ var svg = d3.select("#graph").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var line = d3.svg.line()
-	.interpolate("basis")
+	.interpolate("cardinal")
     .x(function(d) { return x(d.t); })
     .y(function(d) { return y(d.measure); });
+
+// Sets attributes of blockers
+
+var lineBlockerAttr = new Object();
+	lineBlockerAttr.x=0;
+	lineBlockerAttr.y=0;
+
+var pointBlockerAttr = new Object();
+	pointBlockerAttr.x=width/2;
+	pointBlockerAttr.y=0;
 
 // Reads data from .csv file
 
@@ -113,6 +124,49 @@ d3.csv("/static/test.csv", function(error, data) {
   	// y.domain(d3.extent(data, function(d) { return d.B; })).nice();
   	x.domain([0,xMax+1]);
   	y.domain([0,yMax])
+
+    // Appends line
+
+    svg.append("path")
+    	.attr("class", "line")
+    	.style("stroke", "red")
+    	.style("stroke-dasharray", "10, 5")
+    	.style("opacity", 1)
+        .attr("d", line(data));
+
+    // Append line blocker
+
+	var lineBlocker = svg.append("rect")
+		.attr("width", width/2)
+		.attr("height", height)
+		.attr("x", function(d) {return lineBlockerAttr.x;})
+		.attr("y", function(d) {return lineBlockerAttr.y;})
+		.style("fill", "pink")
+		.style("opacity", 0.2);
+
+    // Appends points
+
+  	svg.selectAll(".dot")
+      	.data(data)
+   	.enter().append("circle")
+      	.attr("class", "dot")
+      	.attr("r", 3.5)
+      	.attr("cx", function(d) { return x(d.iv); })
+      	.attr("cy", function(d) { return y(d.dv); })
+      	.style("fill", function(d) { return color(d.condition); })
+      	.style("opacity", 1);
+
+    // Append point blocker
+
+    var pointBlocker = svg.append("rect")
+		.attr("width", width/2)
+		.attr("height", height)
+		.attr("x", function(d) {return pointBlockerAttr.x;})
+		.attr("y", function(d) {return pointBlockerAttr.y;})
+		.style("fill", "cyan")
+		.style("opacity", 0.2);
+
+    // Appends axes
 
   	svg.append("g")
     	.attr("class", "x axis")
@@ -136,25 +190,6 @@ d3.csv("/static/test.csv", function(error, data) {
     	.style("text-anchor", "end")
     	.text(yLabel)
 
-    // Appends points
-
-  	svg.selectAll(".dot")
-      	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return x(d.iv); })
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); });
-
-    // Appends line
-
-    svg.append("path")
-    	.attr("class", "line")
-    	.style("stroke", "red")
-    	.style("stroke-dasharray", "10, 5")
-        .attr("d", line(data));
-
     // Appends legend
 
   	var legend = svg.selectAll(".legend")
@@ -175,6 +210,20 @@ d3.csv("/static/test.csv", function(error, data) {
       	.attr("dy", ".35em")
       	.style("text-anchor", "end")
       	.text(function(d) { return d; });
+
+    svg.append("rect")
+    	.attr("x", width - 18)
+    	.attr("y", 50)
+      	.attr("width", 18)
+      	.attr("height", 2)
+      	.style("fill", "red");
+
+    svg.append("text")
+      	.attr("x", width - 24)
+      	.attr("y", 50)
+      	.attr("dy", ".35em")
+      	.style("text-anchor", "end")
+      	.text(covariate);
 
 });
 
