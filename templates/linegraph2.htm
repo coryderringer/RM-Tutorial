@@ -7,11 +7,15 @@
 
 <script type="text/javascript">
 
-/// Put variables and data here
-	var lineData = [{x: 1, y: 5}, {x: 20, y: 20}, {x: 40, y: 10}, {x: 60, y: 40}, {x: 80, y: 5}, {x: 100, y: 60}];
-	// var	condition = {{condition}};
-	// var	x = {{x}};
-	// var	y = {{y}};
+/// Name variables here
+	
+	var	yLabel = "Accuracy",
+		condLabel = "Exercise routine",
+		xLabel = "Time (minutes)",
+		xMax = 20,
+		yMax = 14;
+
+
 
 function randomJitter(min, max) {
   return Math.random() * (max - min) + min;
@@ -21,9 +25,9 @@ function randomJitter(min, max) {
 
 <div class="pg">
 	<h2><center>Line graph (using d3)</center></h2>
+	
 	<br>
 
-	<!-- <div id="graph" width="800" height="800"></div> -->
 	<div id="graph" width="900" height="600"></svg>
 
 	<form method="post" action="/SingleSubject">
@@ -36,7 +40,7 @@ function randomJitter(min, max) {
 <style>
 
 	body {
-	  font: 10px sans-serif;
+	  font: 14px sans-serif;
 	}
 
 	.axis path,
@@ -50,13 +54,21 @@ function randomJitter(min, max) {
 	  stroke: #000;
 	}
 
+	path { 
+	    stroke: steelblue;
+	    stroke-width: 2;
+	    fill: none;
+	}
+
 </style>
 
 <script type="text/javascript">
 
+// Sets dimensions of graph and axes
+
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
     .range([0, width]);
@@ -68,80 +80,101 @@ var color = d3.scale.category10();
 
 var xAxis = d3.svg.axis()
     .scale(x)
-    .orient("bottom");
+    .orient("bottom")
+    .ticks(xMax/2);
 
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#graph").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var line = d3.svg.line()
+	.interpolate("basis")
+    .x(function(d) { return x(d.t); })
+    .y(function(d) { return y(d.measure); });
+
+// Reads data from .csv file
+
 d3.csv("/static/test.csv", function(error, data) {
-  if (error) throw error;
+  	if (error) throw error;
 
-  data.forEach(function(d) {
-    d.B = +d.B;
-    d.A = +d.A + randomJitter(-0.1,0.1);
-  });
+  	data.forEach(function(d) {
+    	d.iv = +d.iv + randomJitter(-0.1,0.1);
+    	d.dv = +d.dv;
+    	d.t = +d.t;
+  	});
 
-  // x.domain(d3.extent(data, function(d) { return d.A; })).nice();
-  // y.domain(d3.extent(data, function(d) { return d.B; })).nice();
-  x.domain([0,10])
-  y.domain([0,12])
+  	// x.domain(d3.extent(data, function(d) { return d.A; })).nice();
+  	// y.domain(d3.extent(data, function(d) { return d.B; })).nice();
+  	x.domain([0,xMax+1]);
+  	y.domain([0,yMax])
 
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
+  	svg.append("g")
+    	.attr("class", "x axis")
+      	.attr("transform", "translate(0," + height + ")")
+      	.call(xAxis)
     .append("text")
-      .attr("class", "label")
-      .attr("x", width)
-      .attr("y", -6)
-      .style("text-anchor", "end")
-      .text("Time");
+    	.attr("class", "label")
+    	.attr("x", width)
+    	.attr("y", -6)
+    	.style("text-anchor", "end")
+    	.text(xLabel);
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("DV")
+  	svg.append("g")
+      	.attr("class", "y axis")
+      	.call(yAxis)
+   	.append("text")
+    	.attr("class", "label")
+    	.attr("transform", "rotate(-90)")
+    	.attr("y", 6)
+    	.attr("dy", ".71em")
+    	.style("text-anchor", "end")
+    	.text(yLabel)
 
-  svg.selectAll(".dot")
-      .data(data)
-    .enter().append("circle")
-      .attr("class", "dot")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.A); })
-      .attr("cy", function(d) { return y(d.B); })
-      .style("fill", function(d) { return color(d.condition); });
+    // Appends points
 
-  var legend = svg.selectAll(".legend")
-      .data(color.domain())
+  	svg.selectAll(".dot")
+      	.data(data)
+   	.enter().append("circle")
+      	.attr("class", "dot")
+      	.attr("r", 3.5)
+      	.attr("cx", function(d) { return x(d.iv); })
+      	.attr("cy", function(d) { return y(d.dv); })
+      	.style("fill", function(d) { return color(d.condition); });
+
+    // Appends line
+
+    svg.append("path")
+    	.attr("class", "line")
+    	.style("stroke", "red")
+    	.style("stroke-dasharray", "10, 5")
+        .attr("d", line(data));
+
+    // Appends legend
+
+  	var legend = svg.selectAll(".legend")
+      	.data(color.domain())
     .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+      	.attr("class", "legend")
+      	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-  legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
+  	legend.append("rect")
+      	.attr("x", width - 18)
+      	.attr("width", 18)
+      	.attr("height", 18)
+      	.style("fill", color);
 
-  legend.append("text")
-      .attr("x", width - 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .style("text-anchor", "end")
-      .text(function(d) { return d; });
+  	legend.append("text")
+      	.attr("x", width - 24)
+      	.attr("y", 9)
+      	.attr("dy", ".35em")
+      	.style("text-anchor", "end")
+      	.text(function(d) { return d; });
 
 });
 
