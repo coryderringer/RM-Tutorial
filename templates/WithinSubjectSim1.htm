@@ -14,52 +14,60 @@
 </form>
 
 
-<div class="pg" style="height:650px">
-	<div id="Sim1">
+<div class="pg">
+	<center>
 		<div id="firstrow">
-			<div id="between1" class="pg" style="position:relative;left:-220px;padding:5px;width:200px">
+			<div id="between1" style="display:inline-block;margin-right:100px">
+				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
 					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
+				</div>
+				<div id="ttest1" class="ttest">
+					<span id="tspan1">t=1.00</span><br>
+					<span id="pspan1">p=.50</span><br>
+					<span id="dspan1">d=0.10</span><br>
+				</div>
 			</div>
-			<div id="ttest1" style="position:relative;left:230px;top:-120px;visibility:hidden">
-				<span id="tspan1">t=1.00</span><br>
-				<span id="pspan1">p=.50</span><br>
-				<span id="dspan1">d=0.10</span><br>
-			</div>
-
 			
-			<div id="within1" class="pg" style="position:relative;left:130px;top:-230px;padding:5px;width:200px">
-				<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
-			</div>
-			<div id="ttest2" style="position:relative;left:580px;top:-350px;visibility:hidden">
-				<!-- 580 left -350 top -->
-				<span id="tspan2">t=1.00</span><br>
-				<span id="pspan2">p=.50</span><br>
-				<span id="dspan2">d=0.10</span><br>
-			</div>
-		</div>
-
-		<div id="secondrow" style="position:relative;top:-230px;visibility:hidden">
-			<div id="between2" class="pg" style="position:relative;left:-220px;padding:5px;width:200px">
-				<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
-			</div>
-			<div id="ttest3" style="position:relative;left:230px;top:-120px">
-				<span id="tspan3">t=1.00</span><br>
-				<span id="pspan3">p=.50</span><br>
-				<span id="dspan3">d=0.10</span><br>
-			</div>
-		
-			<div id="within2" class="pg" style="position:relative;left:130px;top:-230px;padding:5px;width:200px">
+			<div id="within1" style="display:inline-block">
+				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
 					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
-			</div>
-			<div id="ttest4" style="position:relative;left:580px;top:-350px">
-				<span id="tspan4">t=1.00</span><br>
-				<span id="pspan4">p=.50</span><br>
-				<span id="dspan4">d=0.10</span><br>
+				</div>
+				<div id="ttest2" class="ttest">
+					<span id="tspan2">t=1.00</span><br>
+					<span id="pspan2">p=.50</span><br>
+					<span id="dspan2">d=0.10</span><br>
+				</div>
 			</div>
 		</div>
-	</div>
+		<br>
 
-	<div id="Text1" style="position:relative;top:-750px">
+		<div id="secondrow" style="display:none">
+			<div id="between2" style="display:inline-block;margin-right:100px">
+				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
+					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
+				</div>
+				<div id="ttest3" class="ttest">
+					<span id="tspan1">t=1.00</span><br>
+					<span id="pspan1">p=.50</span><br>
+					<span id="dspan1">d=0.10</span><br>
+				</div>
+			</div>
+			
+			<div id="within2" style="display:inline-block">
+				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
+					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
+				</div>
+				<div id="ttest4" class="ttest">
+					<span id="tspan2">t=1.00</span><br>
+					<span id="pspan2">p=.50</span><br>
+					<span id="dspan2">d=0.10</span><br>
+				</div>
+			</div>
+		</div>
+	</center>	
+	<br>
+
+	<div id="Text1">
 		<p>To expand on this point, let's look at what each design is actually comparing between the two conditions. On the left we have a between-subjects approach and on the right we have the same datapoints collected in a within-subjects design.</p>
 
 		<div id="Quiz3">
@@ -72,13 +80,14 @@
 			</form><br>
 			<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
 			<br>
-			<div id="ResponseDiv3" style="visibility:hidden"></div>
+			<div id="ResponseDiv3" style=""></div>
 		</div>
 	</div>
-	<button id="ResampleButton" style="width:100px;position:relative;visibility:hidden"></button>
-	<center>
-		<button id="NextButton" style="width:100px;position:relative;visibility:hidden" onclick="MySubmit()">Continue</button>
-	</center>
+	<br>
+	<button id="ResampleButton" style="width:100px;display:none">Resample</button>
+	
+	<button id="NextButton" style="width:100px;display:none">Continue</button>
+	
 	<!-- Not sure where this should go on the page -->
 
 </div>
@@ -89,72 +98,76 @@
 
 
 
-var Q3Outcome = "unanswered";
+var Q3Outcome = 'unanswered';
 var datasets = 1;
+var progress = {{progress}}
 
 function ButtonShow(){
-	$("#AnswerButton3").show();
+	$('#AnswerButton3').show();
 }
 
 function RecordQuiz3(){
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();
-	$("#ResampleButton").css("visibility", "visible");
-	$("#ResampleButton").css("top", "-700px");
-	$("#ResampleButton").html('Next');
-	$("#ResampleButton").click(function(){
-		$("#ttest1").css("visibility", "visible");
-		$("#ttest2").css("visibility", "visible");
-		$("#secondrow").css("visibility", "visible");
-		$("#Text1").css("top", "-480px");
-		$("#Text1").html(
-			"Here we can see that the between subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within subjects design is just as low. In fact, it is exactly the same as it is above, because within subjects designs are not affected by the population variance like between subjects designs.<br><br>"+
+	
 
-			"Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed?"
-			);
-		$("#ResampleButton").on("click", "ResampleFunction");
-		$("#ResampleButton").css("top", "-465px");
-		$("#ResampleButton").html("Resample");
-		$("#NextButton").css("visibility", "visible");
-		$("#NextButton").css("top", "-485px");
+	if(Q3Outcome == 'A'){
+		$('#Text1').html(
+			'Oh no, your intuition wasn\'t right this time! That\'s okay.<br><br>'+
+			'This is the first advantage of within subject designs: <i>they\'re insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we\'re punished statistically by the question we\'re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>'+
 
-	});
-
-	if(Q3Outcome == "A"){
-		$("#Text1").css("top", "-730px");
-		$("#Text1").html(
-			"Oh no, your intuition wasn't right this time! That's okay.<br><br>"+
-			"This is the first advantage of within subject designs: they’re insensitive to the population variance. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we’re punished statistically by the question we’re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>"+
-
-			"Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they’re the result of differences in the effectiveness of the treatment), but they will not affect our power if they’re the result of individual differences unrelated to the treatment, which is the case here!"
+			'Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they\'re the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they\'re the result of individual differences unrelated to the treatment, which is the case here!</i>'
 			);
 
-	}else if (Q3Outcome == "B"){
-		$("#Text1").css("top", "-730px");
-		$("#Text1").html(
-			"Right!<br><br>"+
-			"This is the first advantage of within subject designs: they’re insensitive to the population variance. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we’re punished statistically by the question we’re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>"+
+	}else if (Q3Outcome == 'B'){
+		$('#Text1').html(
+			'Right!<br><br>'+
+			'This is the first advantage of within subject designs: <i>they\'re insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we\'re punished statistically by the question we\'re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>'+
 
-			"Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they’re the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they’re the result of individual differences unrelated to the treatment, which is the case here!</i>"
+			'Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they\'re the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they\'re the result of individual differences unrelated to the treatment, which is the case here!</i>'
 			);
 		
 	}else{
-		alert("Please make a selection!");
+		alert('Please make a selection!');
 	}
+	$('#NextButton').show();
+	$('#NextButton').click(function(){
+		$('#secondrow').show();
+		
+		// Next button: move on after simulations
+		$('#NextButton').click(MySubmit);
+		$('#NextButton').css('display', 'inline-block');
+		$('#NextButton').css('float', 'right');
+
+		// Resample button: draw another sample to display
+		$('#ResampleButton').css('display', 'inline-block');
+		$('#ResampleButton').click(ResampleFunction);
+
+		$('#ResampleButton').show();
+		$('#Text1').html(
+			'Here we can see that the between subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within subjects design is just as low. In fact, it is exactly the same as it is above, because within subjects designs are not affected by the population variance like between subjects designs.<br><br>'+
+
+			'Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed? Click "Continue" when you\'re ready to move on.'
+			);
+		
+
+	});
 }
 
 function ResampleFunction(){
 	// Generate new data
-	datasets += 1
+	datasets += 1;
+	console.log('Resampling!');
 
 }
 
 
 function MySubmit(){
-	var progress = {{progress}} + 1
-	$("#Q3").val(Q2Outcome);
-	$("#progressinput").val(progress);
-	$("#numbersims").val(datasets)
-	$("#dataform").submit();
+	console.log('Submitting!');
+	progress +=1;
+	$('#Q3').val(Q3Outcome);
+	$('#progressinput').val(String(progress));
+	$('#numbersims').val(datasets);
+	$('#dataform').submit();
 }
 
 

@@ -1,3 +1,5 @@
+/** { border: 1px solid red; }*/
+
 div.pg
 {
     margin:auto;
@@ -9,6 +11,14 @@ div.pg
     padding:20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+}
+
+div.ttest
+{
+    position:relative;
+    display:inline-block;
+    top:-45px;
+    text-align: left;
 }
 
 div.Drug1

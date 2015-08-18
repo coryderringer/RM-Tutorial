@@ -166,6 +166,8 @@ class SignupHandler(webapp.RequestHandler):
 		self.session['Module1']   	= 'Incomplete'
 		self.session['Module2']  	= 'Incomplete'
 		self.session['Logged_In']	= True
+		self.session['M1_Progress'] = 0
+		self.session['M2_Progress'] = 0
 
 		doRender(self, 'menu.htm',
 			{'firstname':self.session['firstname'],
@@ -226,7 +228,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 	def post(self):
 		logging.info("checkpoint 1")
 		self.session = get_current_session()
-		self.session['Module2'] = 'Complete'
 
 		progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = progress
