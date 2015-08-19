@@ -7,8 +7,11 @@
 
 <script type="text/javascript">
 
-/// Counter for page
-  var counter = 1;
+/// Checkpoint for page
+  var current = 0;
+
+/// Graph
+  var file = "/static/stimuli/OrderEffects/test.csv";
 
 /// Name variables here
 	var	yLabel = "Accuracy",
@@ -18,16 +21,74 @@
 		xMax = 20,
 		yMax = 14;
 
+/// Text
+
+  var text = [
+    "Let’s look at the results for the experiment. On this graph, the x-axis shows the condition that the participants experience. The y-axis represents their accuracy scores on the spatial reasoning task.<br><br>Participants first go through the intense exercise regimen, and then have their spatial reasoning ability measured. Let’s look at their results!",
+
+    "The average accuracy score after engaging in the intense exercise regimen is Y1. This seems like a pretty good average – but we need to compare this score against the control task. Next, they read a short story while sitting down before having their spatial reasoning ability measured again. Let’s take a look at their results this time around!",
+
+    "The average accuracy score after the control condition is Y0. This is pretty similar to the previous average (after the intense exercise regiment) – it seems our hypothesis is not supported as there doesn’t seem to be a difference in their spatial reasoning ability between both the experimental and control conditions! <br><br>While it could be that your hypothesis was just wrong and intense exercise truly has no effect on one’s spatial reasoning ability, let’s look at another possible reason for this result.",
+
+    "We believe that arousal is the mechanism that leads to an improvement in people’s spatial reasoning ability. Imagine that we had measured their arousal level throughout the experiment using a heart-rate monitor. We can plot their arousal level on the same graph with a line.",
+
+    "When they start the experiment, their arousal level is at its baseline. When they experience the experimental condition, their arousal level increases suddenly, so it looks like the intense exercise regimen successfully manipulated the arousal of the subjects! We expected this to lead to higher accuracy scores on the spatial reasoning task.",
+
+    "But because the exercise was so intense, their arousal levels didn’t drop off soon enough after they finished the exercise routine! We can see that it tapers off gradually, but by the time they experience the control condition, their arousal levels are still higher than before they began the experiment.",
+
+    "This is a problem because it means their arousal levels in the control condition were much higher than they were supposed to be. It’s probably this that led to similar accuracy scores in the control condition – in terms of arousal; they were essentially still in the experimental condition!",
+
+    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a carryover effect, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
+    ]
+
 /// Function for noise
 function randomJitter(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-/// Function to advance text in page
-function next(counter) {
-  current = "text" + counter
-  $()
+/// Function to move text forward and back within page
+function next(current) {
+    
+    $("#text").fadeTo(100, 0)
+      .delay(200)
+      .queue(function(n) { 
+        $("#text").html(text[current]); 
+        n();
+      })
+      .fadeTo(100, 1);
+
+    if (current==0) { $("#previous").attr("disabled", true); }
+    else if (current==text.length-1) { $("#next").attr("disabled", true); }
+    else {
+      $("#next").attr("disabled", true)
+        .delay(400)
+        .queue(function(n) { 
+        $(this).attr("disabled", false); 
+        n();
+      });
+      $("#previous").attr("disabled", true)
+        .delay(400)
+        .queue(function(n) { 
+        $(this).attr("disabled", false); 
+        n();
+      });
+
+    }
+    
 }
+
+/// Function to change visualization in page
+function visuals(current) {
+
+  if (current==1) {
+    svg.selectAll(".dot").transition()
+      .duration(400)
+      .delay(0)
+      .style("opacity", 1);
+  }
+
+}
+
 
 </script>
 
@@ -37,22 +98,14 @@ function next(counter) {
 	
 	<br>
   
-  <div id="text1" style="display:show; height:100px">
-    <p>
-      Let’s look at the results for the experiment. On this graph, the x-axis shows the condition that the participants experience. The y-axis represents their accuracy scores on the spatial reasoning task. 
-    </p>
-    <p>
-      Participants first go through the intense exercise regimen, and then have their spatial reasoning ability measured. Let’s look at their results!
-    </p>
+  <div id="text" style="display:show; height:100px" align="justify">
+    <script>document.write(text[current])</script>
   </div>
 
-  <div id="text2" style="display:none; height:50px">
-    <p>
-      Also, here.
-    </p>
-  </div>
+  <div align="center"><button id="visualize" onclick="visuals(current)">Simulate</button></div>
 
-  <center><button onclick=console.log("HI")>Next</button></center>
+  <div align="right"><button id="previous" onclick="current--; next(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;
+    <button id="next" onclick="current++; next(current); visuals(current)">Next &rarr;</button></div>
 
 	<div id="graph" width="900" height="600"></div>
 
@@ -128,7 +181,7 @@ var line = d3.svg.line()
 // Sets attributes of blockers
 
 var lineBlockerAttr = new Object();
-	lineBlockerAttr.x=0;
+	lineBlockerAttr.x=width/2;
 	lineBlockerAttr.y=0;
 
 var pointBlockerAttr = new Object();
@@ -137,7 +190,7 @@ var pointBlockerAttr = new Object();
 
 // Reads data from .csv file
 
-d3.csv("/static/test.csv", function(error, data) {
+d3.csv(file, function(error, data) {
   	if (error) throw error;
 
   	data.forEach(function(d) {
@@ -157,7 +210,7 @@ d3.csv("/static/test.csv", function(error, data) {
     	.attr("class", "line")
     	.style("stroke", "red")
     	.style("stroke-dasharray", "10, 5")
-    	.style("opacity", 1)
+    	.style("opacity", 0)
         .attr("d", line(data));
 
     // Append line blocker
@@ -167,8 +220,8 @@ d3.csv("/static/test.csv", function(error, data) {
 		.attr("height", height)
 		.attr("x", function(d) {return lineBlockerAttr.x;})
 		.attr("y", function(d) {return lineBlockerAttr.y;})
-		.style("fill", "pink")
-		.style("opacity", 0.2);
+		.style("fill", "white")
+		.style("opacity", 1);
 
     // Appends points
 
@@ -180,7 +233,7 @@ d3.csv("/static/test.csv", function(error, data) {
       	.attr("cx", function(d) { return x(d.iv); })
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
+      	.style("opacity", 0);
 
     // Append point blocker
 
@@ -189,8 +242,8 @@ d3.csv("/static/test.csv", function(error, data) {
 		.attr("height", height)
 		.attr("x", function(d) {return pointBlockerAttr.x;})
 		.attr("y", function(d) {return pointBlockerAttr.y;})
-		.style("fill", "cyan")
-		.style("opacity", 0.2);
+		.style("fill", "white")
+		.style("opacity", 1);
 
     // Appends axes
 
