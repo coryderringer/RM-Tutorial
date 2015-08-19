@@ -281,6 +281,10 @@ class LineGraphTestHandler(webapp.RequestHandler):
 			# 'x' : x,
 			# 'y' : y})
 
+class OrderEffectsHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, 'OrderEffectsIntro.htm')
+
 		
 ###############################################################################
 ######################### Data Display Page Handler ###########################
@@ -410,6 +414,7 @@ application = webapp.WSGIApplication([
 	('/SingleSubject', SingleSubjectHandler),
 	('/WithinSubject', WithinSubjectHandler),
 	('/LineGraphTest', LineGraphTestHandler),
+	('/OrderEffects', OrderEffectsHandler),
 	('/.*',  LoginHandler)],  #default page
 	debug=True)
 
