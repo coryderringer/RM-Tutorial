@@ -21,6 +21,13 @@ div.ttest
     text-align: left;
 }
 
+div.logout
+{
+    position:fixed;
+    top:0;
+    right:0;
+}
+
 div.Drug1
 {
 margin:auto;

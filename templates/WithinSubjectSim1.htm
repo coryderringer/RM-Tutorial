@@ -83,12 +83,29 @@
 			<div id="ResponseDiv3" style=""></div>
 		</div>
 	</div>
-	<br>
-	<button id="ResampleButton" style="width:100px;display:none">Resample</button>
+
+	<div id="AnswerA" style="display:none">
+		<p>Oh no, your intuition wasn't right this time! That's okay.</p>
+	</div>
+	<div id="AnswerB" style="display:none">
+		<p>Right!</p>
+	</div>
+	<div id="Text2" style="display:none">
+		<p>This is the first advantage of within subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.</p>
+
+		<p>Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they're the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they're the result of individual differences unrelated to the treatment, which is the case here!</i></p>
+	</div>
+
+	<div id="Text3" style="display:none">
+		<p>Here we can see that the between subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within subjects design is just as low. In fact, it is exactly the same as it is above, because within subjects designs are not affected by the population variance like between subjects designs.</p>
+
+		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed?</p>
+	</div>
+
+	<button id="ResampleButton" style="width:100px;display:none" onclick="ResampleFunction()">Resample</button>
 	
 	<button id="NextButton" style="width:100px;display:none">Continue</button>
-	
-	<!-- Not sure where this should go on the page -->
+
 
 </div>
 
@@ -100,56 +117,41 @@
 
 var Q3Outcome = 'unanswered';
 var datasets = 1;
-var progress = {{progress}}
+var progress = {{progress}};
 
-function ButtonShow(){
-	$('#AnswerButton3').show();
-}
 
 function RecordQuiz3(){
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();
+	if(Q3Outcome != 'A' & Q3Outcome != 'B'){
+		alert('Please make a selection!');
+		return
 	
-
-	if(Q3Outcome == 'A'){
-		$('#Text1').html(
-			'Oh no, your intuition wasn\'t right this time! That\'s okay.<br><br>'+
-			'This is the first advantage of within subject designs: <i>they\'re insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we\'re punished statistically by the question we\'re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>'+
-
-			'Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they\'re the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they\'re the result of individual differences unrelated to the treatment, which is the case here!</i>'
-			);
+	}else if(Q3Outcome == 'A'){
+		$('#AnswerA').show();
 
 	}else if (Q3Outcome == 'B'){
-		$('#Text1').html(
-			'Right!<br><br>'+
-			'This is the first advantage of within subject designs: <i>they\'re insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we\'re punished statistically by the question we\'re asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.<br><br>'+
-
-			'Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they\'re the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they\'re the result of individual differences unrelated to the treatment, which is the case here!</i>'
-			);
+		$('#AnswerB').show();
 		
-	}else{
-		alert('Please make a selection!');
 	}
-	$('#NextButton').show();
+	$('#Text1').hide();
+	
+	// Show response and next button
+	$('#Text2, #NextButton').show();
+	
 	$('#NextButton').click(function(){
-		$('#secondrow').show();
 		
+		// Hide quiz, answers
+		$('#Text1, #Text2, #AnswerA, #AnswerB').hide();
+
+		// Show second row and instructions, resample button
+		$('#secondrow, #Text3, #ResampleButton').show();
+		
+
 		// Next button: move on after simulations
 		$('#NextButton').click(MySubmit);
 		$('#NextButton').css('display', 'inline-block');
-		$('#NextButton').css('float', 'right');
-
-		// Resample button: draw another sample to display
-		$('#ResampleButton').css('display', 'inline-block');
-		$('#ResampleButton').click(ResampleFunction);
-
-		$('#ResampleButton').show();
-		$('#Text1').html(
-			'Here we can see that the between subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within subjects design is just as low. In fact, it is exactly the same as it is above, because within subjects designs are not affected by the population variance like between subjects designs.<br><br>'+
-
-			'Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed? Click "Continue" when you\'re ready to move on.'
-			);
-		
-
+		$('#NextButton').css('float', 'right');	
+	
 	});
 }
 

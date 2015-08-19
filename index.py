@@ -218,35 +218,36 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		if self.session['M2_Progress'] == 0:
 			doRender(self, "WithinSubjectIntro.htm",
 				{'progress':self.session['M2_Progress']})
-		elif self.session['M2_Progress'] == 1:
-			doRender(self, "WithinSubjectSim1.htm",
-				{'progress':self.session['M2_Progress']})
-		elif self.session['M2_Progress'] == 2:
-			doRender(self, "WithinSubjectSim2.htm",
-				{'progress':self.session['M2_Progress']})
+		# elif self.session['M2_Progress'] == 1:
+		# 	doRender(self, "WithinSubjectSim1.htm",
+		# 		{'progress':self.session['M2_Progress']})
+		# elif self.session['M2_Progress'] == 2:
+		# 	doRender(self, "WithinSubjectSim2.htm",
+		# 		{'progress':self.session['M2_Progress']})
 
 	def post(self):
 		logging.info("checkpoint 1")
 		self.session = get_current_session()
 
-		progress = int(self.request.get('progressinput'))
-		self.session['M2_Progress'] = progress
-		logging.info("Progress: "+str(progress))
-		if progress == 3:
+		M2_Progress = int(self.request.get('progressinput'))
+		self.session['M2_Progress'] = M2_Progress
+		logging.info("Progress: "+str(M2_Progress))
+
+		if M2_Progress == 1:
 			# Record things from intro (answers to questions)
-			doRender(self, "WithinSubjectSim1.htm")
-		elif progress == 4:
+			doRender(self, "WithinSubjectSim1.htm",
+				{'progress':self.session['M2_Progress']})
+		elif M2_Progress == 2:
 			# Record things from sim 1 
 			doRender(self, "WithinSubjectSim2.htm",
-				{'progress':progress})
-		elif progress == 5:
+				{'progress':self.session['M2_Progress']})
+		elif M2_Progress == 3:
 			# Record things from sim 2
-			doRender(self, "WithinSubjectSim1.htm",
-				{'progress':progress})
-		elif progress == 6:
+			doRender(self, "WithinSubjectQuiz.htm",
+				{'progress':self.session['M2_Progress']})
+		elif M2_Progress == 4:
 			# Record results of final quiz
-			doRender(self, "WithinSubjectSim1.htm",
-				{'progress':progress})
+
 
 			# Record that user completed the module
 			self.session['Module2'] = 'Complete'
@@ -265,10 +266,8 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 			logging.info('Datastore updated')
 
-			doRender(self, 'menu.htm',
-				{'firstname':self.session['firstname'],
-				'Module1':self.session['Module1'],
-				'Module2':self.session['Module2']})	
+			self.session['M2_Progress'] = 0
+			doRender(self, "FinishWithinSubjects.htm")
 		else:
 			logging.info("something is wrong")
 		
@@ -322,6 +321,7 @@ class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
 
+		# logging.info(Logged_In)
 		# If they're logged in, take them to the main menu
 		if 'Logged_In' in self.session:
 			if self.session['Logged_In'] == True:
@@ -375,6 +375,7 @@ class LoginHandler(webapp.RequestHandler):
 			self.session['Module1'] = i.Module1
 			self.session['Module2'] = i.Module2
 			self.session['M2_Progress'] = 0
+			self.session['Logged_In'] = True
 
 
 		
@@ -391,7 +392,7 @@ class LogoutHandler(webapp.RequestHandler):
 		self.session['Logged_In'] = False	
 		
 		# kill all the session stuff that would identify them (username, password, etc)
-		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In']
+		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In', 'M2_Progress']
 
 		for i in sessionlist:
 			if i in self.session:
