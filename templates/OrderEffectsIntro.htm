@@ -24,13 +24,15 @@
 /// Text
 
   var text = [
-    "Let’s look at the results for the experiment. On this graph, the x-axis shows the condition that the participants experience. The y-axis represents their accuracy scores on the spatial reasoning task.<br><br>Participants first go through the intense exercise regimen, and then have their spatial reasoning ability measured. Let’s look at their results!",
+    "Let’s look at the results for the experiment. On this graph, the x-axis shows the time elapsed in the experiment. The experimental condition is experienced first, and they are measured on their accuracy at about 5 minutes. After that, they experience the control condition, and their accuracy is measured again at about 15 minutes in the experiment. The y-axis represents their accuracy scores on the spatial reasoning task.",
 
-    "The average accuracy score after engaging in the intense exercise regimen is Y1. This seems like a pretty good average – but we need to compare this score against the control task. Next, they read a short story while sitting down before having their spatial reasoning ability measured again. Let’s take a look at their results this time around!",
+    "Participants first go through the intense exercise regimen, and then have their spatial reasoning ability measured. Let’s look at their results! Each orange point represents the score of a single participant collected in this condition.",
+
+    "The average accuracy score after engaging in the intense exercise regimen is Y1. This seems like a pretty good average – but we need to compare this score against the control task. Next, they read a short story while sitting down before having their spatial reasoning ability measured again. Let’s take a look at their results this time around, shown as blue points below.",
 
     "The average accuracy score after the control condition is Y0. This is pretty similar to the previous average (after the intense exercise regiment) – it seems our hypothesis is not supported as there doesn’t seem to be a difference in their spatial reasoning ability between both the experimental and control conditions! <br><br>While it could be that your hypothesis was just wrong and intense exercise truly has no effect on one’s spatial reasoning ability, let’s look at another possible reason for this result.",
 
-    "We believe that arousal is the mechanism that leads to an improvement in people’s spatial reasoning ability. Imagine that we had measured their arousal level throughout the experiment using a heart-rate monitor. We can plot their arousal level on the same graph with a line.",
+    "We believe that arousal is the mechanism that leads to an improvement in people’s spatial reasoning ability. Imagine that we had measured their arousal level throughout the experiment using a heart-rate monitor. We can plot their arousal level on the same graph with a line (that will be red in color).",
 
     "When they start the experiment, their arousal level is at its baseline. When they experience the experimental condition, their arousal level increases suddenly, so it looks like the intense exercise regimen successfully manipulated the arousal of the subjects! We expected this to lead to higher accuracy scores on the spatial reasoning task.",
 
@@ -47,6 +49,7 @@ function randomJitter(min, max) {
 }
 
 /// Function to move text forward and back within page
+
 function next(current) {
     
     // Changes text
@@ -57,63 +60,72 @@ function next(current) {
         n();
       })
       .fadeTo(100, 1);
+    $("#progress").html("<i>Page " + (current+1) + " of 9</i>");
 
-    // Blocks buttons for a bit
-    $("#next").attr("disabled", true)
-      .delay(500)
-      .queue(function(n) { 
-        $(this).attr("disabled", false); 
-        n();
-      });
-    $("#previous").attr("disabled", true)
-      .delay(500)
-      .queue(function(n) { 
-        $(this).attr("disabled", false); 
-        n();
-      });
-
-    // Enables/disables right buttons at right time
-    if (current==0) { $("#previous").attr("disabled", true); }
-    else if (current==1) { $("#visualize").attr("disabled", false); }
-    else if (current==text.length-1) { $("#next").attr("disabled", true); }
-    else {
+    if (current<text.length-1) {
+      // Blocks buttons for a bit
       $("#next").attr("disabled", true)
-        .delay(400)
+        .delay(600)
         .queue(function(n) { 
           $(this).attr("disabled", false); 
           n();
         });
       $("#previous").attr("disabled", true)
-        .delay(400)
+        .delay(600)
         .queue(function(n) { 
           $(this).attr("disabled", false); 
           n();
         });
     }
+
+    // Does different things each time page advances
+    if (current==1) { svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==2) { svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==4) { svg.select("#legendBlocker").transition().duration(800).delay(0).style("opacity", 0); }
+    else if (current==5) { svg.select("path").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==6) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==text.length-1) { $("#next").attr("disabled", true); }
+  
+}
+
+function previous(current) {
     
+    // Changes text
+    $("#text").fadeTo(100, 0)
+      .delay(200)
+      .queue(function(n) { 
+        $("#text").html(text[current]); 
+        n();
+      })
+      .fadeTo(100, 1);
+    $("#progress").html("<i>Page " + (current+1) + " of 9</i>");
+
+    if (current>0) {
+      // Blocks buttons for a bit
+      $("#next").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+      $("#previous").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+    }
+
+    // Does different things each time page advances
+    if (current==5) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==4) { svg.select("path").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==3) { svg.select("#legendBlocker").transition().duration(800).delay(0).style("opacity", 1); }
+    else if (current==1) { svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==0) { 
+      $("#previous").attr("disabled", true); 
+      svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 0);
+    }
 }
-
-/// Function to change visualization in page
-function visuals(current) {
-
-  $("#visualize").attr("disabled", true);
-
-  if (current==0) {
-    svg.selectAll(".dot").transition()
-      .duration(400)
-      .delay(0)
-      .style("opacity", 1);
-  }
-  else if (current==1) {
-    console.log("HI")
-    var pointBlocker = svg.select("rect").transition()
-      .duration(400)
-      .delay(0)
-      .style("opacity", 0);
-  }
-
-}
-
 
 </script>
 
@@ -127,10 +139,15 @@ function visuals(current) {
     <script>document.write(text[current])</script>
   </div>
 
-  <div align="center"><button id="visualize" onclick="visuals(current)">Simulate</button></div>
+  <div id="progress" style="display:show; height:10px; font-size:12px;" align="right">
+    <i>Page <script>document.write(current+1)</script> of 9</i>
+  </div>
 
-  <div align="right"><button id="previous" onclick="current--; next(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;
-    <button id="next" onclick="current++; next(current);">Next &rarr;</button></div>
+  <br>
+
+  <div align="right">
+    <button id="previous" onclick="current--; previous(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;<button id="next" onclick="current++; next(current);">Next &rarr;</button>
+  </div>
 
 	<div id="graph" width="900" height="600"></div>
 
@@ -199,7 +216,7 @@ var svg = d3.select("#graph").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var line = d3.svg.line()
-	.interpolate("cardinal")
+	.interpolate("basis")
     .x(function(d) { return x(d.t); })
     .y(function(d) { return y(d.measure); });
 
@@ -219,8 +236,8 @@ d3.csv(file, function(error, data) {
   	if (error) throw error;
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.1,0.1);
-    	d.dv = +d.dv;
+    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.dv = +d.dv + randomJitter(-1,1);
     	d.t = +d.t;
   	});
 
@@ -234,14 +251,15 @@ d3.csv(file, function(error, data) {
     svg.append("path")
     	.attr("class", "line")
     	.style("stroke", "red")
-    	.style("stroke-dasharray", "10, 5")
+    	//.style("stroke-dasharray", "10, 5")
     	.style("opacity", 0)
         .attr("d", line(data));
 
     // Append line blocker
 
 	var lineBlocker = svg.append("rect")
-		.attr("width", width/2)
+		.attr("id", "lineBlocker")
+    .attr("width", width/2)
 		.attr("height", height)
 		.attr("x", function(d) {return lineBlockerAttr.x;})
 		.attr("y", function(d) {return lineBlockerAttr.y;})
@@ -263,7 +281,8 @@ d3.csv(file, function(error, data) {
     // Append point blocker
 
     var pointBlocker = svg.append("rect")
-		.attr("width", width/2)
+		.attr("id", "pointBlocker")
+    .attr("width", width/2)
 		.attr("height", height)
 		.attr("x", function(d) {return pointBlockerAttr.x;})
 		.attr("y", function(d) {return pointBlockerAttr.y;})
@@ -330,6 +349,7 @@ d3.csv(file, function(error, data) {
       	.text(covariate);
 
     var legendBlocker = svg.append("rect")
+      .attr("id", "legendBlocker")
       .attr("width", 150)
       .attr("height", 20)
       .attr("x", width - 150)
