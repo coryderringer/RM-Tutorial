@@ -10,6 +10,7 @@
 <form id="dataform" method="post" action="/WithinSubject">
 	<input id="Q1" name="Q1" type="hidden">
 	<input id="Q2" name="Q2" type="hidden">
+	<input id="guessesinput" name="guessesinput" type="hidden">
 	<input id="progressinput" name="progressinput" type="hidden">
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
@@ -204,6 +205,7 @@ function MySubmit(){
 	$('#Q2').val(Q2Outcome);
 	progress += 1;
 	$('#progressinput').val(progress);
+	$('#guessesinput').val(guesses)
 	$('#dataform').submit();
 }
 

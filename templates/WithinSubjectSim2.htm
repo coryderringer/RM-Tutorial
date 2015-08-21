@@ -7,8 +7,7 @@
 {% block bodycontent %}
 
 <form id="dataform" method="post" action="/WithinSubject">
-	<input id="Q3" name="Q3" type="hidden">
-	<input id="numbersims" name="numbersims" type="hidden">
+	<input id="numbersims2" name="numbersims2" type="hidden">
 	<input id="progressinput" name="progressinput" type="hidden">
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
@@ -127,7 +126,7 @@ function MySubmit(){
 	console.log('Submitting!');
 	progress +=1;
 	$('#progressinput').val(String(progress));
-	$('#numbersims').val(datasets);
+	$('#numbersims2').val(datasets);
 	$('#dataform').submit();
 }
 

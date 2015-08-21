@@ -24,6 +24,11 @@ class User(db.Model):
 	Module2 = 			db.StringProperty()
 	WSAnswer1 = 		db.StringProperty()
 	WSAnswer2 = 		db.StringProperty()
+	WSAnswer3 = 		db.StringProperty()
+	numberOfGuesses = 	db.IntegerProperty()
+	numberOfSimulations = db.IntegerProperty()
+	numberOfSimulations2 = db.IntegerProperty()
+	QuizResults = 		db.ListProperty(str)
 	
 
 #This stores the current number of participants who have ever taken the study.
@@ -238,20 +243,33 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			# Record things from intro (answers to questions)
 			self.session['WSAnswer1'] = self.request.get('Q1')
 			self.session['WSAnswer2'] = self.request.get('Q2')
+			self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
+
 			doRender(self, "WithinSubjectSim1.htm",
 				{'progress':self.session['M2_Progress']})
+
 		elif M2_Progress == 2:
 			# Record things from sim 1 
+			self.session['WSAnswer3'] = self.request.get('Q3')
+			self.session['numberOfSimulations'] = int(self.request.get('numbersims'))
+			
+
 			doRender(self, "WithinSubjectSim2.htm",
 				{'progress':self.session['M2_Progress']})
+
 		elif M2_Progress == 3:
 			# Record things from sim 2
+			self.session['numberOfSimulations2'] = int(self.request.get('numbersims2'))
+
 			doRender(self, "WithinSubjectQuiz.htm",
 				{'progress':self.session['M2_Progress']})
 		elif M2_Progress == 4:
 			# Record results of final quiz
+			QuizResults = self.request.get('AnswerInput')
+			QuizResults = map(str,QuizResults.split(",")) 
 
-
+			self.session['QuizResults'] = QuizResults
+			
 			# Record that user completed the module
 			self.session['Module2'] = 'Complete'
 			
@@ -266,6 +284,11 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			for i in results:
 				i.WSAnswer1 = self.session['WSAnswer1']
 				i.WSAnswer2 = self.session['WSAnswer2']
+				i.WSAnswer3 = self.session['WSAnswer3']
+				i.numberOfGuesses = self.session['numberOfGuesses']
+				i.numberOfSimulations = self.session['numberOfSimulations']
+				i.numberOfSimulations2 = self.session['numberOfSimulations2']
+				i.QuizResults = self.session['QuizResults']
 				i.Module2 = self.session['Module2']
 				i.put()
 
@@ -325,7 +348,7 @@ class DataHandler(webapp.RequestHandler):
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
-
+		self.session['M2_Progress'] = 0
 		# logging.info(Logged_In)
 		# If they're logged in, take them to the main menu
 		if 'Logged_In' in self.session:
@@ -379,8 +402,9 @@ class LoginHandler(webapp.RequestHandler):
 			self.session['usernum'] = i.usernum
 			self.session['Module1'] = i.Module1
 			self.session['Module2'] = i.Module2
-			self.session['M2_Progress'] = 0
-			self.session['Logged_In'] = True
+		
+		self.session['M2_Progress'] = 0
+		self.session['Logged_In'] = True
 
 
 		

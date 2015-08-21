@@ -22,6 +22,7 @@ User:
 <th>password</th>
 <th>Module1</th>
 <th>Module2</th>
+</tr>
 
 
 <!-- Subsequent Rows -->
@@ -34,9 +35,63 @@ User:
 <th>{{ i.password }}</th>
 <th>{{ i.Module1 }}</th>
 <th>{{ i.Module2 }}</th>
+
 </tr>
 {% endfor %}
 </table>
+<br>
+<!-- Module 1 Progress -->
+
+
+
+
+
+<!-- Module 2 Progress -->
+Within Subjects Tutorial
+<table>
+<!-- Header Row -->
+<tr>
+<th>usernum</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>username</th>
+<th>WSAnswer1</th>
+<th>WSAnswer2</th>
+<th>WSAnswer3</th>
+<th>numberOfGuesses</th>
+<th>numberOfSimulations</th>
+<th>numberOfSimulations2</th>
+<th colspan=3>QuizResults</th>
+</tr>
+
+
+
+<!-- Subsequent Rows -->
+{% for i in users %}
+<tr>
+<th>{{ i.usernum }}</th>
+<th>{{ i.firstname }}</th>
+<th>{{ i.lastname }}</th>
+<th>{{ i.username }}</th>
+<th>{{ i.WSAnswer1 }}</th>
+<th>{{ i.WSAnswer2 }}</th>
+<th>{{ i.WSAnswer3 }}</th>
+<th>{{ i.numberOfGuesses }}</th>
+<th>{{ i.numberOfSimulations }}</th>
+<th>{{ i.numberOfSimulations2 }}</th>
+
+{% for j in i.QuizResults %}
+<th>{{ j }}</th>
+{% endfor %}
+
+</tr>
+{% endfor %}
+
+</table>
+
+
+
+
 
 </body>
 {% endblock %}
