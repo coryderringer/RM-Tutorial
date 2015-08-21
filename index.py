@@ -22,7 +22,8 @@ class User(db.Model):
 	password =			db.StringProperty()
 	Module1 =			db.StringProperty()
 	Module2 = 			db.StringProperty()
-
+	WSAnswer1 = 		db.StringProperty()
+	WSAnswer2 = 		db.StringProperty()
 	
 
 #This stores the current number of participants who have ever taken the study.
@@ -235,6 +236,8 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 		if M2_Progress == 1:
 			# Record things from intro (answers to questions)
+			self.session['WSAnswer1'] = self.request.get('Q1')
+			self.session['WSAnswer2'] = self.request.get('Q2')
 			doRender(self, "WithinSubjectSim1.htm",
 				{'progress':self.session['M2_Progress']})
 		elif M2_Progress == 2:
@@ -261,6 +264,8 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 			# change the datastore result for module 2
 			for i in results:
+				i.WSAnswer1 = self.session['WSAnswer1']
+				i.WSAnswer2 = self.session['WSAnswer2']
 				i.Module2 = self.session['Module2']
 				i.put()
 

@@ -24,7 +24,7 @@
 				<div id="ttest1" class="ttest">
 					<span id="tspan1">t=1.00</span><br>
 					<span id="pspan1">p=.50</span><br>
-					<span id="dspan1">d=0.10</span><br>
+					<span id="dspan1">power=.8</span><br>
 				</div>
 			</div>
 			
@@ -35,7 +35,7 @@
 				<div id="ttest2" class="ttest">
 					<span id="tspan2">t=1.00</span><br>
 					<span id="pspan2">p=.50</span><br>
-					<span id="dspan2">d=0.10</span><br>
+					<span id="dspan2">power=.8</span><br>
 				</div>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 				<div id="ttest3" class="ttest">
 					<span id="tspan1">t=1.00</span><br>
 					<span id="pspan1">p=.50</span><br>
-					<span id="dspan1">d=0.10</span><br>
+					<span id="dspan1">power=.8</span><br>
 				</div>
 			</div>
 			
@@ -60,15 +60,19 @@
 				<div id="ttest4" class="ttest">
 					<span id="tspan2">t=1.00</span><br>
 					<span id="pspan2">p=.50</span><br>
-					<span id="dspan2">d=0.10</span><br>
+					<span id="dspan2">power=.8</span><br>
 				</div>
 			</div>
 		</div>
+		<br>
+		<button id="ResampleButton" style="width:100px;display:none;position:relative;left:-20px" onclick="ResampleFunction()">Resample</button>
 	</center>	
 	<br>
 
 	<div id="Text1">
 		<p>To expand on this point, let's look at what each design is actually comparing between the two conditions. On the left we have a between-subjects approach and on the right we have the same datapoints collected in a within-subjects design.</p>
+
+		<p>Notice that the dependent variable (on the Y axis) is different between these two designs. This is a natural result of the difference between the questions we're asking with these designs. In a between subjects design, we want to know if one group is different from another group after some treatment. In a within subjects design, we want to know if one treatment works better than the other treatment for the same group of people. Click the "Learn More" button below to learn more about how these datasets were simulated.</p>
 
 		<div id="Quiz3">
 			<p id="Question3">Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
@@ -78,9 +82,19 @@
 				<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design</label><br>
 				<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design</label><br>
 			</form><br>
+
 			<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
+			<button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button>
 			<br>
 			<div id="ResponseDiv3" style=""></div>
+		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
+			<center><b>Data Simulations:</b></center><br>
+			To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample from a normal distribution (mean = 200, standard deviation = 10).<br>
+			<br>
+			<b>In the between subjects design,</b> we would then randomly assign each person to one condition or the other. Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution (mean weight loss for the fruit group was 10 pounds, 25 for the vegetable group, with a standard devation of 5 pounds per group). These adjusted weights represent each participant's weight after the treatment (our dependent variable).<br>
+			<br>
+			<b>In the within subjects design,</b> we can draw a sample just like before from a normal distribution with a mean of 200 and a standard deviation of 10. Additionally, each individual gets an adjustment representing the amount of weight they lost in each condition. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about these adjustments.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
+		</div>
 		</div>
 	</div>
 
@@ -102,8 +116,6 @@
 		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed?</p>
 	</div>
 
-	<button id="ResampleButton" style="width:100px;display:none" onclick="ResampleFunction()">Resample</button>
-	
 	<button id="NextButton" style="width:100px;display:none">Continue</button>
 
 
@@ -118,7 +130,14 @@
 var Q3Outcome = 'unanswered';
 var datasets = 1;
 var progress = {{progress}};
+var LearnDiv = 0;
 
+function LearnVisible(){
+	if(LearnDiv == 0){
+		LearnDiv += 1;
+	}
+	$('#DataGenerationExplanation').toggle();
+}
 
 function RecordQuiz3(){
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();

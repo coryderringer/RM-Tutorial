@@ -1,6 +1,6 @@
 {% extends "_base.htm" %}
 {% block title %}
-	Sim 2!!
+	Quiz
 {% endblock%}
 
 
@@ -20,47 +20,32 @@
 	<p id="Question1">This is the text from Question 1</p>
 
 	<form id="Q1Answers">
-		<input type="radio" name="q1" value="A" id="q1a"><label for="q1a">This is option A in Question 1</label><br>
-		<input type="radio" name="q1" value="B" id="q1b"><label for="q1b">This is option B in Question 1</label><br>
-		<input type="radio" name="q1" value="C" id="q1c"><label for="q1c">This is option C in Question 1</label><br>
-		<input type="radio" name="q1" value="D" id="q1d"><label for="q1d">This is option D in Question 1</label><br>
+		<div class="answer">
+			<input type="radio" name="q1" value="A" id="q1a"><label for="q1a"><span id="Q1Option1"></span></label><br>
+			<input type="radio" name="q1" value="B" id="q1b"><label for="q1b"><span id="Q1Option2"></span></label><br>
+			<input type="radio" name="q1" value="C" id="q1c"><label for="q1c"><span id="Q1Option3"></span></label><br>
+		</div>
 	</form><br>
 	
 	<p id="Question2">This is the text from Question 2</p>
 
 	<form id="Q2Answers">
-		<input type="radio" name="q2" value="A" id="q2a"><label for="q2a">This is option A in Question 2</label><br>
-		<input type="radio" name="q2" value="B" id="q2b"><label for="q2b">This is option B in Question 2</label><br>
-		<input type="radio" name="q2" value="C" id="q2c"><label for="q2c">This is option C in Question 2</label><br>
-		<input type="radio" name="q2" value="D" id="q2d"><label for="q2d">This is option D in Question 2</label><br>
+		<div class="answer">
+			<input type="radio" name="q2" value="A" id="q2a"><label for="q2a"><span id="Q2Option1"></span></label><br>
+			<input type="radio" name="q2" value="B" id="q2b"><label for="q2b"><span id="Q2Option2"></span></label><br>
+			<input type="radio" name="q2" value="C" id="q2c"><label for="q2c"><span id="Q2Option3"></span></label><br>
+		</div>
 	</form><br>
 
 	<p id="Question3">This is the text from Question 3</p>
 
 	<form id="Q3Answers">
-		<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">This is option A in Question 3</label><br>
-		<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">This is option B in Question 3</label><br>
-		<input type="radio" name="q3" value="C" id="q3c"><label for="q3c">This is option C in Question 3</label><br>
-		<input type="radio" name="q3" value="D" id="q3d"><label for="q3d">This is option D in Question 3</label><br>
+		<div class="answer">
+			<input type="radio" name="q3" value="A" id="q3a"><label for="q3a"><span id="Q3Option1"></span></label><br>
+			<input type="radio" name="q3" value="B" id="q3b"><label for="q3b"><span id="Q3Option2"></span></label><br>
+			<input type="radio" name="q3" value="C" id="q3c"><label for="q3c"><span id="Q3Option3"></span></label><br>
+		</div>
 	</form><br>
-
-	<p id="Question4">This is the text from Question 4</p>
-
-	<form id="Q4Answers">
-		<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">This is option A in Question 4</label><br>
-		<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">This is option B in Question 4</label><br>
-		<input type="radio" name="q4" value="C" id="q4c"><label for="q4c">This is option C in Question 4</label><br>
-		<input type="radio" name="q4" value="D" id="q4d"><label for="q4d">This is option D in Question 4</label><br>
-	</form><br>
-
-	<p id="Question5">This is the text from Question 5</p>
-
-	<form id="Q5Answers">
-		<input type="radio" name="q5" value="A" id="q5a"><label for="q5a">This is option A in Question 5</label><br>
-		<input type="radio" name="q5" value="B" id="q5b"><label for="q5b">This is option B in Question 5</label><br>
-		<input type="radio" name="q5" value="C" id="q5c"><label for="q5c">This is option C in Question 5</label><br>
-		<input type="radio" name="q5" value="D" id="q5d"><label for="q5d">This is option D in Question 5</label><br>
-	</form><br>	
 	
 	<button id="SubmitButton" style="width:100px" onclick="MySubmit()">Submit</button>
 	
@@ -73,17 +58,45 @@
 var progress = {{progress}};
 var Outcomes = new Array();
 
+
+
+var QuestionList = ['What is the primary difference between a within-subjects design and a between-subjects design?','Which of the following is one advantage of using a within-subjects design?','Earlier I mentioned that within-subjects designs allow each participant to serve as his/her own control. Why is this important?']
+
+var Q1Options = ['Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs assign one level of the IV to each participant, whereas between-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs can be posttest-only, whereas between-subjects designs always require a pretest and a posttest.']
+
+var Q2Options = ['Within-subject designs yield increased power to detect small but consistent differences between levels of the IV.','Within-subjects designs are true experiments, whereas all between-subjects designs are correlational.', 'Within-subjects designs allow us to randomize which participants get one level of the IV, and which get another level.']
+
+var Q3Options = ['It eliminates noise in the data from population variance, increasing statistical power.','It decreases the cost of running experiments by reducing the number of participants needed.','It’s actually not important']
+
+
+// Fill in questions, can use this format to randomize the order as well.
+$('#Question1').html(QuestionList[0]);
+$('#Question2').html(QuestionList[1]);
+$('#Question3').html(QuestionList[2]);
+
+// Fill in options for each question
+$('#Q1Option1').html(Q1Options[0]);
+$('#Q1Option2').html(Q1Options[1]);
+$('#Q1Option3').html(Q1Options[2]);
+
+
+$('#Q2Option1').html(Q2Options[0]);
+$('#Q2Option2').html(Q2Options[1]);
+$('#Q2Option3').html(Q2Options[2]);
+
+$('#Q3Option1').html(Q3Options[0]);
+$('#Q3Option2').html(Q3Options[1]);
+$('#Q3Option3').html(Q3Options[2]);
+
 function MySubmit(){
 
 	Outcomes[0] = $('input[name=q1]:checked', '#Q1Answers').val();
 	Outcomes[1] = $('input[name=q2]:checked', '#Q2Answers').val();
 	Outcomes[2] = $('input[name=q3]:checked', '#Q3Answers').val();
-	Outcomes[3] = $('input[name=q4]:checked', '#Q4Answers').val();
-	Outcomes[4] = $('input[name=q5]:checked', '#Q5Answers').val();
 	
 	for(var i = 0; i < Outcomes.length; i++){
 		if(Outcomes[i] != 'A' & Outcomes[i] != 'B' & Outcomes[i] != 'C' & Outcomes[i] != 'D'){
-			alert('Please answer all five quesions!');
+			alert('Please answer all of the questions!');
 			return
 		}
 	}
@@ -94,7 +107,7 @@ function MySubmit(){
 	$('#AnswerInput').val(String(Outcomes));
 	$('#dataform').submit();
 	
-
+// scramble the order of the answers, keep track of which one is correct
 }
 
 

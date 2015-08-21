@@ -1,4 +1,11 @@
 /** { border: 1px solid red; }*/
+.answer
+{
+    width:750px;
+    position:relative;
+    left:20px;
+}
+
 
 div.pg
 {

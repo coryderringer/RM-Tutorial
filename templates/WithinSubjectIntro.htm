@@ -22,8 +22,8 @@
 	<p>Imagine you hear about a study being planned at your local university. The researchers are trying to find out which of two interventions is more effective for weight loss over a 3-month timespan. We’ll call them the Fruit Condition and the Vegetable Condition:</p>
 
 	<ul>
-		<li>Fruit Condition: Each week, a new basket of fresh fruit is delivered to the participants.</li>
-		<li>Vegetable Condition: Each week, a new basket of fresh vegetables is delivered to the participants.</li>
+		<li><b>Fruit Condition:</b> Each week, a new basket of fresh fruit is delivered to the participants.</li>
+		<li><b>Vegetable Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.</li>
 	</ul>
 
 	<p>If we want to see which of these interventions is more effective, there are a couple of ways we could go about it.</p>
@@ -31,21 +31,46 @@
 	<p>First, we could use a between-subjects design. We could randomly divide the participants into two groups: one which gets the Fruit Condition and one which gets the Vegetable Condition. If the experimental group weighs less at the end of 3 months, we would conclude that counting calories is an effective weight loss strategy.</p>
 
 	<p>Alternatively, we could use a within-subjects design. Using this approach, we would put everyone in both conditions at different points in time. Each participant would spend 3 months in the Fruit Condition and 3 months in the Vegetable Condition, randomly assigning each participant on the order of the two conditions. Then we could see if people consistently lose more weight in one condition than in the other.</p>
-	<center>
-		<div class="pg" style="padding:5px;width:350px">
-			<IMG src="/static/images/testimage.png" style="width:300px"></IMG>
-		</div>
-		<br>
-		<button onclick="EndText1()" style="width:100px">Next</button>
-	</center>
+	<div>
+		<center>
+			<div class="pg" style="padding:5px;width:250px;display:inline-block;margin-right:50px">
+				<IMG src="/static/images/BetweenSubjects.png" style="width:220px"></IMG>
+			</div>
+			<div class="pg" style="padding:5px;width:250px;display:inline-block">
+				<IMG src="/static/images/WithinSubjects.png" style="width:220px"></IMG>
+			</div>
+			<br>
+			<div style="display:inline-block;margin-right:210px">
+				Between Subjects
+			</div>
+			<div style="display:inline-block">
+				Within Subjects
+			</div>
+			<br>
+			<br>
+			<button onclick="EndText1()" style="width:100px">Next</button>
+		</center>
+	</div>
 </div>
 
 <div id="Quiz1" class="pg" style="display:none">
-	<center>
-		<div class="pg" style="padding:5px;width:350px">
-			<IMG src="/static/images/testimage.png" style="width:300px"></IMG>
-		</div>
-	</center>
+	<div>
+		<center>
+			<div class="pg" style="padding:5px;width:250px;display:inline-block;margin-right:50px">
+				<IMG src="/static/images/BetweenSubjects.png" style="width:220px"></IMG>
+			</div>
+			<div class="pg" style="padding:5px;width:250px;display:inline-block">
+				<IMG src="/static/images/WithinSubjects.png" style="width:220px"></IMG>
+			</div>
+			<br>
+			<div style="display:inline-block;margin-right:210px">
+				Between Subjects
+			</div>
+			<div style="display:inline-block">
+				Within Subjects
+			</div>
+		</center>
+	</div>
 
 	<p>Which approach do you think offers more information about the effectiveness of each intervention?</p>
 	<form id="Q1Answers">
@@ -86,18 +111,9 @@
 			<input type="radio" name="q2" value="B" id="q2b"><label for="q2b"><span id="optionB">We don't know for sure that the subjects were selected randomly from the population, so they may not be representative. What if this effect only applies to the subjects in our sample?</span></label><br>
 			<input type="radio" name="q2" value="C" id="q2c"><label for="q2c"><span id="optionC">It's a correlational comparison because we're not actually manipulating the independent variable, and correlation doesn't imply causation!</span></label><br>
 		</form><br>
+		<div id="ResponseDiv2" style="display:none"></div>
+
 		<button id="AnswerButton2" onclick="RecordQuiz2()" style="width:100px">Submit</button>
-		<div id="ResponseDiv2A" style="display:none">
-			<p>That's what we're looking for! In a between subjects design, these individual differences are a mysterious nuisance: they increase the statistical noise in each group and thereby reduce our statistical power. Because within subjects designs essentially use each participant as their own control, the variation between participants in either condition is less important.</p>
-		</div>
-
-		<div id="ResponseDiv2B" style="display:none">
-			<p>We didn’t specify random selection from the population in either case, so while this isn’t ideal, it affects both designs equally. Try again!</p>
-		</div>
-
-		<div id="ResponseDiv2C" style="display:none">
-			<p>Not quite: our IV is the dietary intervention (Fruit Condition or Vegetable Condition). Since in the between subjects design we randomly assign subjects to one of these, we are directly manipulating the IV. Both designs are experimental rather than correlational. Try again!</p>
-		</div>
 
 		<button id="SubmitButton" onclick="MySubmit()"  style="width:100px;display:none">Next</button>
 
@@ -157,25 +173,27 @@ function RecordQuiz2(){
 	
 	Q2Outcome[guesses] = $('input[name=q2]:checked', '#Q2Answers').val();
 	
+	var answers = ['<p><i>That\'s what we\'re looking for! In a between subjects design, these individual differences are a mysterious nuisance: they increase the statistical noise in each group and thereby reduce our statistical power. Because within subjects designs essentially use each participant as their own control, the variation between participants in either condition is less important.</i></p>', '<p><i>We didn’t specify random selection from the population in either case, so while this isn’t ideal, it affects both designs equally. Try again!</i></p>', '<p><i>Not quite: our IV is the dietary intervention (Fruit Condition or Vegetable Condition). Since in the between subjects design we randomly assign subjects to one of these, we are directly manipulating the IV. Both designs are experimental rather than correlational. Try again!</i></p>']
 
 	if(Q2Outcome[guesses] != 'A' & Q2Outcome[guesses] != 'B' & Q2Outcome[guesses] != 'C'){
 		alert('Please make a selection!');
 		return
 
 	}else if(Q2Outcome[guesses] == 'A'){
-		$('#AnswerButton2, #ResponseDiv2B, #ResponseDiv2C').hide();
+		$('#ResponseDiv2').html(answers[0]);
+		$('#AnswerButton2').hide();
 		$('#q2b, #optionB, #q2c, #optionC').css('opacity', '0.1');
-		$('#ResponseDiv2A, #SubmitButton').show();
+		$('#ResponseDiv2, #SubmitButton').show();
 		guesses += 1;
 		
 	}else if(Q2Outcome[guesses] == 'B'){
-		$('#ResponseDiv2A, #ResponseDiv2C').hide();
-		$('#ResponseDiv2B').show();
+		$('#ResponseDiv2').html(answers[1]);
+		$('#ResponseDiv2').show();
 		guesses += 1;
 
 	}else if(Q2Outcome[guesses] == 'C'){
-		$('#ResponseDiv2B, #ResponseDiv2A').hide();
-		$('#ResponseDiv2C').show();
+		$('#ResponseDiv2').html(answers[2]);
+		$('#ResponseDiv2').show();
 		guesses += 1;
 	}
 }
