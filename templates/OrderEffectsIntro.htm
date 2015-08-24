@@ -30,7 +30,7 @@
 
     "The average accuracy score after engaging in the intense exercise regimen is Y1. This seems like a pretty good average – but we need to compare this score against the control task. Next, they read a short story while sitting down before having their spatial reasoning ability measured again. Let’s take a look at their results this time around, shown as blue points below.",
 
-    "The average accuracy score after the control condition is Y0. This is pretty similar to the previous average (after the intense exercise regiment) – it seems our hypothesis is not supported as there doesn’t seem to be a difference in their spatial reasoning ability between both the experimental and control conditions! <br><br>While it could be that your hypothesis was just wrong and intense exercise truly has no effect on one’s spatial reasoning ability, let’s look at another possible reason for this result.",
+    "The average accuracy score after the control condition is Y0. This is pretty similar to the previous average (after the intense exercise regimen) – it seems our hypothesis is not supported as there doesn’t seem to be a difference in their spatial reasoning ability between both the experimental and control conditions! <br><br>While it could be that your hypothesis was just wrong and intense exercise truly has no effect on one’s spatial reasoning ability, let’s look at another possible reason for this result.",
 
     "We believe that arousal is the mechanism that leads to an improvement in people’s spatial reasoning ability. Imagine that we had measured their arousal level throughout the experiment using a heart-rate monitor. We can plot their arousal level on the same graph with a line (that will be red in color).",
 
@@ -223,7 +223,7 @@ var line = d3.svg.line()
 // Sets attributes of blockers
 
 var lineBlockerAttr = new Object();
-	lineBlockerAttr.x=width/2;
+	lineBlockerAttr.x=width/3;
 	lineBlockerAttr.y=0;
 
 var pointBlockerAttr = new Object();
@@ -240,6 +240,9 @@ d3.csv(file, function(error, data) {
     	d.dv = +d.dv + randomJitter(-1,1);
     	d.t = +d.t;
   	});
+
+    //d3.mean(data, function(d) { return d.iv; })
+
 
   	// x.domain(d3.extent(data, function(d) { return d.A; })).nice();
   	// y.domain(d3.extent(data, function(d) { return d.B; })).nice();
@@ -259,7 +262,7 @@ d3.csv(file, function(error, data) {
 
 	var lineBlocker = svg.append("rect")
 		.attr("id", "lineBlocker")
-    .attr("width", width/2)
+    .attr("width", width)
 		.attr("height", height)
 		.attr("x", function(d) {return lineBlockerAttr.x;})
 		.attr("y", function(d) {return lineBlockerAttr.y;})
