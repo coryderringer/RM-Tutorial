@@ -308,9 +308,9 @@ class LineGraphTestHandler(webapp.RequestHandler):
 			# 'x' : x,
 			# 'y' : y})
 
-class OrderEffectsHandler(webapp.RequestHandler):
+class CarryoverEffectsHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, 'OrderEffectsIntro.htm')
+		doRender(self, 'CarryoverEffects.htm')
 
 		
 ###############################################################################
@@ -444,7 +444,7 @@ application = webapp.WSGIApplication([
 	('/SingleSubject', SingleSubjectHandler),
 	('/WithinSubject', WithinSubjectHandler),
 	('/LineGraphTest', LineGraphTestHandler),
-	('/OrderEffects', OrderEffectsHandler),
+	('/CarryoverEffects', CarryoverEffectsHandler),
 	('/.*',  LoginHandler)],  #default page
 	debug=True)
 

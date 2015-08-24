@@ -21,6 +21,14 @@
 		xMax = 20,
 		yMax = 14;
 
+/// Variables for calculating stuff
+  var parsedData;
+  var iv = [];
+  var dv = [];
+  var measure = [];
+  var meanControl = [];
+  var meanExperimental = [];
+
 /// Text
 
   var text = [
@@ -40,7 +48,7 @@
 
     "This is a problem because it means their arousal levels in the control condition were much higher than they were supposed to be. It’s probably this that led to similar accuracy scores in the control condition – in terms of arousal; they were essentially still in the experimental condition!",
 
-    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a carryover effect, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
+    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
     ]
 
 /// Function for noise
@@ -131,7 +139,7 @@ function previous(current) {
 
 <div class="pg">
 
-	<h2><center>Order effects</center></h2>
+	<h2><center>Carryover effects</center></h2>
 	
 	<br>
   
@@ -235,14 +243,28 @@ var pointBlockerAttr = new Object();
 d3.csv(file, function(error, data) {
   	if (error) throw error;
 
+    //////// Saves data for calculation ////////
+    parsedData = JSON.parse(JSON.stringify(data));
+  
+    for (i = 0; i < parsedData.length; i++) {
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure.push(Number(parsedData[i].measure));
+
+      if (parsedData[i].condition=="Control") {
+        meanControl.push(Number(parsedData[i].dv));
+      }
+      else if (parsedData[i].condition=="Experimental") {
+        meanExperimental.push(Number(parsedData[i].dv));
+      }
+    }
+    ////////////////////////////////////////////
+
   	data.forEach(function(d) {
     	d.iv = +d.iv + randomJitter(-0.3,0.3);
-    	d.dv = +d.dv + randomJitter(-1,1);
+    	d.dv = +d.dv;
     	d.t = +d.t;
   	});
-
-    //d3.mean(data, function(d) { return d.iv; })
-
 
   	// x.domain(d3.extent(data, function(d) { return d.A; })).nice();
   	// y.domain(d3.extent(data, function(d) { return d.B; })).nice();
@@ -260,14 +282,34 @@ d3.csv(file, function(error, data) {
 
     // Append line blocker
 
-	var lineBlocker = svg.append("rect")
-		.attr("id", "lineBlocker")
-    .attr("width", width)
-		.attr("height", height)
-		.attr("x", function(d) {return lineBlockerAttr.x;})
-		.attr("y", function(d) {return lineBlockerAttr.y;})
-		.style("fill", "white")
-		.style("opacity", 1);
+  	var lineBlocker = svg.append("rect")
+  		.attr("id", "lineBlocker")
+      .attr("width", width)
+  		.attr("height", height)
+  		.attr("x", function(d) {return lineBlockerAttr.x;})
+  		.attr("y", function(d) {return lineBlockerAttr.y;})
+  		.style("fill", "white")
+  		.style("opacity", 1);
+
+    // Appends means
+
+    // var controlMean = svg.append("line")
+    //   .attr("x1", d3.min(iv)*30)
+    //   .attr("x2", d3.min(iv)*30+50)
+    //   .attr("y1", d3.mean(meanControl)*20)
+    //   .attr("y2", d3.mean(meanControl)*20)
+    //   // .attr("y1", 0)
+    //   // .attr("y2", 600)
+    //   .style("stroke", "rgb(6,120,155)");
+
+    // var experimentalMean = svg.append("line")
+    //   .attr("x1", d3.max(iv)*33)
+    //   .attr("x2", d3.max(iv)*33+50)
+    //   .attr("y1", d3.mean(meanExperimental)*20)
+    //   .attr("y2", d3.mean(meanExperimental)*20)
+    //   // .attr("y1", 0)
+    //   // .attr("y2", 600)
+    //   .style("stroke", "rgb(6,120,155)");
 
     // Appends points
 
@@ -361,6 +403,15 @@ d3.csv(file, function(error, data) {
       .style("opacity", 1);
 
 });
+
+/// Calculate means
+
+// var calculate = [];
+// for (i = 0; i < parsedData.length; i++) {
+//   if (parsedData[i].condition=="Control") {
+//       calculate[i] = Number(parsedData[i].t)
+//   }
+// }
 
 </script>
 {% endblock %}
