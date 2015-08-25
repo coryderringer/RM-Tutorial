@@ -201,12 +201,19 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
     height = 400 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
-    .range([0, width]);
+    .range([0, width])
+    .domain([0,xMax+1]);
 
 var y = d3.scale.linear()
-    .range([height, 0]);
+    .range([height, 0])
+    .domain([0,yMax]);
 
-var color = d3.scale.category10();
+var cond = d3.scale.ordinal()
+    .rangePoints([0, width],1)
+    .domain(["Experimental","Control"]);
+
+var color = d3.scale.category10()
+    .domain(["Experimental","Control"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -264,12 +271,13 @@ d3.csv(file, function(error, data) {
     	d.iv = +d.iv + randomJitter(-0.3,0.3);
     	d.dv = +d.dv;
     	d.t = +d.t;
+      d.condition = d.condition;
   	});
 
   	// x.domain(d3.extent(data, function(d) { return d.A; })).nice();
   	// y.domain(d3.extent(data, function(d) { return d.B; })).nice();
-  	x.domain([0,xMax+1]);
-  	y.domain([0,yMax])
+  	// x.domain([0,xMax+1]);
+  	// y.domain([0,yMax])
 
     // Appends line
 
@@ -278,7 +286,7 @@ d3.csv(file, function(error, data) {
     	.style("stroke", "red")
     	//.style("stroke-dasharray", "10, 5")
     	.style("opacity", 0)
-        .attr("d", line(data));
+      .attr("d", line(data));
 
     // Append line blocker
 
@@ -293,23 +301,23 @@ d3.csv(file, function(error, data) {
 
     // Appends means
 
-    // var controlMean = svg.append("line")
-    //   .attr("x1", d3.min(iv)*30)
-    //   .attr("x2", d3.min(iv)*30+50)
-    //   .attr("y1", d3.mean(meanControl)*20)
-    //   .attr("y2", d3.mean(meanControl)*20)
-    //   // .attr("y1", 0)
-    //   // .attr("y2", 600)
-    //   .style("stroke", "rgb(6,120,155)");
+    var controlMean = svg.append("line")
+      // .attr("x1", x(d3.max(iv)-1))
+      // .attr("x2", x(d3.max(iv)+1))
+      .attr("x1", cond("Control")-x(1))
+      .attr("x2", cond("Control")+x(1))
+      .attr("y1", y(d3.mean(meanControl)))
+      .attr("y2", y(d3.mean(meanControl)))
+      .style("stroke", color("Control"));
 
-    // var experimentalMean = svg.append("line")
-    //   .attr("x1", d3.max(iv)*33)
-    //   .attr("x2", d3.max(iv)*33+50)
-    //   .attr("y1", d3.mean(meanExperimental)*20)
-    //   .attr("y2", d3.mean(meanExperimental)*20)
-    //   // .attr("y1", 0)
-    //   // .attr("y2", 600)
-    //   .style("stroke", "rgb(6,120,155)");
+    var experimentalMean = svg.append("line")
+      // .attr("x1", x(d3.min(iv)-1))
+      // .attr("x2", x(d3.min(iv)+1))
+      .attr("x1", cond("Experimental")-x(1))
+      .attr("x2", cond("Experimental")+x(1))
+      .attr("y1", y(d3.mean(meanExperimental)))
+      .attr("y2", y(d3.mean(meanExperimental)))
+      .style("stroke", color("Experimental"));
 
     // Appends points
 
@@ -318,8 +326,9 @@ d3.csv(file, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return x(d.iv); })
-      	.attr("cy", function(d) { return y(d.dv); })
+      	//.attr("cx", function(d) { return x(d.iv); })
+      	.attr("cx", function(d) { return cond(d.condition); })
+        .attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
       	.style("opacity", 0);
 
