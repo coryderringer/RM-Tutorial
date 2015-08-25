@@ -17,18 +17,16 @@
 <div class="pg">
 	<center>
 		<div id="firstrow">
-			<div id="between1" style="display:inline-block;margin-right:100px">
-				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
-					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
-				</div>
-				<div id="ttest1" class="ttest">
+			<div id="between1">
+				<div id="graph" width="900" height="600"></div>
+				<!-- <div id="ttest1" class="ttest">
 					<span id="tspan1">t=1.00</span><br>
 					<span id="pspan1">p=.50</span><br>
 					<span id="dspan1">power=.8</span><br>
-				</div>
+				</div> -->
 			</div>
 			
-			<div id="within1" style="display:inline-block">
+			<!-- <div id="within1" style="display:inline-block">
 				<div class="pg" style="display:inline-block;margin-right:20px;padding:5px;width:200px">
 					<IMG src="/static/images/testimage.png" style="width:200px"></IMG>
 				</div>
@@ -37,7 +35,7 @@
 					<span id="pspan2">p=.50</span><br>
 					<span id="dspan2">power=.8</span><br>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<br>
 
@@ -192,6 +190,184 @@ function MySubmit(){
 }
 
 
+
+/// Graph
+  var file = "/static/stimuli/WithinSubjects/between1.csv";
+  var file2 = "/static/stimuli/WithinSubjects/within1.csv";
+
+/// Name variables here
+	var	yLabel = "Weight",
+		condLabel = "Exercise routine",
+		xLabel = "Fruit or Veggie",
+		xMax = 20,
+		yMax = 250;
+
+/// Variables for calculating stuff
+  var parsedData;
+  var iv = [];
+  var dv = [];
+  var measure = [];
+  var meanVeggie = [];
+  var meanFruit = [];
+
+
+/// Function for noise
+function randomJitter(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(xMax/2);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("#graph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// var line = d3.svg.line()
+// 	.interpolate("basis")
+//     .x(function(d) { return x(d.t); })
+//     .y(function(d) { return y(d.measure); });
+
+// Sets attributes of blockers
+
+// var lineBlockerAttr = new Object();
+// 	lineBlockerAttr.x=width/3;
+// 	lineBlockerAttr.y=0;
+
+// var pointBlockerAttr = new Object();
+// 	pointBlockerAttr.x=width/2;
+// 	pointBlockerAttr.y=0;
+
+// Reads data from .csv file
+
+d3.csv(file, function(error, data) {
+  	if (error) throw error;
+
+    //////// Saves data for calculation ////////
+    parsedData = JSON.parse(JSON.stringify(data));
+  
+    for (i = 0; i < parsedData.length; i++) {
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure.push(Number(parsedData[i].measure));
+
+      if (parsedData[i].condition=="Veggie") {
+        meanVeggie.push(Number(parsedData[i].dv));
+      }
+      else if (parsedData[i].condition=="Fruit") {
+        meanFruit.push(Number(parsedData[i].dv));
+      }
+    }
+    ////////////////////////////////////////////
+
+  	data.forEach(function(d) {
+    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.dv = +d.dv;
+    	d.t = +d.t;
+  	});
+
+  	// create the scales x() and y()
+  	x.domain([0,xMax+1]);
+  	y.domain([0,yMax]);
+
+
+    // Appends lines for means
+
+    var VeggieMean = svg.append("line")
+      .attr("x1", x(d3.min(iv)-1))
+      .attr("x2", x(d3.min(iv)+3))
+      .attr("y1", y(d3.mean(meanVeggie)))
+      .attr("y2", y(d3.mean(meanVeggie)))
+      .attr("stroke", "black");
+
+    var FruitMean = svg.append("line")
+      .attr("x1", x(d3.max(iv)-3))
+      .attr("x2", x(d3.max(iv)+1))
+      .attr("y1", y(d3.mean(meanFruit)))
+      .attr("y2", y(d3.mean(meanFruit)))
+      .attr("stroke", "black");
+
+    // Appends points
+
+  	svg.selectAll(".dot")
+      	.data(data)
+   	.enter().append("circle")
+      	.attr("class", "dot")
+      	.attr("r", 3.5)
+      	.attr("cx", function(d) { return x(d.iv); })
+      	.attr("cy", function(d) { return y(d.dv); })
+      	.style("fill", function(d) { return color(d.condition); })
+      	.style("opacity", 1);
+
+    // Appends axes
+
+  	svg.append("g")
+    	.attr("class", "x axis")
+      	.attr("transform", "translate(0," + height + ")")
+      	.call(xAxis)
+    .append("text")
+    	.attr("class", "label")
+    	.attr("x", width)
+    	.attr("y", -6)
+    	.style("text-anchor", "end")
+    	.text(xLabel);
+
+  	svg.append("g")
+      	.attr("class", "y axis")
+      	.call(yAxis)
+   	.append("text")
+    	.attr("class", "label")
+    	.attr("transform", "rotate(-90)")
+    	.attr("y", 6)
+    	.attr("dy", ".71em")
+    	.style("text-anchor", "end")
+    	.text(yLabel)
+
+    // Appends legend
+
+  	var legend = svg.selectAll(".legend")
+      	.data(color.domain())
+    .enter().append("g")
+      	.attr("class", "legend")
+      	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  	legend.append("rect")
+      	.attr("x", width - 18)
+      	.attr("width", 18)
+      	.attr("height", 18)
+      	.style("fill", color);
+
+  	legend.append("text")
+      	.attr("x", width - 24)
+      	.attr("y", 9)
+      	.attr("dy", ".35em")
+      	.style("text-anchor", "end")
+      	.text(function(d) { return d; });
+
+
+
+});
 
 </script>
 
