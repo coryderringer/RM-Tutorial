@@ -186,10 +186,10 @@ class SignupHandler(webapp.RequestHandler):
 ######################### Individual Page Handlers ############################
 ###############################################################################
 
-class SingleSubjectHandler(webapp.RequestHandler):
+class OrderEffectsHandler(webapp.RequestHandler):
 
 	def get(self):
-		doRender(self, "single_subject.htm")
+		doRender(self, "OrderEffects.htm")
 
 	def post(self):
 		self.session = get_current_session()
@@ -325,6 +325,9 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 	def get(self):
 		doRender(self, 'CarryoverEffects1.htm')
 
+	# In this handler, add all the progress/back-end stuff, so that the first page rendered is the overall experiment description
+	# It should then cycle through the pages to the other parts with graphs and stuff
+
 		
 ###############################################################################
 ######################### Data Display Page Handler ###########################
@@ -456,7 +459,7 @@ application = webapp.WSGIApplication([
 	('/logout', LogoutHandler),
 	('/login', LoginHandler),
 	('/signup', SignupHandler),
-	('/SingleSubject', SingleSubjectHandler),
+	('/OrderEffects', OrderEffectsHandler),
 	('/WithinSubject', WithinSubjectHandler),
 	('/LineGraphTest', LineGraphTestHandler),
 	('/CarryoverEffects', CarryoverEffectsHandler),
