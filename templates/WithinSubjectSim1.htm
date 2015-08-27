@@ -188,22 +188,119 @@ function MySubmit(){
 
 /// Graph
 // list of files
-var BetweenFileList = ['/static/stimuli/WithinSubjects/between1.csv', '/static/stimuli/WithinSubjects/between2.csv', '/static/stimuli/WithinSubjects/between3.csv', '/static/stimuli/WithinSubjects/between4.csv', '/static/stimuli/WithinSubjects/between5.csv'];
+var FileList = ['/static/stimuli/WithinSubjects/data1.csv',  
+	'/static/stimuli/WithinSubjects/data2.csv',  
+	'/static/stimuli/WithinSubjects/data3.csv',  
+	'/static/stimuli/WithinSubjects/data4.csv',  
+	'/static/stimuli/WithinSubjects/data5.csv',  
+	'/static/stimuli/WithinSubjects/data6.csv',  
+	'/static/stimuli/WithinSubjects/data7.csv',  
+	'/static/stimuli/WithinSubjects/data8.csv',  
+	'/static/stimuli/WithinSubjects/data9.csv',  
+	'/static/stimuli/WithinSubjects/data10.csv',  
+	'/static/stimuli/WithinSubjects/data11.csv',  
+	'/static/stimuli/WithinSubjects/data12.csv',  
+	'/static/stimuli/WithinSubjects/data13.csv',  
+	'/static/stimuli/WithinSubjects/data14.csv',  
+	'/static/stimuli/WithinSubjects/data15.csv',  
+	'/static/stimuli/WithinSubjects/data16.csv',  
+	'/static/stimuli/WithinSubjects/data17.csv',  
+	'/static/stimuli/WithinSubjects/data18.csv',  
+	'/static/stimuli/WithinSubjects/data19.csv',  
+	'/static/stimuli/WithinSubjects/data20.csv',  
+	'/static/stimuli/WithinSubjects/data21.csv',  
+	'/static/stimuli/WithinSubjects/data22.csv',  
+	'/static/stimuli/WithinSubjects/data23.csv',  
+	'/static/stimuli/WithinSubjects/data24.csv',  
+	'/static/stimuli/WithinSubjects/data25.csv',  
+	'/static/stimuli/WithinSubjects/data26.csv',  
+	'/static/stimuli/WithinSubjects/data27.csv',  
+	'/static/stimuli/WithinSubjects/data28.csv',  
+	'/static/stimuli/WithinSubjects/data29.csv',  
+	'/static/stimuli/WithinSubjects/data30.csv',  
+	'/static/stimuli/WithinSubjects/data31.csv',  
+	'/static/stimuli/WithinSubjects/data32.csv',  
+	'/static/stimuli/WithinSubjects/data33.csv',  
+	'/static/stimuli/WithinSubjects/data34.csv',  
+	'/static/stimuli/WithinSubjects/data35.csv',  
+	'/static/stimuli/WithinSubjects/data36.csv',  
+	'/static/stimuli/WithinSubjects/data37.csv',  
+	'/static/stimuli/WithinSubjects/data38.csv',  
+	'/static/stimuli/WithinSubjects/data39.csv',  
+	'/static/stimuli/WithinSubjects/data40.csv',  
+	'/static/stimuli/WithinSubjects/data41.csv',  
+	'/static/stimuli/WithinSubjects/data42.csv',  
+	'/static/stimuli/WithinSubjects/data43.csv',  
+	'/static/stimuli/WithinSubjects/data44.csv',  
+	'/static/stimuli/WithinSubjects/data45.csv',  
+	'/static/stimuli/WithinSubjects/data46.csv',  
+	'/static/stimuli/WithinSubjects/data47.csv',  
+	'/static/stimuli/WithinSubjects/data48.csv',  
+	'/static/stimuli/WithinSubjects/data49.csv',  
+	'/static/stimuli/WithinSubjects/data50.csv'];
 
-var WithinFileList = ['/static/stimuli/WithinSubjects/within1.csv', '/static/stimuli/WithinSubjects/within2.csv', '/static/stimuli/WithinSubjects/within3.csv', '/static/stimuli/WithinSubjects/within4.csv', '/static/stimuli/WithinSubjects/within5.csv']
+var FileList2 = ['/static/stimuli/WithinSubjects/widedata1.csv',  
+	'/static/stimuli/WithinSubjects/widedata2.csv',  
+	'/static/stimuli/WithinSubjects/widedata3.csv',  
+	'/static/stimuli/WithinSubjects/widedata4.csv',  
+	'/static/stimuli/WithinSubjects/widedata5.csv',  
+	'/static/stimuli/WithinSubjects/widedata6.csv',  
+	'/static/stimuli/WithinSubjects/widedata7.csv',  
+	'/static/stimuli/WithinSubjects/widedata8.csv',  
+	'/static/stimuli/WithinSubjects/widedata9.csv',  
+	'/static/stimuli/WithinSubjects/widedata10.csv',  
+	'/static/stimuli/WithinSubjects/widedata11.csv',  
+	'/static/stimuli/WithinSubjects/widedata12.csv',  
+	'/static/stimuli/WithinSubjects/widedata13.csv',  
+	'/static/stimuli/WithinSubjects/widedata14.csv',  
+	'/static/stimuli/WithinSubjects/widedata15.csv',  
+	'/static/stimuli/WithinSubjects/widedata16.csv',  
+	'/static/stimuli/WithinSubjects/widedata17.csv',  
+	'/static/stimuli/WithinSubjects/widedata18.csv',  
+	'/static/stimuli/WithinSubjects/widedata19.csv',  
+	'/static/stimuli/WithinSubjects/widedata20.csv',  
+	'/static/stimuli/WithinSubjects/widedata21.csv',  
+	'/static/stimuli/WithinSubjects/widedata22.csv',  
+	'/static/stimuli/WithinSubjects/widedata23.csv',  
+	'/static/stimuli/WithinSubjects/widedata24.csv',  
+	'/static/stimuli/WithinSubjects/widedata25.csv',  
+	'/static/stimuli/WithinSubjects/widedata26.csv',  
+	'/static/stimuli/WithinSubjects/widedata27.csv',  
+	'/static/stimuli/WithinSubjects/widedata28.csv',  
+	'/static/stimuli/WithinSubjects/widedata29.csv',  
+	'/static/stimuli/WithinSubjects/widedata30.csv',  
+	'/static/stimuli/WithinSubjects/widedata31.csv',  
+	'/static/stimuli/WithinSubjects/widedata32.csv',  
+	'/static/stimuli/WithinSubjects/widedata33.csv',  
+	'/static/stimuli/WithinSubjects/widedata34.csv',  
+	'/static/stimuli/WithinSubjects/widedata35.csv',  
+	'/static/stimuli/WithinSubjects/widedata36.csv',  
+	'/static/stimuli/WithinSubjects/widedata37.csv',  
+	'/static/stimuli/WithinSubjects/widedata38.csv',  
+	'/static/stimuli/WithinSubjects/widedata39.csv',  
+	'/static/stimuli/WithinSubjects/widedata40.csv',  
+	'/static/stimuli/WithinSubjects/widedata41.csv',  
+	'/static/stimuli/WithinSubjects/widedata42.csv',  
+	'/static/stimuli/WithinSubjects/widedata43.csv',  
+	'/static/stimuli/WithinSubjects/widedata44.csv',  
+	'/static/stimuli/WithinSubjects/widedata45.csv',  
+	'/static/stimuli/WithinSubjects/widedata46.csv',  
+	'/static/stimuli/WithinSubjects/widedata47.csv',  
+	'/static/stimuli/WithinSubjects/widedata48.csv',  
+	'/static/stimuli/WithinSubjects/widedata49.csv',  
+	'/static/stimuli/WithinSubjects/widedata50.csv']
+
 
 // Randomly select a file from the list
-var BetweenFile = BetweenFileList[Math.floor(Math.random() * BetweenFileList.length)];
-
-var WithinFile = WithinFileList[Math.floor(Math.random() * WithinFileList.length)];
-
+var File = FileList[Math.floor(Math.random() * FileList.length)];
+var File2 = FileList2[Math.floor(Math.random()*FileList2.length)];
 
 /// Name variables here
 var	yLabel = "Weight",
 	condLabel = "Exercise routine",
 	xMax = 20,
-	yMax1 = 250;
-	yMax2 = 40
+	yMax = 250;
+	
 
 /// Variables for calculating stuff
 var parsedData;
@@ -230,13 +327,10 @@ var x = d3.scale.linear()
     .range([0, width])
     .domain([0,xMax+1]);
 
-var y1 = d3.scale.linear()
+var y = d3.scale.linear()
     .range([height, 0])
-    .domain([100,yMax1]);
+    .domain([100,yMax]);
 
-var y2 = d3.scale.linear()
-    .range([height, 0])
-    .domain([-5,yMax2]);
 
 var cond = d3.scale.ordinal()
     .rangePoints([0, width],1)
@@ -250,13 +344,11 @@ var xAxis = d3.svg.axis()
     .orient("bottom")
     // .ticks(xMax/2);
 
-var yAxis1 = d3.svg.axis()
-    .scale(y1)
+var yAxis = d3.svg.axis()
+    .scale(y)
     .orient("left");
 
-var yAxis2 = d3.svg.axis()
-    .scale(y2)
-    .orient("left");
+
 
 var chart1 = d3.select("#graph1").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -288,7 +380,7 @@ var chart2 = d3.select("#graph2").append("svg")
 // Reads data from .csv file
 
 // for between subjects
-d3.csv(BetweenFile, function(error, data) {
+d3.csv(File, function(error, data) {
   	if (error) throw error;
 
     //////// Saves data for calculation ////////
@@ -325,15 +417,15 @@ d3.csv(BetweenFile, function(error, data) {
     var VeggieMeanBetween = chart1.append("line")
       .attr("x1", cond("Veggie")-x(1))
       .attr("x2", cond("Veggie")+3*x(1))
-      .attr("y1", y1(d3.mean(meanVeggieBetween)))
-      .attr("y2", y1(d3.mean(meanVeggieBetween)))
+      .attr("y1", y(d3.mean(meanVeggieBetween)))
+      .attr("y2", y(d3.mean(meanVeggieBetween)))
       .attr("stroke", color("Veggie"));
 
     var FruitMeanBetween = chart1.append("line")
       .attr("x1", cond("Fruit")-3*x(1))
       .attr("x2", cond("Fruit")+x(1))
-      .attr("y1", y1(d3.mean(meanFruitBetween)))
-      .attr("y2", y1(d3.mean(meanFruitBetween)))
+      .attr("y1", y(d3.mean(meanFruitBetween)))
+      .attr("y2", y(d3.mean(meanFruitBetween)))
       .attr("stroke", color("Fruit"));
 
     // Appends points
@@ -343,9 +435,9 @@ d3.csv(BetweenFile, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + randomJitter(-10,10); })
+      	.attr("cx", function(d) { return cond(d.condition) ; })
       		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y1(d.dv); })
+      	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
       	.style("opacity", 1);
 
@@ -359,7 +451,7 @@ d3.csv(BetweenFile, function(error, data) {
 
   	chart1.append("g")
       	.attr("class", "y axis")
-      	.call(yAxis1)
+      	.call(yAxis)
    	.append("text")
     	.attr("class", "label")
     	.attr("transform", "rotate(-90)")
@@ -394,22 +486,22 @@ d3.csv(BetweenFile, function(error, data) {
 });
 
 // for within subjects
-d3.csv(WithinFile, function(error, data) {
+d3.csv(File, function(error, data) {
   	if (error) throw error;
 
     //////// Saves data for calculation ////////
-    parsedData2 = JSON.parse(JSON.stringify(data));
+    parsedData = JSON.parse(JSON.stringify(data));
   
     for (i = 0; i < parsedData.length; i++) {
-      iv.push(Number(parsedData2[i].iv));
-      dv.push(Number(parsedData2[i].dv));
-      measure.push(Number(parsedData2[i].measure));
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
-        meanVeggieWithin.push(Number(parsedData2[i].dv));
+        meanVeggieWithin.push(Number(parsedData[i].dv));
       }
       else if (parsedData[i].condition=="Fruit") {
-        meanFruitWithin.push(Number(parsedData2[i].dv));
+        meanFruitWithin.push(Number(parsedData[i].dv));
       }
     }
     ////////////////////////////////////////////
@@ -431,15 +523,15 @@ d3.csv(WithinFile, function(error, data) {
     var VeggieMeanWithin = chart2.append("line")
       .attr("x1", cond("Veggie")-x(1))
       .attr("x2", cond("Veggie")+3*x(1))
-      .attr("y1", y2(d3.mean(meanVeggieWithin)))
-      .attr("y2", y2(d3.mean(meanVeggieWithin)))
+      .attr("y1", y(d3.mean(meanVeggieWithin)))
+      .attr("y2", y(d3.mean(meanVeggieWithin)))
       .attr("stroke", color("Veggie"));
 
     var FruitMeanWithin = chart2.append("line")
       .attr("x1", cond("Fruit")-3*x(1))
       .attr("x2", cond("Fruit")+x(1))
-      .attr("y1", y2(d3.mean(meanFruitWithin)))
-      .attr("y2", y2(d3.mean(meanFruitWithin)))
+      .attr("y1", y(d3.mean(meanFruitWithin)))
+      .attr("y2", y(d3.mean(meanFruitWithin)))
       .attr("stroke", color("Fruit"));
 
     // Appends points
@@ -449,9 +541,9 @@ d3.csv(WithinFile, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition)+ randomJitter(-10,10); })
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y2(d.dv); })
+      	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
       	.style("opacity", 1);
 
@@ -465,7 +557,7 @@ d3.csv(WithinFile, function(error, data) {
 
   	chart2.append("g")
       	.attr("class", "y axis")
-      	.call(yAxis2)
+      	.call(yAxis)
    	.append("text")
     	.attr("class", "label")
     	.attr("transform", "rotate(-90)")
@@ -499,19 +591,18 @@ d3.csv(WithinFile, function(error, data) {
 
 function UpdateData(){
 	$('#graph1').html('');
-	meanFruit = []
-	meanVeggie = []
+	meanFruitBetween = [];
+	meanVeggieBetween = [];
 
 	$('#graph2').html('');
-
+	meanFruitWithin = [];
+	meanVeggieWithin = [];
 
 	// randomly select a datafile
 
-	random = Math.floor(Math.random() * BetweenFileList.length)
+	random = Math.floor(Math.random() * FileList.length)
 
-	var Between = BetweenFileList[random]
-
-	var Within = WithinFileList[random]
+	File = FileList[random]
 
 	var chart1 = d3.select("#graph1").append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -526,7 +617,7 @@ function UpdateData(){
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	// generate the graph again for between
-	d3.csv(BetweenFile, function(error, data) {
+	d3.csv(File, function(error, data) {
 	  	if (error) throw error;
 
 	    //////// Saves data for calculation ////////
@@ -563,15 +654,15 @@ function UpdateData(){
 	    var VeggieMeanBetween = chart1.append("line")
 	      .attr("x1", cond("Veggie")-x(1))
 	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y1(d3.mean(meanVeggieBetween)))
-	      .attr("y2", y1(d3.mean(meanVeggieBetween)))
+	      .attr("y1", y(d3.mean(meanVeggieBetween)))
+	      .attr("y2", y(d3.mean(meanVeggieBetween)))
 	      .attr("stroke", color("Veggie"));
 
 	    var FruitMeanBetween = chart1.append("line")
 	      .attr("x1", cond("Fruit")-3*x(1))
 	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y1(d3.mean(meanFruitBetween)))
-	      .attr("y2", y1(d3.mean(meanFruitBetween)))
+	      .attr("y1", y(d3.mean(meanFruitBetween)))
+	      .attr("y2", y(d3.mean(meanFruitBetween)))
 	      .attr("stroke", color("Fruit"));
 
 	    // Appends points
@@ -581,9 +672,9 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition)+ randomJitter(-10,10); })
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y1(d.dv); })
+	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
 	      	.style("opacity", 1);
 
@@ -597,7 +688,7 @@ function UpdateData(){
 
 	  	chart1.append("g")
 	      	.attr("class", "y axis")
-	      	.call(yAxis1)
+	      	.call(yAxis)
 	   	.append("text")
 	    	.attr("class", "label")
 	    	.attr("transform", "rotate(-90)")
@@ -632,22 +723,22 @@ function UpdateData(){
 	});
 
 	// generate the graph again for within
-	d3.csv(WithinFile, function(error, data) {
+	d3.csv(File, function(error, data) {
 	  	if (error) throw error;
 
 	    //////// Saves data for calculation ////////
-	    parsedData2 = JSON.parse(JSON.stringify(data));
+	    parsedData = JSON.parse(JSON.stringify(data));
 	  
 	    for (i = 0; i < parsedData.length; i++) {
-	      iv.push(Number(parsedData2[i].iv));
-	      dv.push(Number(parsedData2[i].dv));
-	      measure.push(Number(parsedData2[i].measure));
+	      iv.push(Number(parsedData[i].iv));
+	      dv.push(Number(parsedData[i].dv));
+	      measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
-	        meanVeggieWithin.push(Number(parsedData2[i].dv));
+	        meanVeggieWithin.push(Number(parsedData[i].dv));
 	      }
 	      else if (parsedData[i].condition=="Fruit") {
-	        meanFruitWithin.push(Number(parsedData2[i].dv));
+	        meanFruitWithin.push(Number(parsedData[i].dv));
 	      }
 	    }
 	    ////////////////////////////////////////////
@@ -669,15 +760,15 @@ function UpdateData(){
 	    var VeggieMeanWithin = chart2.append("line")
 	      .attr("x1", cond("Veggie")-x(1))
 	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y2(d3.mean(meanVeggieWithin)))
-	      .attr("y2", y2(d3.mean(meanVeggieWithin)))
+	      .attr("y1", y(d3.mean(meanVeggieWithin)))
+	      .attr("y2", y(d3.mean(meanVeggieWithin)))
 	      .attr("stroke", color("Veggie"));
 
 	    var FruitMeanWithin = chart2.append("line")
 	      .attr("x1", cond("Fruit")-3*x(1))
 	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y2(d3.mean(meanFruitWithin)))
-	      .attr("y2", y2(d3.mean(meanFruitWithin)))
+	      .attr("y1", y(d3.mean(meanFruitWithin)))
+	      .attr("y2", y(d3.mean(meanFruitWithin)))
 	      .attr("stroke", color("Fruit"));
 
 	    // Appends points
@@ -687,9 +778,9 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition)+ randomJitter(-10,10); })
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y2(d.dv); })
+	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
 	      	.style("opacity", 1);
 
@@ -703,7 +794,7 @@ function UpdateData(){
 
 	  	chart2.append("g")
 	      	.attr("class", "y axis")
-	      	.call(yAxis2)
+	      	.call(yAxis)
 	   	.append("text")
 	    	.attr("class", "label")
 	    	.attr("transform", "rotate(-90)")
