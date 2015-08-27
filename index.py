@@ -245,8 +245,21 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			self.session['WSAnswer2'] = self.request.get('Q2')
 			self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
 
+			pValues = [[0,0,0,0]] * 50
+			sigTally = [[0,0,0,0]] * 50
+			
+			f = open('pValues.csv', 'rU')
+			mycsv = csv.reader(f)
+			mycsv = list(mycsv)   
+
+			for x in range(0,50):
+				pValues[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+				sigTally[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+
 			doRender(self, "WithinSubjectSim1.htm",
-				{'progress':self.session['M2_Progress']})
+				{'progress':self.session['M2_Progress'],
+				'pValues':pValues,
+				'sigTally':sigTally})
 
 		elif M2_Progress == 2:
 			# Record things from sim 1 
