@@ -323,7 +323,7 @@ class LineGraphTestHandler(webapp.RequestHandler):
 
 class CarryoverEffectsHandler(webapp.RequestHandler):
 	def get(self):
-		doRender(self, 'CarryoverEffects.htm')
+		doRender(self, 'CarryoverEffects1.htm')
 
 		
 ###############################################################################
@@ -361,6 +361,7 @@ class DataHandler(webapp.RequestHandler):
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
+		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
 		# logging.info(Logged_In)
 		# If they're logged in, take them to the main menu
@@ -416,6 +417,7 @@ class LoginHandler(webapp.RequestHandler):
 			self.session['Module1'] = i.Module1
 			self.session['Module2'] = i.Module2
 		
+		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
 		self.session['Logged_In'] = True
 

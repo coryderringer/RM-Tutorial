@@ -11,7 +11,8 @@
   var current = 0;
 
 /// Graph
-  var file = "/static/stimuli/OrderEffects/test.csv";
+  var file = "/static/stimuli/OrderEffects/test.csv"
+  var file1 = "/static/stimuli/OrderEffects/test1.csv";
 
 /// Name variables here
 	var	yLabel = "Accuracy",
@@ -175,7 +176,7 @@ function previous(current) {
     <button id="previous" onclick="current--; previous(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;<button id="next" onclick="current++; next(current);">Next &rarr;</button>
   </div>
 
-	<div id="graph" width="900" height="600"></div>
+	<div id="graph" width="900" height="600" align="center"></div>
 
 	<form method="post" action="/SingleSubject">
 		<button>Complete Module</button>
@@ -217,6 +218,8 @@ function previous(current) {
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 800 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+    // width = 500 - margin.left - margin.right,
+    // height = 300 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
     .range([0, width])
@@ -229,6 +232,7 @@ var y = d3.scale.linear()
 var cond = d3.scale.ordinal()
     .rangePoints([0, width],1)
     .domain(["Experimental","Control"]);
+    // .domain(["Control", "Experimental"]);
 
 var color = d3.scale.category10()
     .domain(["Experimental","Control"]);
@@ -467,14 +471,6 @@ d3.csv(file, function(error, data) {
 
 });
 
-/// Calculate means
-
-// var calculate = [];
-// for (i = 0; i < parsedData.length; i++) {
-//   if (parsedData[i].condition=="Control") {
-//       calculate[i] = Number(parsedData[i].t)
-//   }
-// }
-
 </script>
+
 {% endblock %}
