@@ -16,7 +16,12 @@
 
 <div class="pg">
 	<center>
+		<span style="display:inline-block"><b>Between Subjects</b></span>
+		<span style="display:inline-block;position:relative;left:170px"><b>Within Subjects</b></span>
 		<div id="firstrow">
+			<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
+				<b>Low<br>Population Variance</b>
+			</span>	
 			<div id="between1" style="display:inline-block">
 				<div id="graph1"></div>
 				<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
@@ -38,6 +43,9 @@
 		<br>
 
 		<div id="secondrow" style="display:none">
+			<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
+				<b>High<br>Population Variance</b>
+			</span>
 			<div id="between2" style="display:inline-block">
 				<div id="graph3"></div>
 				<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
@@ -50,7 +58,7 @@
 		</div>
 		
 		<br>
-		<button id="ResampleButton" style="width:100px;display:none;position:relative;left:-20px" onclick="UpdateData()">Resample</button>
+		<button id="ResampleButton" style="width:100px;display:none;float:left" onclick="UpdateData()">Resample</button>
 	</center>	
 	<br>
 
@@ -101,7 +109,7 @@
 		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed?</p>
 	</div>
 
-	<button id="NextButton" style="width:100px;display:none">Continue</button>
+	<center><button id="NextButton" style="width:12.5%;display:none">Continue</button></center>
 
 
 </div>
@@ -116,8 +124,8 @@ var Q3Outcome = 'unanswered';
 var datasets = 1;
 var progress = {{progress}};
 var LearnDiv = 0;
-var pValues = {{pValues}};
-var sigTally = {{sigTally}};
+var pValues = {{pValues1}};
+var sigTally = {{sigTally1}};
 
 
 function LearnVisible(){
@@ -129,7 +137,8 @@ function LearnVisible(){
 
 function RecordQuiz3(){
 	$('.pdiv').show();
-
+	
+	
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();
 	if(Q3Outcome != 'A' & Q3Outcome != 'B'){
 		alert('Please make a selection!');
@@ -154,12 +163,11 @@ function RecordQuiz3(){
 
 		// Show second row and instructions, resample button
 		$('#secondrow, #Text3, #ResampleButton').show();
-		
+		$('#firstrow').find('span').css('visibility', 'visible');
 
 		// Next button: move on after simulations
 		$('#NextButton').click(MySubmit);
-		$('#NextButton').css('display', 'inline-block');
-		$('#NextButton').css('float', 'right');	
+		// $('#NextButton').css('display', 'inline-block');
 	
 	});
 }
@@ -474,13 +482,14 @@ d3.csv(File, function(error, data) {
   	chart1.append("g")
       	.attr("class", "y axis")
       	.call(yAxis)
-   	.append("text")
-    	.attr("class", "label")
-    	.attr("transform", "rotate(-90)")
-    	.attr("y", 6)
-    	.attr("dy", ".71em")
-    	.style("text-anchor", "end")
-    	.text(yLabel)
+   	// .append("text")
+    // 	.attr("class", "label")
+    // 	.attr("transform", "rotate(-90)")
+    // 	.attr("y", 6)
+    // 	.attr("dy", "-5em")
+    // 	// .attr("dx", "1em")
+    // 	.style("text-anchor", "end")
+    // 	.text(yLabel)
 
     // Appends legend
 
@@ -583,6 +592,8 @@ d3.csv(File, function(error, data) {
 	// 		.attr("y1", y(parsedData.dv))
 	// 		.attr("y2", y(parsedData.dv))
 	// 		.attr("stroke", "black");
+	
+	// Not quite working yet...
 	var line = chart2.selectAll("line")
 		.data(data)
 		.enter().append("line")
@@ -605,13 +616,13 @@ d3.csv(File, function(error, data) {
   	chart2.append("g")
       	.attr("class", "y axis")
       	.call(yAxis)
-   	.append("text")
-    	.attr("class", "label")
-    	.attr("transform", "rotate(-90)")
-    	.attr("y", 6)
-    	.attr("dy", ".71em")
-    	.style("text-anchor", "end")
-    	.text(yLabel)
+   	// .append("text")
+    // 	.attr("class", "label")
+    // 	.attr("transform", "rotate(-90)")
+    // 	.attr("y", 6)
+    // 	.attr("dy", ".71em")
+    // 	.style("text-anchor", "end")
+    // 	.text(yLabel)
 
    //  // Appends legend
 
@@ -710,13 +721,13 @@ d3.csv(File2, function(error, data) {
   	chart3.append("g")
       	.attr("class", "y axis")
       	.call(yAxis)
-   	.append("text")
-    	.attr("class", "label")
-    	.attr("transform", "rotate(-90)")
-    	.attr("y", 6)
-    	.attr("dy", ".71em")
-    	.style("text-anchor", "end")
-    	.text(yLabel)
+   	// .append("text")
+    // 	.attr("class", "label")
+    // 	.attr("transform", "rotate(-90)")
+    // 	.attr("y", 6)
+    // 	.attr("dy", ".71em")
+    // 	.style("text-anchor", "end")
+    // 	.text(yLabel)
 
     // Appends legend
 
@@ -777,19 +788,19 @@ d3.csv(File2, function(error, data) {
 
     // Appends lines for means
 
-    var VeggieMeanWithin = chart4.append("line")
-      .attr("x1", cond("Veggie")-x(1))
-      .attr("x2", cond("Veggie")+3*x(1))
-      .attr("y1", y(d3.mean(meanWideVeggieWithin)))
-      .attr("y2", y(d3.mean(meanWideVeggieWithin)))
-      .attr("stroke", color("Veggie"));
+    // var VeggieMeanWithin = chart4.append("line")
+    //   .attr("x1", cond("Veggie")-x(1))
+    //   .attr("x2", cond("Veggie")+3*x(1))
+    //   .attr("y1", y(d3.mean(meanWideVeggieWithin)))
+    //   .attr("y2", y(d3.mean(meanWideVeggieWithin)))
+    //   .attr("stroke", color("Veggie"));
 
-    var FruitMeanWithin = chart4.append("line")
-      .attr("x1", cond("Fruit")-3*x(1))
-      .attr("x2", cond("Fruit")+x(1))
-      .attr("y1", y(d3.mean(meanWideFruitWithin)))
-      .attr("y2", y(d3.mean(meanWideFruitWithin)))
-      .attr("stroke", color("Fruit"));
+    // var FruitMeanWithin = chart4.append("line")
+    //   .attr("x1", cond("Fruit")-3*x(1))
+    //   .attr("x2", cond("Fruit")+x(1))
+    //   .attr("y1", y(d3.mean(meanWideFruitWithin)))
+    //   .attr("y2", y(d3.mean(meanWideFruitWithin)))
+    //   .attr("stroke", color("Fruit"));
 
     // Appends points
 
@@ -815,13 +826,13 @@ d3.csv(File2, function(error, data) {
   	chart4.append("g")
       	.attr("class", "y axis")
       	.call(yAxis)
-   	.append("text")
-    	.attr("class", "label")
-    	.attr("transform", "rotate(-90)")
-    	.attr("y", 6)
-    	.attr("dy", ".71em")
-    	.style("text-anchor", "end")
-    	.text(yLabel)
+   	// .append("text")
+    // 	.attr("class", "label")
+    // 	.attr("transform", "rotate(-90)")
+    // 	.attr("y", 6)
+    // 	.attr("dy", ".71em")
+    // 	.style("text-anchor", "end")
+    // 	.text(yLabel)
 
     // Appends legend
 
@@ -980,13 +991,13 @@ function UpdateData(){
 	  	chart1.append("g")
 	      	.attr("class", "y axis")
 	      	.call(yAxis)
-	   	.append("text")
-	    	.attr("class", "label")
-	    	.attr("transform", "rotate(-90)")
-	    	.attr("y", 6)
-	    	.attr("dy", ".71em")
-	    	.style("text-anchor", "end")
-	    	.text(yLabel)
+	   	// .append("text")
+	    // 	.attr("class", "label")
+	    // 	.attr("transform", "rotate(-90)")
+	    // 	.attr("y", 6)
+	    // 	.attr("dy", ".71em")
+	    // 	.style("text-anchor", "end")
+	    // 	.text(yLabel)
 
 	    // Appends legend
 
@@ -1050,19 +1061,19 @@ function UpdateData(){
 
 	    // Appends lines for means
 
-	    var VeggieMeanWithin = chart2.append("line")
-	      .attr("x1", cond("Veggie")-x(1))
-	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y(d3.mean(meanVeggieWithin)))
-	      .attr("y2", y(d3.mean(meanVeggieWithin)))
-	      .attr("stroke", color("Veggie"));
+	    // var VeggieMeanWithin = chart2.append("line")
+	    //   .attr("x1", cond("Veggie")-x(1))
+	    //   .attr("x2", cond("Veggie")+3*x(1))
+	    //   .attr("y1", y(d3.mean(meanVeggieWithin)))
+	    //   .attr("y2", y(d3.mean(meanVeggieWithin)))
+	    //   .attr("stroke", color("Veggie"));
 
-	    var FruitMeanWithin = chart2.append("line")
-	      .attr("x1", cond("Fruit")-3*x(1))
-	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y(d3.mean(meanFruitWithin)))
-	      .attr("y2", y(d3.mean(meanFruitWithin)))
-	      .attr("stroke", color("Fruit"));
+	    // var FruitMeanWithin = chart2.append("line")
+	    //   .attr("x1", cond("Fruit")-3*x(1))
+	    //   .attr("x2", cond("Fruit")+x(1))
+	    //   .attr("y1", y(d3.mean(meanFruitWithin)))
+	    //   .attr("y2", y(d3.mean(meanFruitWithin)))
+	    //   .attr("stroke", color("Fruit"));
 
 	    // Appends points
 
@@ -1088,13 +1099,13 @@ function UpdateData(){
 	  	chart2.append("g")
 	      	.attr("class", "y axis")
 	      	.call(yAxis)
-	   	.append("text")
-	    	.attr("class", "label")
-	    	.attr("transform", "rotate(-90)")
-	    	.attr("y", 6)
-	    	.attr("dy", ".71em")
-	    	.style("text-anchor", "end")
-	    	.text(yLabel)
+	   	// .append("text")
+	    // 	.attr("class", "label")
+	    // 	.attr("transform", "rotate(-90)")
+	    // 	.attr("y", 6)
+	    // 	.attr("dy", ".71em")
+	    // 	.style("text-anchor", "end")
+	    // 	.text(yLabel)
 
 	    // Appends legend
 
@@ -1193,13 +1204,13 @@ function UpdateData(){
 	  	chart3.append("g")
 	      	.attr("class", "y axis")
 	      	.call(yAxis)
-	   	.append("text")
-	    	.attr("class", "label")
-	    	.attr("transform", "rotate(-90)")
-	    	.attr("y", 6)
-	    	.attr("dy", ".71em")
-	    	.style("text-anchor", "end")
-	    	.text(yLabel)
+	   	// .append("text")
+	    // 	.attr("class", "label")
+	    // 	.attr("transform", "rotate(-90)")
+	    // 	.attr("y", 6)
+	    // 	.attr("dy", ".71em")
+	    // 	.style("text-anchor", "end")
+	    // 	.text(yLabel)
 
 	    // Appends legend
 
@@ -1260,19 +1271,19 @@ function UpdateData(){
 
 	    // Appends lines for means
 
-	    var VeggieMeanWithin = chart4.append("line")
-	      .attr("x1", cond("Veggie")-x(1))
-	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y(d3.mean(meanWideVeggieWithin)))
-	      .attr("y2", y(d3.mean(meanWideVeggieWithin)))
-	      .attr("stroke", color("Veggie"));
+	    // var VeggieMeanWithin = chart4.append("line")
+	    //   .attr("x1", cond("Veggie")-x(1))
+	    //   .attr("x2", cond("Veggie")+3*x(1))
+	    //   .attr("y1", y(d3.mean(meanWideVeggieWithin)))
+	    //   .attr("y2", y(d3.mean(meanWideVeggieWithin)))
+	    //   .attr("stroke", color("Veggie"));
 
-	    var FruitMeanWithin = chart4.append("line")
-	      .attr("x1", cond("Fruit")-3*x(1))
-	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y(d3.mean(meanWideFruitWithin)))
-	      .attr("y2", y(d3.mean(meanWideFruitWithin)))
-	      .attr("stroke", color("Fruit"));
+	    // var FruitMeanWithin = chart4.append("line")
+	    //   .attr("x1", cond("Fruit")-3*x(1))
+	    //   .attr("x2", cond("Fruit")+x(1))
+	    //   .attr("y1", y(d3.mean(meanWideFruitWithin)))
+	    //   .attr("y2", y(d3.mean(meanWideFruitWithin)))
+	    //   .attr("stroke", color("Fruit"));
 
 	    // Appends points
 
@@ -1298,13 +1309,13 @@ function UpdateData(){
 	  	chart4.append("g")
 	      	.attr("class", "y axis")
 	      	.call(yAxis)
-	   	.append("text")
-	    	.attr("class", "label")
-	    	.attr("transform", "rotate(-90)")
-	    	.attr("y", 6)
-	    	.attr("dy", ".71em")
-	    	.style("text-anchor", "end")
-	    	.text(yLabel)
+	   	// .append("text")
+	    // 	.attr("class", "label")
+	    // 	.attr("transform", "rotate(-90)")
+	    // 	.attr("y", 6)
+	    // 	.attr("dy", ".71em")
+	    // 	.style("text-anchor", "end")
+	    // 	.text(yLabel)
 
 	    // Appends legend
 

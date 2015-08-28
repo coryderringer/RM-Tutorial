@@ -245,30 +245,49 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			self.session['WSAnswer2'] = self.request.get('Q2')
 			self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
 
-			pValues = [[0,0,0,0]] * 50
-			sigTally = [[0,0,0,0]] * 50
+			pValues1 = [[0,0,0,0]] * 50
+			sigTally1 = [[0,0,0,0]] * 50
 			
-			f = open('pValues.csv', 'rU')
+			f = open('pValues1.csv', 'rU')
 			mycsv = csv.reader(f)
 			mycsv = list(mycsv)   
 
 			for x in range(0,50):
-				pValues[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
-				sigTally[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+				pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+				sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+
+			self.session['pValues1'] = pValues1
+			self.session['sigTally1'] = sigTally1
 
 			doRender(self, "WithinSubjectSim1.htm",
 				{'progress':self.session['M2_Progress'],
-				'pValues':pValues,
-				'sigTally':sigTally})
+				'pValues1':pValues1,
+				'sigTally1':sigTally1})
 
 		elif M2_Progress == 2:
 			# Record things from sim 1 
 			self.session['WSAnswer3'] = self.request.get('Q3')
 			self.session['numberOfSimulations'] = int(self.request.get('numbersims'))
 			
+			pValues2 = [[0,0,0,0]] * 50
+			sigTally2 = [[0,0,0,0]] * 50
+			correlations = [[0,0]] * 50
+
+			f = open('pValues2.csv', 'rU')
+			mycsv = csv.reader(f)
+			mycsv = list(mycsv)
+
+			for x in range(0,50):
+				pValues2[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+				sigTally2[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+				correlations[x] = [float(mycsv[x][8]), float(mycsv[x][9])]
+
 
 			doRender(self, "WithinSubjectSim2.htm",
-				{'progress':self.session['M2_Progress']})
+				{'progress':self.session['M2_Progress'],
+				'pValues2':pValues2,
+				'sigTally2':sigTally2,
+				'correlations':correlations})
 
 		elif M2_Progress == 3:
 			# Record things from sim 2
@@ -276,6 +295,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 			doRender(self, "WithinSubjectQuiz.htm",
 				{'progress':self.session['M2_Progress']})
+
 		elif M2_Progress == 4:
 			# Record results of final quiz
 			QuizResults = self.request.get('AnswerInput')
