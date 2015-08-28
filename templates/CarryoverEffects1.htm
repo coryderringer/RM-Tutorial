@@ -173,17 +173,12 @@ function answerQuiz2() {
   Q2Outcome = $('input[name=q2]:checked', '#Quiz2').val();
 
   $('#answer').hide()
-  $('#optionA, #optionB').css('opacity', '0.3');
-  $('#q2a, #q2b, #q2c').attr('disabled', true);
+  $('#optionA, #optionB').css('opacity', '0.5');
+  $('#q2a, #q2b').attr('disabled', true);
   $('#A2').show();
   $('#submit').show();
 
-  if (Q2Outcome=='C') { 
-    $('#A2').html('<b>Correct!</b><br>Actually, all are valid ways to deal with carryover effects.<br><br>If you used a between-subjects design, different groups of participants would experience the different conditions and each manipulation would not be able to contaminate the other. However, the usual drawbacks of this design still apply.<br><br>If we want to stick with the within-subjects design, we could increase the time between the conditions so that arousal in the experimental condition has time to decay. However, we do not always know how long it takes for participants to return to normal on some important characteristic. Another drawback is that extending the time is not always practically feasible (assuming you don’t want an experiment to last for days).<br><br>In the next section, we will look');
-  }
-  else {
-    $('#A2').html('<b>Sorry, that is incorrect!</b><br>This study uses a within-subjects design because the same group experiences both conditions – the exercise regimen and the control task – and gets measured on the dependent variable (spatial reasoning ability) after completing each condition.');
-  }
+  $('#A2').html('<b>Actually, they\'re both valid ways!</b><br>If you used a between-subjects design, different groups of participants would experience the different conditions and each manipulation would not be able to contaminate the other. However, the usual drawbacks of this design still apply, and researchers generally look for other ways of dealing with carryover effects instead of always reverting to a between-subjects design.<br><br>If we want to stick with the within-subjects design, we could increase the time between the conditions so that arousal in the experimental condition has time to decay. However, we do not always know how long it takes for participants to return to normal on some important characteristic (in this case, because we measure their arousal with a heart-rate monitor, we have that information).<br><br>Another major drawback is that extending the time is not always practically feasible (assuming you don’t want an experiment to last for days). Looking at the graph, how long do you think it would take for the participants\' heart-rate to return to normal?');
 }
 
 /// Submit function
@@ -198,7 +193,7 @@ function MySubmit(){
 
 </script>
 
-<div class="pg">
+<div class="pg" style="height:940px">
 
 	<h2><center>Carryover effects</center></h2>
 	
@@ -224,12 +219,11 @@ function MySubmit(){
 
 	<div id="quiz" width="900" style="display:none">
 
-    <p><b>What is the best way to deal with order and carryover effects?</b></p>
+    <p><b>Which of the following ways is preferable for dealing with carryover effects?</b></p>
 
     <form id="Quiz2" style="position:relative;left:20px">
       <input type="radio" value="A" name="q2" id="q2a"><label for="q2a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
       <input type="radio" value="B" name="q2" id="q2b"><label for="q2b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
-      <input type="radio" value="C" name="q2" id="q2c"><label for="q2c">&nbspUse a counterbalanced design where different subjects experience the conditions in different orders</label><br>
     </form><br>
 
     <center><button id="answer" onclick="answerQuiz2()">Check answer</button></center>
@@ -299,11 +293,13 @@ var y = d3.scale.linear()
 
 var cond = d3.scale.ordinal()
     .rangePoints([0, width],1)
-    .domain(["Experimental","Control"]);
+    // .domain(["Experimental","Control"]);
+    .domain(["Exercise regimen","Read short story"]);
     // .domain(["Control", "Experimental"]);
 
 var color = d3.scale.category10()
-    .domain(["Experimental","Control"]);
+    // .domain(["Experimental","Control"]);
+    .domain(["Exercise regimen","Read short story"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -342,16 +338,19 @@ d3.csv(file, function(error, data) {
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
+    console.log(parsedData.length);
   
     for (i = 0; i < parsedData.length; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
       measure.push(Number(parsedData[i].measure));
 
-      if (parsedData[i].condition=="Control") {
+      // if (parsedData[i].condition=="Control") {
+      if (parsedData[i].condition=="Read short story") {
         meanControl.push(Number(parsedData[i].dv));
       }
-      else if (parsedData[i].condition=="Experimental") {
+      // else if (parsedData[i].condition=="Experimental") {
+      else if (parsedData[i].condition=="Exercise regimen") {
         meanExperimental.push(Number(parsedData[i].dv));
       }
     }
@@ -393,17 +392,21 @@ d3.csv(file, function(error, data) {
 
     var controlMean = svg.append("line")
       .attr("id", "controlMean")
-      .attr("x1", cond("Control")-x(1))
-      .attr("x2", cond("Control")+x(1))
+      // .attr("x1", cond("Control")-x(1))
+      // .attr("x2", cond("Control")+x(1))
+      .attr("x1", cond("Read short story")-x(1))
+      .attr("x2", cond("Read short story")+x(1))
       .attr("y1", y(d3.mean(meanControl)))
       .attr("y2", y(d3.mean(meanControl)))
       .style("opacity", 1)
       .style("stroke-width", 2)
-      .style("stroke", color("Control"));
+      // .style("stroke", color("Control"));
+      .style("stroke", color("Read short story"));
 
     var controlM = svg.append("text")
         .attr("id", "controlM")
-        .attr("x", cond("Control")+x(1.2))
+        // .attr("x", cond("Control")+x(1.2))
+        .attr("x", cond("Read short story")+x(1.2))
         .attr("y", y(d3.mean(meanControl)))
         .attr("dy", ".35em")
         .attr("dx", x(1))
@@ -413,17 +416,21 @@ d3.csv(file, function(error, data) {
 
     var experimentalMean = svg.append("line")
       .attr("id", "experimentalMean")
-      .attr("x1", cond("Experimental")-x(1))
-      .attr("x2", cond("Experimental")+x(1))
+      // .attr("x1", cond("Experimental")-x(1))
+      // .attr("x2", cond("Experimental")+x(1))
+      .attr("x1", cond("Exercise regimen")-x(1))
+      .attr("x2", cond("Exercise regimen")+x(1))
       .attr("y1", y(d3.mean(meanExperimental)))
       .attr("y2", y(d3.mean(meanExperimental)))
       .style("opacity", 0)
       .style("stroke-width", 2)
-      .style("stroke", color("Experimental"));
+      // .style("stroke", color("Experimental"));
+      .style("stroke", color("Exercise regimen"));
 
     var experimentalM = svg.append("text")
       .attr("id", "experimentalM")
-      .attr("x", cond("Experimental")+x(1.2))
+      // .attr("x", cond("Experimental")+x(1.2))
+      .attr("x", cond("Exercise regimen")+x(1.2))
       .attr("y", y(d3.mean(meanExperimental)))
       .attr("dy", ".35em")
       .attr("dx", x(1))
@@ -480,14 +487,16 @@ d3.csv(file, function(error, data) {
     	.text(yLabel);
 
     svg.append("text")
-        .attr("x", cond("Control"))
+        // .attr("x", cond("Control"))
+        .attr("x", cond("Read short story"))
         .attr("y", y(2))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text("Read short story");
 
     svg.append("text")
-        .attr("x", cond("Experimental"))
+        // .attr("x", cond("Experimental"))
+        .attr("x", cond("Exercise regimen"))
         .attr("y", y(2))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
