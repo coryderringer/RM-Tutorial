@@ -189,30 +189,51 @@ class SignupHandler(webapp.RequestHandler):
 class OrderEffectsHandler(webapp.RequestHandler):
 
 	def get(self):
-		doRender(self, "OrderEffects.htm")
+		self.session = get_current_session()
+		if self.session['M1_Progress'] == 0:
+			doRender(self, "OrderEffects.htm",
+				{'progress':self.session['M1_Progress']})
 
 	def post(self):
+		logging.info("checkpoint 1")
 		self.session = get_current_session()
-		self.session['Module1'] = 'Complete'
+
+		M1_Progress = int(self.request.get('progressinput'))
+		self.session['M1_Progress'] = M1_Progress
+		logging.info("Progress: "+str(M1_Progress))
+		
+		if M1_Progress == 1:
+			self.session['OEAnswer1'] = self.request.get('Q1')
+
+			doRender(self, "CarryoverEffects1.htm",
+				{'progress':self.session['M1_Progress']})
+
+		elif M1_Progress == 2:
+			self.session['OEAnswer2'] = self.request.get('Q2')
+
+			doRender(self, "CarryoverEffects2.htm",
+				{'progress':self.session['M1_Progress']})
+
+		# self.session['Module1'] = 'Complete'
 
 		# Query the datastore
-		que = db.Query(User)
+		# que = db.Query(User)
 
-		# find the current user
-		que = que.filter('username =', self.session['username'])
-		results = que.fetch(limit=1)
+		# # find the current user
+		# que = que.filter('username =', self.session['username'])
+		# results = que.fetch(limit=1)
 
-		# change the datastore result for module 1
-		for i in results:
-			i.Module1 = self.session['Module1']
-			i.put()
+		# # change the datastore result for module 1
+		# for i in results:
+		# 	i.Module1 = self.session['Module1']
+		# 	i.put()
 
-		logging.info('Datastore updated')
+		# logging.info('Datastore updated')
 
-		doRender(self, 'menu.htm',
-			{'firstname':self.session['firstname'],
-			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2']})
+		# doRender(self, 'menu.htm',
+		# 	{'firstname':self.session['firstname'],
+		# 	'Module1':self.session['Module1'],
+		# 	'Module2':self.session['Module2']})
 
 		
 
