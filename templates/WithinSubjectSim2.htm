@@ -1,6 +1,6 @@
 {% extends "_base.htm" %}
 {% block title %}
-	Sim 2!!
+	Within-Subject Designs
 {% endblock%}
 
 
@@ -26,6 +26,7 @@
 			</span>
 			<div id="between1" style="display:inline-block">
 				<div id="graph1"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack1"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
 				
 				<!-- <div id="ttest1" class="ttest">
@@ -37,6 +38,7 @@
 			
 			<div id="within1" style="display:inline-block">
 				<div id="graph2"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack2"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
 			</div>
 		</div>
@@ -51,11 +53,13 @@
 			</span>
 			<div id="between2" style="display:inline-block">
 				<div id="graph3"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack3"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
 			</div>
 			
 			<div id="within2" style="display:inline-block">
 				<div id="graph4"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack4"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
 			</div>
 		</div>
@@ -67,19 +71,23 @@
 	<div id="Text1">
 		<p>The second advantage of within subject designs (closely related to the first) is that they are able to detect small but consistent differences that between subjects designs cannot, again because the designs ask different questions of the data.</p>
 
-		<p>Here we see the same example data from both between and within subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Vegetable Conditions for the same participants. A handy rule of thumb is to imagine lines connecting each individual's data in one condition to his/her data in the other. If the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants. If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects.</p>	
+		<p>Here we see the same example data from both between and within subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. A handy rule of thumb is to imagine lines connecting each individual's data in one condition to his/her data in the other (as we have drawn here). If the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects.</p>	
+
+		<p>In a within-subjects experiment, the means of the effect in each condition might be very similar. However, if each subject saw increased weight loss in Veggie Condition compared to Fruit Condition, even if the increase is small, it might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
 	</div>
 	
 	<div id="Text2" style="display:none">
-		<p>In a within-subjects experiment, Fruit Condition and Vegetable Condition might have the same group means as they did before (7.5 and 8, respectively). However, if each subject saw increased weight loss in Vegetable Condition compared to Fruit Condition, even if the increase is small, the average increase might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
+		<p>By contrast, if the datapoints are not correlated (as in the bottom row of graphs), it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that the lines on the bottom-left graph have wildly varying slopes. Some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. Consistent differences, even small ones, are the key in a within-subjects design.</p>
 
-		<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences can be statistically significant.</p>
+		<p>Also notice that the correlation of the two conditions does not matter at all in the between-subjects design: the p value is the same if the correlation is high (r = .99) or low (r = -.02). This is because the groups consist of different people: you can't compare Bob's weight loss in the Fruit Condition to his weight loss in the Veggie Condition, because Bob was never in the Veggie Condition! The correlation doesn't really mean anything in the context of a between-subjects design, so it doesn't affect the p value.</p>
+
+		<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
 	</div>
 	<button id="NextButton" style="width:100px" onclick="StartSimulations()">Continue</button>
 
 	
 	
-	<center><button id="SubmitButton" style="display:none;float:right" onclick="MySubmit()">Continue to Quiz</button></center>
+	<center><button id="SubmitButton" style="display:none" onclick="MySubmit()">Continue to Quiz</button></center>
 	
 	
 
@@ -89,11 +97,25 @@
 
 
 
-var datasets = 0;
+var datasets = 1;
 var progress = {{progress}};
 var pValues = {{pValues2}};
 var sigTally = {{sigTally2}};
 var correlations = {{correlations}};
+var sig = [0,0,0,0]
+
+function KeepScore(){
+	
+	for(var i = 0; i < pList.length; i++){
+		sig[i] += sigList[i]
+	}
+
+	$('#sigTrack1').html(sig[0]+'/'+datasets);
+	$('#sigTrack2').html(sig[1]+'/'+datasets);
+	$('#sigTrack3').html(sig[2]+'/'+datasets);
+	$('#sigTrack4').html(sig[3]+'/'+datasets);
+}
+
 
 function StartSimulations(){
 	console.log('Starting!');
@@ -103,6 +125,7 @@ function StartSimulations(){
 	$('#NextButton').hide();
 
 	// show stuff
+	$('.sigTrack').show();
 	$('.pdiv').show();
 	$('#ttest1').css('visibility', 'visible');
 	$('#ttest2').css('visibility', 'visible');
@@ -111,6 +134,9 @@ function StartSimulations(){
 	$('#ResampleButton').show();
 	$('#SubmitButton').show();
 	$('#firstrow').find('span').css('visibility', 'visible');
+
+	KeepScore();
+
 }
 
 // function ResampleFunction(){
@@ -238,12 +264,12 @@ var FileList2 = ['/static/stimuli/WithinSubjects/lowcorreldata1.csv',
 // Randomly select a file from the list
 
 // A particularly good example
-var random = 29;
-var File = FileList[random];
-var File2 = FileList2[random];
-var pList = pValues[random];
-var sigList = sigTally[random];
-var corList = correlations[random];
+random = 11;
+File = FileList[random];
+File2 = FileList2[random];
+pList = pValues[random];
+sigList = sigTally[random];
+corList = correlations[random];
 
 
 $('#p1').html(pList[0]+',    r = '+corList[0]);
@@ -262,6 +288,7 @@ var	yLabel = "Weight",
 var parsedData;
 var iv = [];
 var dv = [];
+var dvb = [];
 var meanVeggieBetween = [];
 var meanFruitBetween = [];
 var meanVeggieWithin = [];
@@ -467,10 +494,11 @@ d3.csv(File, function(error, data) {
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-  
-    for (i = 0; i < parsedData.length; i++) {
+	console.log(parsedData.length);
+    for (i = 0; i < 20; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
+      dvb.push(Number(parsedData[i].dvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
@@ -483,8 +511,9 @@ d3.csv(File, function(error, data) {
     ////////////////////////////////////////////
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.iv = +d.iv;
     	d.dv = +d.dv;
+    	d.dvb = +d.dvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
@@ -512,16 +541,27 @@ d3.csv(File, function(error, data) {
 
     // Appends points
 
+	var line = chart2.selectAll("line")
+		.data(data)
+		.enter().append("line")
+			.filter(function(d) { return d.condition == 'Veggie' })
+				.attr("x1", cond("Veggie"))
+				.attr("x2", cond("Fruit"))
+				.attr("y1", function(d) { return y(d.dv); })
+				.attr("y2", function(d) { return y(d.dvb); })
+				.attr("stroke", "black");
+
+
   	chart2.selectAll(".dot")
       	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition); })
-      		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
+	   	.enter().append("circle")
+	      	.attr("class", "dot")
+	      	.attr("r", 3.5)
+	      	.attr("cx", function(d) { return cond(d.condition); })
+	      		// Not great because it's not scaled, but it works for now
+	      	.attr("cy", function(d) { return y(d.dv); })
+	      	.style("fill", function(d) { return color(d.condition); })
+	      	.style("opacity", 1);
 
     // trying to draw lines.....
     
@@ -702,24 +742,26 @@ d3.csv(File2, function(error, data) {
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-  
-    for (i = 0; i < parsedData.length; i++) {
+	console.log(parsedData.length);
+    for (i = 0; i < 20; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
+      dvb.push(Number(parsedData[i].dvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
-        meanWideVeggieWithin.push(Number(parsedData[i].dv));
+        meanVeggieWithin.push(Number(parsedData[i].dv));
       }
       else if (parsedData[i].condition=="Fruit") {
-        meanWideFruitWithin.push(Number(parsedData[i].dv));
+        meanFruitWithin.push(Number(parsedData[i].dv));
       }
     }
     ////////////////////////////////////////////
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.iv = +d.iv;
     	d.dv = +d.dv;
+    	d.dvb = +d.dvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
@@ -746,6 +788,19 @@ d3.csv(File2, function(error, data) {
     //   .attr("stroke", color("Fruit"));
 
     // Appends points
+
+
+	
+
+	var line = chart4.selectAll("line")
+		.data(data)
+		.enter().append("line")
+			.filter(function(d) { return d.condition == 'Veggie' })
+				.attr("x1", cond("Veggie"))
+				.attr("x2", cond("Fruit"))
+				.attr("y1", function(d) { return y(d.dv); })
+				.attr("y2", function(d) { return y(d.dvb); })
+				.attr("stroke", "black");
 
   	chart4.selectAll(".dot")
       	.data(data)
@@ -834,6 +889,8 @@ function UpdateData(){
 	pList = pValues[random];
 	sigList = sigTally[random];
 	corList = correlations[random];
+
+	KeepScore();
 
 	$('#p1').html(pList[0]+',    r = '+corList[0]);
 	$('#p2').html(pList[1]+',    r = '+corList[0]);
@@ -983,6 +1040,7 @@ function UpdateData(){
 	    for (i = 0; i < parsedData.length; i++) {
 	      iv.push(Number(parsedData[i].iv));
 	      dv.push(Number(parsedData[i].dv));
+	      dvb.push(Number(parsedData[i].dvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
@@ -995,11 +1053,13 @@ function UpdateData(){
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+	    	d.iv = +d.iv;
 	    	d.dv = +d.dv;
+	    	d.dvb = +d.dvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
+
 
 	  	// create the scales x() and y()
 	  	// x.domain([0,xMax+1]);
@@ -1021,6 +1081,18 @@ function UpdateData(){
 	    //   .attr("y1", y(d3.mean(meanFruitWithin)))
 	    //   .attr("y2", y(d3.mean(meanFruitWithin)))
 	    //   .attr("stroke", color("Fruit"));
+
+		var line = chart2.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.dv); })
+					.attr("y2", function(d) { return y(d.dvb); })
+					.attr("stroke", "black");
+
+
 
 	    // Appends points
 
@@ -1189,28 +1261,29 @@ function UpdateData(){
 
 	    //////// Saves data for calculation ////////
 	    parsedData = JSON.parse(JSON.stringify(data));
-	  
-	    for (i = 0; i < parsedData.length; i++) {
+		console.log(parsedData.length);
+	    for (i = 0; i < 20; i++) {
 	      iv.push(Number(parsedData[i].iv));
 	      dv.push(Number(parsedData[i].dv));
+	      dvb.push(Number(parsedData[i].dvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
-	        meanWideVeggieWithin.push(Number(parsedData[i].dv));
+	        meanVeggieWithin.push(Number(parsedData[i].dv));
 	      }
 	      else if (parsedData[i].condition=="Fruit") {
-	        meanWideFruitWithin.push(Number(parsedData[i].dv));
+	        meanFruitWithin.push(Number(parsedData[i].dv));
 	      }
 	    }
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+	    	d.iv = +d.iv;
 	    	d.dv = +d.dv;
+	    	d.dvb = +d.dvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
-
 	  	// create the scales x() and y()
 	  	// x.domain([0,xMax+1]);
 	  	// y.domain([0,yMax]);
@@ -1231,6 +1304,19 @@ function UpdateData(){
 	    //   .attr("y1", y(d3.mean(meanWideFruitWithin)))
 	    //   .attr("y2", y(d3.mean(meanWideFruitWithin)))
 	    //   .attr("stroke", color("Fruit"));
+
+
+		var line = chart4.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.dv); })
+					.attr("y2", function(d) { return y(d.dvb); })
+					.attr("stroke", "black");
+
+
 
 	    // Appends points
 

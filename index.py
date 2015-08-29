@@ -19,7 +19,7 @@ class User(db.Model):
 	firstname = 		db.StringProperty()
 	lastname = 			db.StringProperty()
 	usernum = 			db.IntegerProperty()
-	password =			db.StringProperty()
+	# password =			db.StringProperty()
 	Module1 =			db.StringProperty()
 	Module2 = 			db.StringProperty()
 	WSAnswer1 = 		db.StringProperty()
@@ -121,11 +121,11 @@ class SignupHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		username = self.request.get('username')
 		firstname = self.request.get('firstname')
-		password1 = self.request.get('password1')
-		password2 = self.request.get('password2')
+		# password1 = self.request.get('password1')
+		# password2 = self.request.get('password2')
 		exists = 2
 
-		if username == '' or firstname == '' or password1 == '' or password2 == '':
+		if username == '' or firstname == '':# or password1 == '' or password2 == '':
 			doRender(self,
 				'signupfail.htm',
 				{'error': 'Please fill in all fields.'})
@@ -145,11 +145,11 @@ class SignupHandler(webapp.RequestHandler):
 			return
 
 		# If the two passwords they entered do not match
-		if password1 != password2:
-			doRender(self,
-				'signupfail.htm',
-				{'error': 'Passwords do not match.'})
-			return
+		# if password1 != password2:
+		# 	doRender(self,
+		# 		'signupfail.htm',
+		# 		{'error': 'Passwords do not match.'})
+		# 	return
 
 		# Create User object in the datastore
 		usernum = create_or_increment_NumOfUsers()
@@ -157,7 +157,7 @@ class SignupHandler(webapp.RequestHandler):
 			username=username,
 			firstname=firstname,
 			lastname=self.request.get('lastname'),
-			password=password1,
+			# password=password1,
 			Module1="Incomplete",
 			Module2="Incomplete");
 
@@ -168,7 +168,7 @@ class SignupHandler(webapp.RequestHandler):
 		self.session['usernum']    	= usernum
 		self.session['username']   	= username
 		self.session['firstname']	= firstname
-		self.session['password']    = password1
+		# self.session['password']    = password1
 		self.session['Module1']   	= 'Incomplete'
 		self.session['Module2']  	= 'Incomplete'
 		self.session['Logged_In']	= True
@@ -432,7 +432,7 @@ class LoginHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		
 		username = self.request.get('username')
-		password = self.request.get('password')
+		# password = self.request.get('password')
 		
 		# Check whether user already exists
 		que = db.Query(User)
@@ -447,21 +447,21 @@ class LoginHandler(webapp.RequestHandler):
 			return
 
 		# Check if password matches password entry in datastore
-		que = que.filter('password =', password)
-		results = que.fetch(limit=1)
+		# que = que.filter('password =', password)
+		# results = que.fetch(limit=1)
 
-		# If password mismatch
-		if len(results) == 0:
-			doRender(self,
-				'loginfailed.htm',
-				{'error': 'Incorrect password'})
-			return
+		# # If password mismatch
+		# if len(results) == 0:
+		# 	doRender(self,
+		# 		'loginfailed.htm',
+		# 		{'error': 'Incorrect password'})
+		# 	return
 
 
 		# i is a list object (basically a row of data) in the datastore. This loop saves each relevant piece of info from our query into the session.
 		for i in results:
 			self.session['username'] = i.username
-			self.session['password'] = i.password
+			# self.session['password'] = i.password
 			self.session['firstname'] = i.firstname
 			self.session['usernum'] = i.usernum
 			self.session['Module1'] = i.Module1
@@ -486,7 +486,7 @@ class LogoutHandler(webapp.RequestHandler):
 		self.session['Logged_In'] = False	
 		
 		# kill all the session stuff that would identify them (username, password, etc)
-		sessionlist = ['usernum', 'username', 'password', 'Module1', 'Module2', 'Logged_In', 'M2_Progress']
+		sessionlist = ['usernum', 'username', 'Module1', 'Module2', 'Logged_In', 'M2_Progress']
 
 		for i in sessionlist:
 			if i in self.session:

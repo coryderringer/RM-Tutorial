@@ -20,18 +20,18 @@
 <div class="logout"><a href="/logout.htm">Logout</a></div>
 
 <div id="Text1" class="pg">
-	<p>Imagine you hear about a study being planned at your local university. The researchers are trying to find out which of two interventions is more effective for weight loss over a 3-month timespan. We’ll call them the Fruit Condition and the Vegetable Condition:</p>
+	<p>Imagine you hear about a study being planned at your local university. The researchers are trying to find out which of two interventions is more effective for weight loss over a 3-month timespan. We’ll call them the Fruit Condition and the Veggie Condition:</p>
 
 	<ul>
 		<li><b>Fruit Condition:</b> Each week, a new basket of fresh fruit is delivered to the participants.</li>
-		<li><b>Vegetable Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.</li>
+		<li><b>Veggie Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.</li>
 	</ul>
 
 	<p>If we want to see which of these interventions is more effective, there are a couple of ways we could go about it.</p>
 
-	<p>First, we could use a between-subjects design. We could randomly divide the participants into two groups: one which gets the Fruit Condition and one which gets the Vegetable Condition. If the experimental group weighs less at the end of 3 months, we would conclude that counting calories is an effective weight loss strategy.</p>
+	<p>First, we could use a <b>between-subjects design</b>. With this kind of research design, each person is assigned to one of the two conditions. We would randomly divide the participants into two groups. The Veggie group (Bob, Amy, and Jim) gets only the Veggie Condition, while the Fruit Group (Sarah, Todd, and Kelsey) gets only the Fruit Condition. If the Veggie group weighs less at the end of 3 months, we would conclude that the Veggie Condition is more effective for weight loss.</p>
 
-	<p>Alternatively, we could use a within-subjects design. Using this approach, we would put everyone in both conditions at different points in time. Each participant would spend 3 months in the Fruit Condition and 3 months in the Vegetable Condition, randomly assigning each participant on the order of the two conditions. Then we could see if people consistently lose more weight in one condition than in the other.</p>
+	<p>Alternatively, we could use a <b>within-subjects design</b>. Using this approach, we would put everyone in both conditions at different points in time. So rather than only receiving the Veggie Condition, we would have Bob, Amy, and Jim spend 3 months in the Fruit Condition and 3 months in the Veggie Condition (with the order of these conditions being randomly assigned for each person). Then we would see if people consistently lose more weight in one condition than in the other.</p>
 	<div>
 		<center>
 			<div class="pg" style="padding:5px;width:250px;display:inline-block;margin-right:50px">
@@ -89,7 +89,7 @@
 	</div>
 
 	<div id="Feedback" style="display:none">
-		<p>Many researchers would agree that the within subjects design is better. The within subjects design allows for a direct comparison between the two interventions within the same individuals. In other words, it eliminates individual differences between participants as a factor that could influence the DV (weight). Let’s examine this a bit closer.</p>
+		<p>Many researchers would agree that the within subjects design is more informative. The within subjects design allows for a direct comparison between the two interventions within the same individual participants. The main advantage of this approach is that <b>it eliminates individual differences between participants as a factor that could influence our dependent variable</b> (in this case: weight). Let’s examine this a bit closer.</p>
 		<button onclick="EndQuiz1()" style="width:100px">Okay</button>
 	</div>
 
@@ -100,13 +100,13 @@
 <div id="Text2" class="pg" style="display:none">
 
 	<b>Fruit Condition:</b> Each week, a new basket of fresh fruit is delivered to the participants.<br>
-	<b>Vegetable Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.<br><br>
+	<b>Veggie Condition:</b> Each week, a new basket of fresh vegetables is delivered to the participants.<br><br>
 
-	<p>The defining feature of within subject designs is that they make a comparison within the same group of subjects rather than between different groups. Instead of looking at subjects in the Fruit Condition and subjects in the Vegetable Condition, we can compare subjects with <i>themselves</i>. Instead of having a dedicated control group, <i>each subject serves as a “control” for him/herself!</i></p>
+	<p>The defining feature of within subject designs is that they make a comparison within the same group of participants rather than between different groups. Instead of looking at participants in the Fruit and Veggie Conditions separately, we can compare participants with <i>themselves</i>. In other words, instead of having a dedicated control group, <i>each subject is effectively a “control” for him/herself!</i></p>
 
 
 	<div id="Quiz2">
-		<p><b>Which of the following could pose a problem for a between-subjects comparison?</b></p>
+		<p><b>Which of the following could pose a problem for a between-subjects design?</b></p>
 		<form id="Q2Answers" style="position:relative;left:20px">
 			<input type="radio" name="q2" value="A" id="q2a"><label for="q2a">There could be individual differences between the participants within each group.</label><br>
 			<input type="radio" name="q2" value="B" id="q2b"><label for="q2b"><span id="optionB">We don't know for sure that the subjects were selected randomly from the population, so they may not be representative. What if this effect only applies to the subjects in our sample?</span></label><br>
@@ -174,7 +174,7 @@ function RecordQuiz2(){
 	
 	Q2Outcome[guesses] = $('input[name=q2]:checked', '#Q2Answers').val();
 	
-	var answers = ['<p><i>That\'s what we\'re looking for! In a between subjects design, these individual differences are a mysterious nuisance: they increase the statistical noise in each group and thereby reduce our statistical power. Because within subjects designs essentially use each participant as their own control, the variation between participants in either condition is less important.</i></p>', '<p><i>We didn’t specify random selection from the population in either case, so while this isn’t ideal, it affects both designs equally. Try again!</i></p>', '<p><i>Not quite: our IV is the dietary intervention (Fruit Condition or Vegetable Condition). Since in the between subjects design we randomly assign subjects to one of these, we are directly manipulating the IV. Both designs are experimental rather than correlational. Try again!</i></p>']
+	var answers = ['<p><i>That\'s what we\'re looking for!<br>In a between subjects design, these individual differences are a mysterious nuisance: they increase the statistical noise in each group and thereby reduce our statistical power (the ability of our experiment to detect a difference between the two conditions). Because we use the same participants in each condition, random differences between participants in the two conditions are eliminated.</i></p>', '<p><i>Not this one!<br>We didn’t specify random selection from the population in either case, so while this isn’t ideal, it affects both designs equally. Try again!</i></p>', '<p><i>Not quite!<br>Our independent variable (IV) is the dietary intervention: Fruit or Veggie Condition. Since in the between subjects design we randomly assign subjects to one of these, we are directly manipulating the IV. Both designs are experimental rather than correlational. Try again!</i></p>']
 
 	if(Q2Outcome[guesses] != 'A' & Q2Outcome[guesses] != 'B' & Q2Outcome[guesses] != 'C'){
 		alert('Please make a selection!');

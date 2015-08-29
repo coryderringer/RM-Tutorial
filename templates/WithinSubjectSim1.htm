@@ -1,6 +1,6 @@
 {% extends "_base.htm" %}
 {% block title %}
-	Sim 1!!
+	Within-Subject Designs
 {% endblock%}
 
 
@@ -16,14 +16,15 @@
 
 <div class="pg">
 	<center>
-		<span style="display:inline-block"><b>Between Subjects</b></span>
-		<span style="display:inline-block;position:relative;left:170px"><b>Within Subjects</b></span>
+		<span style="display:inline-block"><b>Between-Subjects</b></span>
+		<span style="display:inline-block;position:relative;left:170px"><b>Within-Subjects</b></span>
 		<div id="firstrow">
 			<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
-				<b>Low<br>Population Variance</b>
+				<b>High<br>Population Variance</b>
 			</span>	
 			<div id="between1" style="display:inline-block">
 				<div id="graph1"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack1"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
 				
 				<!-- <div id="ttest1" class="ttest">
@@ -35,6 +36,7 @@
 			
 			<div id="within1" style="display:inline-block">
 				<div id="graph2"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack2"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
 			</div>
 		</div>
@@ -44,15 +46,17 @@
 
 		<div id="secondrow" style="display:none">
 			<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
-				<b>High<br>Population Variance</b>
+				<b>Low<br>Population Variance</b>
 			</span>
 			<div id="between2" style="display:inline-block">
 				<div id="graph3"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack3"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
 			</div>
 			
 			<div id="within2" style="display:inline-block">
 				<div id="graph4"></div>
+				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack4"></span></div>
 				<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
 			</div>
 		</div>
@@ -63,9 +67,9 @@
 	<br>
 
 	<div id="Text1">
-		<p>To expand on this point, let's look at what each design is actually comparing between the two conditions. On the left we have a between-subjects approach and on the right we have the same datapoints collected in a within-subjects design.</p>
+		<p>To expand on this point, let's look at what each design is actually comparing between the two conditions. Here we have some hypothetical data presented as a between-subjects comparison (on the left) and as a within-subjects comparison (on the right).</p>
 
-		<p>Notice that the dependent variable (on the Y axis) is different between these two designs. This is a natural result of the difference between the questions we're asking with these designs. In a between subjects design, we want to know if one group is different from another group after some treatment. In a within subjects design, we want to know if one treatment works better than the other treatment for the same group of people. Click the "Learn More" button below to learn more about how these datasets were simulated.</p>
+		<p>Notice that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know if one group is different from another group after some treatment. To examine this, we usually compare the mean DV scores for each group (the blue and orange lines in the graph on the left). In a within-subjects design, we want to know if one treatment works better than the other treatment for the same group of people. This is illustrated above by the lines connecting across the conditions: each line represents a participant, and each dot at the end of the line represents the participant's weight at the end of the Fruit or Veggie condition.</p>
 
 		<div id="Quiz3">
 			<p id="Question3">Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
@@ -77,17 +81,17 @@
 			</form><br>
 
 			<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
-			<button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button>
+			<!-- <button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button> -->
 			<br>
 			<div id="ResponseDiv3" style=""></div>
-		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
+<!-- 		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
 			<center><b>Data Simulations:</b></center><br>
-			To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample from a normal distribution (mean = 200, standard deviation = 10).<br>
+			To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample of either 10 (within-subjects) or 20 (between-subjects) values from a normal distribution (mean = 200, standard deviation = 9). This reflects the baseline weight of each participant in our study.<br>
 			<br>
-			<b>In the between subjects design,</b> we would then randomly assign each person to one condition or the other. Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution (mean weight loss for the fruit group was 10 pounds, 25 for the vegetable group, with a standard devation of 5 pounds per group). These adjusted weights represent each participant's weight after the treatment (our dependent variable).<br>
+			If the study were conducted using a <b>between-subjects design,</b> we would then randomly assign each person to one condition or the other (10 participants per condition). Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution. For the Fruit Condition, we draw 10 values from a distribution with a mean of 11 pounds and a standard deviation of 6 pounds. The 10 values in the Veggie Condition are drawn from a distribution with a mean of 25 pounds, with the same standard deviation of 6 pounds. These distributions reflect the weight lost in each condition (e.g. participants in the Fruit Condition lost an average of 11 pounds). The final result is obtained by subtracting each Fruit or Veggie Condition value from the corresponding baseline value. For example, Participant 1's weight at the start of the study is drawn from the baseline distribution, and the value is 205 pounds. This participant is in the Veggie Condition, so we simulate the amount of weight lost by drawing from another distribution, with a result of 15 pounds. Participant 1's weight on the graph would then be 190 pounds.<br>
 			<br>
-			<b>In the within subjects design,</b> we can draw a sample just like before from a normal distribution with a mean of 200 and a standard deviation of 10. Additionally, each individual gets an adjustment representing the amount of weight they lost in each condition. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about these adjustments.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
-		</div>
+			<b>In the within-subjects design,</b> we draw the same baseline distribution and the same treatment distributions. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about the adjustment distributions.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within-subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
+		</div> -->
 		</div>
 	</div>
 
@@ -98,15 +102,15 @@
 		<p>Right!</p>
 	</div>
 	<div id="Text2" style="display:none">
-		<p>This is the first advantage of within subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more power we lose in a between subjects design.</p>
+		<p>This is the first advantage of within-subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more statistical power we lose in a between-subjects design.</p>
 
-		<p>Asking a different question with a within subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they're the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they're the result of individual differences unrelated to the treatment, which is the case here!</i></p>
+		<p>Asking a different question using a within-subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they're the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they're the result of individual differences unrelated to the treatment, which is the case here!</i></p>
 	</div>
 
 	<div id="Text3" style="display:none">
-		<p>Here we can see that the between subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within subjects design is just as low. In fact, it is exactly the same as it is above, because within subjects designs are not affected by the population variance like between subjects designs.</p>
+		<p>Here we can see that the between-subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within-subjects design is exactly the same regardless of the population variance: <b>within-subjects designs are not affected by the population variance</b>.</p>
 
-		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within subjects design significant when the between subjects design isn’t? Is that pattern ever reversed?</p>
+		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
 	</div>
 
 	<center><button id="NextButton" style="width:12.5%;display:none">Continue</button></center>
@@ -126,7 +130,19 @@ var progress = {{progress}};
 var LearnDiv = 0;
 var pValues = {{pValues1}};
 var sigTally = {{sigTally1}};
+var sig = [0,0,0,0]
 
+function KeepScore(){
+	
+	for(var i = 0; i < pList.length; i++){
+		sig[i] += sigList[i]
+	}
+
+	$('#sigTrack1').html(sig[2]+'/'+datasets);
+	$('#sigTrack2').html(sig[3]+'/'+datasets);
+	$('#sigTrack3').html(sig[0]+'/'+datasets);
+	$('#sigTrack4').html(sig[1]+'/'+datasets);
+}
 
 function LearnVisible(){
 	if(LearnDiv == 0){
@@ -137,7 +153,8 @@ function LearnVisible(){
 
 function RecordQuiz3(){
 	$('.pdiv').show();
-	
+	$('.sigTrack').show();
+	KeepScore();
 	
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();
 	if(Q3Outcome != 'A' & Q3Outcome != 'B'){
@@ -297,16 +314,17 @@ var FileList2 = ['/static/stimuli/WithinSubjects/widedata1.csv',
 
 
 // Randomly select a file from the list
-var random = Math.floor(Math.random() * FileList.length);
+// var random = Math.floor(Math.random() * FileList.length);
+var random = 37;
 var File = FileList[random];
 var File2 = FileList2[random];
 var pList = pValues[random];
 var sigList = sigTally[random];
 
-$('#p1').html(pList[0]);
-$('#p2').html(pList[1]);
-$('#p3').html(pList[2]);
-$('#p4').html(pList[3]);
+$('#p1').html(pList[2]);
+$('#p2').html(pList[3]);
+$('#p3').html(pList[0]);
+$('#p4').html(pList[1]);
 
 /// Name variables here
 var	yLabel = "Weight",
@@ -318,7 +336,11 @@ var	yLabel = "Weight",
 /// Variables for calculating stuff
 var parsedData;
 var iv = [];
+var iv2 = [];
 var dv = [];
+var dvb = [];
+var wdv = [];
+var wdvb = [];
 var meanVeggieBetween = [];
 var meanFruitBetween = [];
 var meanVeggieWithin = [];
@@ -365,26 +387,26 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 
-
-var chart1 = d3.select("#graph1").append("svg")
+// I created these out of order (oops!). Since they take in different datasets with different column names, it was easier to change where they're appended instead of changing the charts themselves.
+var chart1 = d3.select("#graph3").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var chart2 = d3.select("#graph2").append("svg")
+var chart2 = d3.select("#graph4").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var chart3 = d3.select("#graph3").append("svg")
+var chart3 = d3.select("#graph1").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var chart4 = d3.select("#graph4").append("svg")
+var chart4 = d3.select("#graph2").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   	.append("g")
@@ -407,7 +429,7 @@ var chart4 = d3.select("#graph4").append("svg")
 
 // Reads data from .csv file
 
-// for between subjects
+// for between-subjects
 
 // CHART 1
 d3.csv(File, function(error, data) {
@@ -419,6 +441,7 @@ d3.csv(File, function(error, data) {
     for (i = 0; i < parsedData.length; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
+      dvb.push(Number(parsedData[i].dvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
@@ -431,8 +454,9 @@ d3.csv(File, function(error, data) {
     ////////////////////////////////////////////
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.iv = +d.iv;
     	d.dv = +d.dv;
+    	d.dvb = +d.dvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
@@ -518,16 +542,17 @@ d3.csv(File, function(error, data) {
 
 // CHART 2
 
-// for within subjects
+// for within-subjects
 d3.csv(File, function(error, data) {
   	if (error) throw error;
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-  
-    for (i = 0; i < parsedData.length; i++) {
+	console.log(parsedData.length);
+    for (i = 0; i < 20; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
+      dvb.push(Number(parsedData[i].dvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
@@ -539,12 +564,16 @@ d3.csv(File, function(error, data) {
     }
     ////////////////////////////////////////////
 
+
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.iv = +d.iv;
     	d.dv = +d.dv;
+    	d.dvb = +d.dvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
+
+
 
   	// create the scales x() and y()
   	// x.domain([0,xMax+1]);
@@ -569,16 +598,7 @@ d3.csv(File, function(error, data) {
 
     // Appends points
 
-  	chart2.selectAll(".dot")
-      	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition); })
-      		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
+
 
     // trying to draw lines.....
     
@@ -593,16 +613,27 @@ d3.csv(File, function(error, data) {
 	// 		.attr("y2", y(parsedData.dv))
 	// 		.attr("stroke", "black");
 	
-	// Not quite working yet...
+
 	var line = chart2.selectAll("line")
 		.data(data)
 		.enter().append("line")
-		    .attr("x1", cond("Veggie"))
-		    .attr("x2", cond("Fruit"))
-		    .attr("y1", function(d) { return y(d.dv); })
-		    .attr("y2", function(d) { return y(d.dv); })
-		    .attr("stroke", "black");
+			.filter(function(d) { return d.condition == 'Veggie' })
+				.attr("x1", cond("Veggie"))
+				.attr("x2", cond("Fruit"))
+				.attr("y1", function(d) { return y(d.dv); })
+				.attr("y2", function(d) { return y(d.dvb); })
+				.attr("stroke", "black");
 
+	chart2.selectAll(".dot")
+      	.data(data)
+   	.enter().append("circle")
+      	.attr("class", "dot")
+      	.attr("r", 3.5)
+      	.attr("cx", function(d) { return cond(d.condition); })
+      		// Not great because it's not scaled, but it works for now
+      	.attr("cy", function(d) { return y(d.dv); })
+      	.style("fill", function(d) { return color(d.condition); })
+      	.style("opacity", 1);
 	
 
     // Appends axes
@@ -658,6 +689,7 @@ d3.csv(File2, function(error, data) {
     for (i = 0; i < parsedData.length; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].wdv));
+      dvb.push(Number(parsedData[i].wdvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
@@ -670,8 +702,9 @@ d3.csv(File2, function(error, data) {
     ////////////////////////////////////////////
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+    	d.iv = +d.iv;
     	d.dv = +d.dv;
+    	d.dvb = +d.dvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
@@ -759,24 +792,26 @@ d3.csv(File2, function(error, data) {
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-  
-    for (i = 0; i < parsedData.length; i++) {
+	console.log(parsedData.length);
+    for (i = 0; i < 20; i++) {
       iv.push(Number(parsedData[i].iv));
-      dv.push(Number(parsedData[i].wdv));
+      wdv.push(Number(parsedData[i].wdv));
+      wdvb.push(Number(parsedData[i].wdvb));
       // measure.push(Number(parsedData[i].measure));
 
       if (parsedData[i].condition=="Veggie") {
-        meanWideVeggieWithin.push(Number(parsedData[i].wdv));
+        meanVeggieWithin.push(Number(parsedData[i].dv));
       }
       else if (parsedData[i].condition=="Fruit") {
-        meanWideFruitWithin.push(Number(parsedData[i].wdv));
+        meanFruitWithin.push(Number(parsedData[i].dv));
       }
     }
     ////////////////////////////////////////////
 
   	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
-    	d.dv = +d.dv;
+    	d.iv = +d.iv;
+    	d.wdv = +d.wdv;
+    	d.wdvb = +d.wdvb;
     	d.t = +d.t;
     	d.condition = d.condition;
   	});
@@ -803,6 +838,15 @@ d3.csv(File2, function(error, data) {
     //   .attr("stroke", color("Fruit"));
 
     // Appends points
+	var line = chart4.selectAll("line")
+		.data(data)
+		.enter().append("line")
+			.filter(function(d) { return d.condition == 'Veggie' })
+				.attr("x1", cond("Veggie"))
+				.attr("x2", cond("Fruit"))
+				.attr("y1", function(d) { return y(d.wdv); })
+				.attr("y2", function(d) { return y(d.wdvb); })
+				.attr("stroke", "black");
 
   	chart4.selectAll(".dot")
       	.data(data)
@@ -862,6 +906,8 @@ d3.csv(File2, function(error, data) {
 
 
 function UpdateData(){
+	datasets += 1;
+
 	$('#graph1').html('');
 	meanFruitBetween = [];
 	meanVeggieBetween = [];
@@ -881,38 +927,40 @@ function UpdateData(){
 
 	// randomly select a datafile
 
-	random = Math.floor(Math.random() * FileList.length)
+	random = Math.floor(Math.random() * FileList.length);
 
-	var random = Math.floor(Math.random() * FileList.length);
-	var File = FileList[random];
-	var File2 = FileList2[random];
-	var pList = pValues[random];
-	var sigList = sigTally[random];
+	// var random = Math.floor(Math.random() * FileList.length);
+	File = FileList[random];
+	File2 = FileList2[random];
+	pList = pValues[random];
+	sigList = sigTally[random];
 
-	$('#p1').html(pList[0]);
-	$('#p2').html(pList[1]);
-	$('#p3').html(pList[2]);
-	$('#p4').html(pList[3]);
+	$('#p1').html(pList[2]);
+	$('#p2').html(pList[3]);
+	$('#p3').html(pList[0]);
+	$('#p4').html(pList[1]);
 
-	var chart1 = d3.select("#graph1").append("svg")
+	KeepScore();
+
+	var chart1 = d3.select("#graph3").append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var chart2 = d3.select("#graph2").append("svg")
+	var chart2 = d3.select("#graph4").append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var chart3 = d3.select("#graph3").append("svg")
+	var chart3 = d3.select("#graph1").append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var chart4 = d3.select("#graph4").append("svg")
+	var chart4 = d3.select("#graph2").append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  	.append("g")
@@ -928,6 +976,7 @@ function UpdateData(){
 	    for (i = 0; i < parsedData.length; i++) {
 	      iv.push(Number(parsedData[i].iv));
 	      dv.push(Number(parsedData[i].dv));
+	      dvb.push(Number(parsedData[i].dvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
@@ -940,8 +989,9 @@ function UpdateData(){
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+	    	d.iv = +d.iv;
 	    	d.dv = +d.dv;
+	    	d.dvb = +d.dvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
@@ -1026,7 +1076,7 @@ function UpdateData(){
 
 	// CHART 2
 
-	// for within subjects
+	// for within-subjects
 	d3.csv(File, function(error, data) {
 	  	if (error) throw error;
 
@@ -1036,6 +1086,7 @@ function UpdateData(){
 	    for (i = 0; i < parsedData.length; i++) {
 	      iv.push(Number(parsedData[i].iv));
 	      dv.push(Number(parsedData[i].dv));
+	      dvb.push(Number(parsedData[i].dvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
@@ -1048,8 +1099,9 @@ function UpdateData(){
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+	    	d.iv = +d.iv;
 	    	d.dv = +d.dv;
+	    	d.dvb = +d.dvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
@@ -1076,6 +1128,16 @@ function UpdateData(){
 	    //   .attr("stroke", color("Fruit"));
 
 	    // Appends points
+
+    	var line = chart2.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.dv); })
+					.attr("y2", function(d) { return y(d.dvb); })
+					.attr("stroke", "black");
 
 	  	chart2.selectAll(".dot")
 	      	.data(data)
@@ -1141,6 +1203,7 @@ function UpdateData(){
 	    for (i = 0; i < parsedData.length; i++) {
 	      iv.push(Number(parsedData[i].iv));
 	      dv.push(Number(parsedData[i].wdv));
+	      dvb.push(Number(parsedData[i].wdvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
@@ -1153,8 +1216,9 @@ function UpdateData(){
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
+	    	d.iv = +d.iv;
 	    	d.dv = +d.dv;
+	    	d.dvb = +d.dvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
@@ -1242,24 +1306,26 @@ function UpdateData(){
 
 	    //////// Saves data for calculation ////////
 	    parsedData = JSON.parse(JSON.stringify(data));
-	  
-	    for (i = 0; i < parsedData.length; i++) {
+		console.log(parsedData.length);
+	    for (i = 0; i < 20; i++) {
 	      iv.push(Number(parsedData[i].iv));
-	      dv.push(Number(parsedData[i].wdv));
+	      wdv.push(Number(parsedData[i].wdv));
+	      wdvb.push(Number(parsedData[i].wdvb));
 	      // measure.push(Number(parsedData[i].measure));
 
 	      if (parsedData[i].condition=="Veggie") {
-	        meanWideVeggieWithin.push(Number(parsedData[i].wdv));
+	        meanVeggieWithin.push(Number(parsedData[i].dv));
 	      }
 	      else if (parsedData[i].condition=="Fruit") {
-	        meanWideFruitWithin.push(Number(parsedData[i].wdv));
+	        meanFruitWithin.push(Number(parsedData[i].dv));
 	      }
 	    }
 	    ////////////////////////////////////////////
 
 	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
-	    	d.dv = +d.dv;
+	    	d.iv = +d.iv;
+	    	d.wdv = +d.wdv;
+	    	d.wdvb = +d.wdvb;
 	    	d.t = +d.t;
 	    	d.condition = d.condition;
 	  	});
@@ -1286,6 +1352,15 @@ function UpdateData(){
 	    //   .attr("stroke", color("Fruit"));
 
 	    // Appends points
+		var line = chart4.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.wdv); })
+					.attr("y2", function(d) { return y(d.wdvb); })
+					.attr("stroke", "black");
 
 	  	chart4.selectAll(".dot")
 	      	.data(data)
