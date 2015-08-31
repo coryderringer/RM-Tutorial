@@ -1,0 +1,562 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Order effects
+{% endblock%}
+
+{% block bodycontent %}
+
+<script type="text/javascript">
+
+/// Overall tutorial progress
+var progress = {{progress}}
+
+/// Checkpoint for page
+  var current = 0;
+
+/// Graph
+  var file = "/static/stimuli/OrderEffects/carryover20.csv";
+
+/// Name variables here
+	var	yLabel = "Accuracy",
+		condLabel = "Exercise routine",
+		xLabel = "Time (minutes)",
+		covariate = "Arousal"
+		xMax = 95,
+		yMax = 14;
+
+/// Variables for calculating stuff
+  var parsedData;
+  var iv = [];
+  var dv = [];
+  var measure = [];
+  var meanControl = [];
+  var meanExperimental = [];
+
+/// Text
+
+  var text = [
+    "Let's imagine we run the same experiment, but this time, we greatly increase the time between the two conditions. You can see on the x-axis that the experiment now takes over an hour. After the intense exercise regimen, participants are told to just sit and rest for about 40 minutes before they experience the control condition.",
+
+    "Again, participants first go through the intense exercise regimen (the experimental condition), and then have their spatial reasoning ability measured. Just like in the earlier experiment, this results in reasonably high accuracy scores.",
+
+    "About 45 minutes Later in the experiment, they experience the control condition. They read a short story and have their spatial reasoning ability measured again. This time, their scores in the control condition are significantly lower! To see why, let's look at their measured arousal levels in this version of the experiment.",
+
+    "When they experience the experimental condition, their arousal level increases from its baseline. However, in this version of the experiment, there is a much longer time between both conditions. After they go through the intense exercise regimen and have their spatial reasoning ability measured for the first time, the participants are asked to sit and rest for 40 minutes. What do you think happens to their arousal levels?",
+
+    "By the time they experience the control condition and read the short stories, their arousal levels have returned to their baseline levels! In this experiment, the control condition is not contaminated by the experimental condition. Therefore, their scores in the control condition are as we expected: their spatial reasoning has lower accuracy because their arousal levels are as we expected them to be when reading short stories.",
+
+    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
+    ]
+
+/// Function for noise
+function randomJitter(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+/// Function to move text forward and back within page
+
+function next(current) {
+    
+    // Changes text
+    $("#text").fadeTo(100, 0)
+      .delay(200)
+      .queue(function(n) { 
+        $("#text").html(text[current]); 
+        n();
+      })
+      .fadeTo(100, 1);
+    $("#progress").html("<i>Page " + (current+1) + " of 6</i>");
+
+    if (current<text.length-1) {
+      // Blocks buttons for a bit
+      $("#next").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+      $("#previous").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+    }
+
+    //Does different things each time page advances
+    if (current==1) { 
+      svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
+    }
+    else if (current==2) { 
+      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 0); 
+      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 1);
+    }
+    else if (current==3) { 
+      svg.select("path").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 0);
+    }
+    else if (current==4) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==text.length-1) { 
+      $("#next").attr("disabled", true);
+      showQuiz(); 
+    }
+  
+}
+
+function previous(current) {
+    
+    // Changes text
+    $("#text").fadeTo(100, 0)
+      .delay(200)
+      .queue(function(n) { 
+        $("#text").html(text[current]); 
+        n();
+      })
+      .fadeTo(100, 1);
+    $("#progress").html("<i>Page " + (current+1) + " of 6</i>");
+
+    if (current>0) {
+      // Blocks buttons for a bit
+      $("#next").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+      $("#previous").attr("disabled", true)
+        .delay(600)
+        .queue(function(n) { 
+          $(this).attr("disabled", false); 
+          n();
+        });
+    }
+
+    // Does different things each time page advances
+    if (current==3) { 
+      svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 1); 
+    }
+    else if (current==2) { 
+      svg.select("path").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 1);
+    }
+    else if (current==1) { 
+      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); 
+      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 0);
+    }
+    else if (current==0) {
+      svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); 
+      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
+      $("#previous").attr("disabled", true); 
+    }
+}
+
+/// Function to show quiz
+
+function showQuiz() {
+  $('#continue').hide();
+  $('#quiz').show();
+}
+
+/// Shows quiz answer
+
+function answerQuiz3() {
+
+  Q3Outcome = $('input[name=q3]:checked', '#Quiz3').val();
+
+  $('#answer').hide()
+  $('#optionA, #optionB').css('opacity', '0.3');
+  $('#q3a, #q3b, #q3c').attr('disabled', true);
+  $('#A3').show();
+  $('#submit').show();
+
+  if (Q3Outcome=='C') { 
+    $('#A3').html('<b>Correct!</b><br>Actually, all are valid ways to deal with carryover effects.<br><br>If you used a between-subjects design, different groups of participants would experience the different conditions and each manipulation would not be able to contaminate the other. However, the usual drawbacks of this design still apply.<br><br>If we want to stick with the within-subjects design, we could increase the time between the conditions so that arousal in the experimental condition has time to decay. However, we do not always know how long it takes for participants to return to normal on some important characteristic. Another drawback is that extending the time is not always practically feasible (assuming you don’t want an experiment to last for days).<br><br>In the next section, we will look');
+  }
+  else {
+    $('#A3').html('<b>Sorry, that is incorrect!</b><br>This study uses a within-subjects design because the same group experiences both conditions – the exercise regimen and the control task – and gets measured on the dependent variable (spatial reasoning ability) after completing each condition.');
+  }
+}
+
+/// Submit function
+
+function MySubmit(){
+  console.log('Submit dat!');
+  $('#Q3').val(Q3Outcome);
+  progress += 1;
+  $('#progressinput').val(progress);
+  $('#myForm').submit();
+}
+
+</script>
+
+<div class="pg">
+
+	<h2><center>Carryover effects</center></h2>
+	
+	<br>
+  
+  <div id="text" style="display:show; height:100px" align="justify">
+    <script>document.write(text[current])</script>
+  </div>
+
+  <div id="progress" style="display:show; height:10px; font-size:12px;" align="right">
+    <i>Page <script>document.write(current+1)</script> of 6</i>
+  </div>
+
+  <br>
+
+  <div align="right">
+    <button id="previous" onclick="current--; previous(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;<button id="next" onclick="current++; next(current);">Next &rarr;</button>
+  </div>
+
+	<div id="graph" width="900" height="600" align="center"></div>
+
+  <br>
+
+	<div id="quiz" width="900" style="display:none">
+
+    <p><b>What is the disa?</b></p>
+
+    <form id="Quiz3" style="position:relative;left:20px">
+      <input type="radio" value="A" name="q3" id="q3a"><label for="q3a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
+      <input type="radio" value="B" name="q3" id="q3b"><label for="q3b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
+      <input type="radio" value="C" name="q3" id="q3c"><label for="q3c">&nbspUse a counterbalanced design where different subjects experience the conditions in different orders</label><br>
+    </form><br>
+
+    <center><button id="answer" onclick="answerQuiz3()">Check answer</button></center>
+
+    <div id="A3" style="display:none"></div>
+
+  </div>
+
+  <br>
+
+  <center>
+    <form id="myForm" method="post" action="/OrderEffects">
+      <input type="submit" id="submit" onclick="MySubmit()" value="Continue" style="display:none"/>
+      <input type="hidden" id="Q3" name="Q3" value="">
+      <input type="hidden" id="progressinput" name="progressinput" value="">
+    </form>
+  </center>
+
+  <br>
+
+	<center>Or <a href="/logout">Logout.</a></center>
+
+</div>
+
+<style>
+
+	body {
+	  font: 14px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.dot {
+	  stroke: #000;
+	}
+
+	path { 
+	    stroke: steelblue;
+	    stroke-width: 2;
+	    fill: none;
+	}
+
+</style>
+
+<script type="text/javascript">
+
+// Sets dimensions of graph and axes
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    // width = 800 - margin.left - margin.right,
+    // height = 400 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width])
+    .domain([0,xMax+1]);
+
+var y = d3.scale.linear()
+    .range([height, 0])
+    .domain([0,yMax]);
+
+var cond = d3.scale.ordinal()
+    .rangePoints([0, width],1)
+    // .domain(["Experimental","Control"]);
+    .domain(["Exercise regimen","Read short story"]);
+    // .domain(["Control", "Experimental"]);
+
+var color = d3.scale.category10()
+    // .domain(["Experimental","Control"]);
+    .domain(["Exercise regimen","Read short story"]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(xMax/10);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("#graph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var line = d3.svg.line()
+  .interpolate("basis")
+    .x(function(d) { return x(d.t); })
+    .y(function(d) { return y(d.measure); });
+
+// Sets attributes of blockers
+
+var lineBlockerAttr = new Object();
+  lineBlockerAttr.x=width/3.5;
+  lineBlockerAttr.y=0;
+
+var pointBlockerAttr = new Object();
+  pointBlockerAttr.x=width/2;
+  pointBlockerAttr.y=0;
+
+// Reads data from .csv file
+
+d3.csv(file, function(error, data) {
+    if (error) throw error;
+
+    //////// Saves data for calculation ////////
+    parsedData = JSON.parse(JSON.stringify(data));
+    console.log(parsedData.length);
+  
+    for (i = 0; i < parsedData.length; i++) {
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure.push(Number(parsedData[i].measure));
+
+      // if (parsedData[i].condition=="Control") {
+      if (parsedData[i].condition=="Read short story") {
+        meanControl.push(Number(parsedData[i].dv));
+      }
+      // else if (parsedData[i].condition=="Experimental") {
+      else if (parsedData[i].condition=="Exercise regimen") {
+        meanExperimental.push(Number(parsedData[i].dv));
+      }
+    }
+    ////////////////////////////////////////////
+
+    data.forEach(function(d) {
+      d.iv = +d.iv;
+      d.dv = +d.dv;
+      d.t = +d.t;
+      d.condition = d.condition;
+    });
+
+    // x.domain(d3.extent(data, function(d) { return d.A; })).nice();
+    // y.domain(d3.extent(data, function(d) { return d.B; })).nice();
+    // x.domain([0,xMax+1]);
+    // y.domain([0,yMax])
+
+    // Appends line
+
+    svg.append("path")
+      .attr("class", "line")
+      .style("stroke", "red")
+      //.style("stroke-dasharray", "10, 5")
+      .style("opacity", 0)
+      .attr("d", line(data));
+
+    // Append line blocker
+
+    var lineBlocker = svg.append("rect")
+      .attr("id", "lineBlocker")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("x", function(d) {return lineBlockerAttr.x;})
+      .attr("y", function(d) {return lineBlockerAttr.y;})
+      .style("fill", "white")
+      .style("opacity", 1);
+
+    // Appends means
+
+    var controlMean = svg.append("line")
+      .attr("id", "controlMean")
+      // .attr("x1", cond("Control")-x(1))
+      // .attr("x2", cond("Control")+x(1))
+      .attr("x1", cond("Read short story")-x(5))
+      .attr("x2", cond("Read short story")+x(5))
+      .attr("y1", y(d3.mean(meanControl)))
+      .attr("y2", y(d3.mean(meanControl)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      // .style("stroke", color("Control"));
+      .style("stroke", color("Read short story"));
+
+    var controlM = svg.append("text")
+        .attr("id", "controlM")
+        // .attr("x", cond("Control")+x(1.2))
+        .attr("x", cond("Read short story")+x(9.2))
+        .attr("y", y(d3.mean(meanControl)))
+        .attr("dy", ".35em")
+        .attr("dx", x(1))
+        .style("opacity", 0)
+        .style("text-anchor", "end")
+        .text(d3.mean(meanControl).toFixed(2));
+
+    var experimentalMean = svg.append("line")
+      .attr("id", "experimentalMean")
+      // .attr("x1", cond("Experimental")-x(1))
+      // .attr("x2", cond("Experimental")+x(1))
+      .attr("x1", cond("Exercise regimen")-x(5))
+      .attr("x2", cond("Exercise regimen")+x(5))
+      .attr("y1", y(d3.mean(meanExperimental)))
+      .attr("y2", y(d3.mean(meanExperimental)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      // .style("stroke", color("Experimental"));
+      .style("stroke", color("Exercise regimen"));
+
+    var experimentalM = svg.append("text")
+      .attr("id", "experimentalM")
+      // .attr("x", cond("Experimental")+x(1.2))
+      .attr("x", cond("Exercise regimen")+x(9.2))
+      .attr("y", y(d3.mean(meanExperimental)))
+      .attr("dy", ".35em")
+      .attr("dx", x(1))
+      .style("opacity", 0)
+      .style("text-anchor", "end")
+      .text(d3.mean(meanExperimental).toFixed(2));
+
+    // Appends points
+
+    svg.selectAll(".dot")
+        .data(data)
+    .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        //.attr("cx", function(d) { return x(d.iv); })
+        .attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-3,3)); })
+        .attr("cy", function(d) { return y(d.dv); })
+        .style("fill", function(d) { return color(d.condition); })
+        .style("opacity", 0);
+
+    // Append point blocker
+
+    var pointBlocker = svg.append("rect")
+      .attr("id", "pointBlocker")
+      .attr("width", width/2)
+      .attr("height", height)
+      .attr("x", function(d) {return pointBlockerAttr.x;})
+      .attr("y", function(d) {return pointBlockerAttr.y;})
+      .style("fill", "white")
+      .style("opacity", 1);
+
+    // Appends axes
+
+    svg.append("g")
+      .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text(xLabel);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text(yLabel);
+
+    svg.append("text")
+        // .attr("x", cond("Control"))
+        .attr("x", cond("Read short story"))
+        .attr("y", y(2))
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text("Read short story");
+
+    svg.append("text")
+        // .attr("x", cond("Experimental"))
+        .attr("x", cond("Exercise regimen"))
+        .attr("y", y(2))
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text("Exercise regimen");
+
+    // Appends legend
+
+    var legend = svg.selectAll(".legend")
+        .data(color.domain())
+    .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color);
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
+
+    svg.append("rect")
+      .attr("x", width - 18)
+      .attr("y", 50)
+        .attr("width", 18)
+        .attr("height", 2)
+        .style("fill", "red");
+
+    svg.append("text")
+        .attr("x", width - 24)
+        .attr("y", 50)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(covariate);
+
+    var legendBlocker = svg.append("rect")
+      .attr("id", "legendBlocker")
+      .attr("width", 100)
+      .attr("height", 20)
+      .attr("x", width - 100)
+      .attr("y", 40)
+      .style("fill", "white")
+      .style("opacity", 0);
+
+});
+
+</script>
+
+{% endblock %}
