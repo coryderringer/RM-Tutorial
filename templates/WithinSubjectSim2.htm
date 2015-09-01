@@ -12,7 +12,7 @@
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
-<h2><center>Within-Subjects Designs</center></h2>
+<h2><center><span id="top">Within-Subjects Designs</span></center></h2>
 
 <div class="logout"><a href="/logout.htm">Logout</a></div>
 
@@ -105,7 +105,7 @@
 
 <div class="pg" style="width:1000px;display:none" id="review">
 	<h1>Ready for the Quiz?</h1>
-	<p> Take a moment to review before the quiz. Click below when you're ready!</p>
+	<p> Take a moment to review before the quiz. You can mouse over each bullet point to see a visual aid. Click below when you're ready!</p>
 
 	<u><b>Review:</b></u><ul>
 		<li><span id="list0"><i>Between-Subjects Designs</i> assign each person to one condition.</span></li><br>
@@ -120,29 +120,29 @@
 </div>
 
 <center>
-	<div class="review" id="listDiv0" style="top:-400px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv0" style="top:-300px;left:230px; display:none; height:200px; width:350px">
 		<br><b>Between-Subjects</b>
 		<img src="/static/images/BetweenSubjects.png" style="height:150px"></img>
 	</div>
 
-	<div class="review" id="listDiv1" style="top:-400px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv1" style="top:-300px;left:230px; display:none; height:200px; width:350px">
 		<br><b>Within-Subjects</b>
 		<img src="/static/images/WithinSubjects.png" style="height:150px"></img>
 	</div>
 
-	<div class="review" id="listDiv2" style="top:-330px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv2" style="top:-300px;left:230px; display:none; height:200px; width:350px">
 		<img src="/static/images/BS2.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv3" style="top:-330px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv3" style="top:-300px;left:230px; display:none; height:200px; width:350px">
 		<img src="/static/images/WS1.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv4" style="top:-320px;left:230px; display:none; height:220px; width:443px">
+	<div class="review" id="listDiv4" style="top:-305px;left:230px; display:none; height:220px; width:443px">
 		<img src="/static/images/PopVar.png" style="height:220px"></img>
 	</div>
 
-	<div class="review" id="listDiv5" style="top:-320px;left:230px; display:none; height:220px; width:443px">
+	<div class="review" id="listDiv5" style="top:-305px;left:230px; display:none; height:220px; width:443px">
 		<img src="/static/images/Correl.png" style="height:220px"></img>
 	</div>
 </center>
@@ -166,6 +166,8 @@ var $vocabSpan = $('#vocabSpan');
 var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
 var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
 
+var $review = $('#review');
+var $header = $('#top');
 
 var $hide = [$('#Text1'), $('#NextButton')];
 var $show = [$('.sigTrack'), $('.pdiv'), $('#secondrow'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
@@ -186,44 +188,104 @@ HoverEvents = function(){
 	var cancel = false;
 	$listItems[0].hover(function(){
 		$listDivs[0].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[0].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 	});
 
 	$listItems[1].hover(function(){
 		$listDivs[1].show();
+		$listItems[0].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[1].hide();
+			$listItems[0].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 	});
 
 	$listItems[2].hover(function(){
 		$listDivs[2].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[0].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[2].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[0].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 	});
 
 	$listItems[3].hover(function(){
 		$listDivs[3].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[0].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[3].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[0].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 	});
 
 	$listItems[4].hover(function(){
 		$listDivs[4].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[0].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[4].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[0].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 	});
 
 	$listItems[5].hover(function(){
 		$listDivs[5].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[0].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[5].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[0].css('opacity', '1.0');
 	});
 
 }
