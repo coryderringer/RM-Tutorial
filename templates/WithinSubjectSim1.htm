@@ -14,107 +14,120 @@
 </form>
 
 
-<div class="pg">
-	<center>
-		<span style="display:inline-block"><b>Between-Subjects</b></span>
-		<span style="display:inline-block;position:relative;left:170px"><b>Within-Subjects</b></span>
-		<div id="firstrow">
-			<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
-				<b>High<br>Population Variance</b>
-			</span>	
-			<div id="between1" style="display:inline-block">
-				<div id="graph1"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack1"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
+<div id="container">
+
+	<div class="corypg">
+		<center>
+			<span style="display:inline-block;position:relative;left:45px"><b>Between-Subjects</b></span>
+			<span style="display:inline-block;position:relative;left:160px"><b>Within-Subjects</b></span>
+			<div id="firstrow">
+				<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
+					<b>High<br>Population Variance</b>
+				</span>	
+				<div id="between1" style="display:inline-block">
+					<div id="graph1"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
+					
+					<!-- <div id="ttest1" class="ttest">
+						<span id="tspan1">t=1.00</span><br>
+						<span id="pspan1">p=.50</span><br>
+						<span id="dspan1">power=.8</span><br>
+					</div> -->
+				</div>
 				
-				<!-- <div id="ttest1" class="ttest">
-					<span id="tspan1">t=1.00</span><br>
-					<span id="pspan1">p=.50</span><br>
-					<span id="dspan1">power=.8</span><br>
-				</div> -->
+				<div id="within1" style="display:inline-block">
+					<div id="graph2"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:15px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
+				</div>
 			</div>
 			
-			<div id="within1" style="display:inline-block">
-				<div id="graph2"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack2"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
-			</div>
-		</div>
-		
-		
-		<br>
+			
+			<br>
 
-		<div id="secondrow" style="display:none">
-			<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
-				<b>Low<br>Population Variance</b>
-			</span>
-			<div id="between2" style="display:inline-block">
-				<div id="graph3"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack3"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
+			<div id="secondrow" style="display:none">
+				<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
+					<b>Low<br>Population Variance</b>
+				</span>
+				<div id="between2" style="display:inline-block">
+					<div id="graph3"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack3"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
+				</div>
+				
+				<div id="within2" style="display:inline-block">
+					<div id="graph4"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:15px"><font color="green">Significant Results: <span id="sigTrack4"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
+				</div>
 			</div>
 			
-			<div id="within2" style="display:inline-block">
-				<div id="graph4"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack4"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
+			
+			<button id="ResampleButton" style="width:100px;display:none;float:left" onclick="UpdateData()">Resample</button>
+		</center>	
+		<br>
+
+		<div id="Text1">
+			<p>To expand on this point, and explore some of the advantages of within subjects designs, let's look at some hypothetical data presented as a between-subjects comparison and as a within-subjects comparison.</p>
+
+			<p>Remember that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know <b>if one group is different from another group</b> after some treatment. In a within-subjects design, we want to know if one treatment works better than the other treatment <b>for the same group of people.</b> </p>
+
+			<div id="Quiz3">
+				<p id="Question3">Keeping in mind our Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
+
+
+				<form id="Q3Answers">
+					<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design</label><br>
+					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design</label><br>
+				</form><br>
+
+				<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
+				<!-- <button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button> -->
+				
+				<div id="ResponseDiv3" style=""></div>
+		<!-- 		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
+				<center><b>Data Simulations:</b></center><br>
+				To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample of either 10 (within-subjects) or 20 (between-subjects) values from a normal distribution (mean = 200, standard deviation = 9). This reflects the baseline weight of each participant in our study.<br>
+				<br>
+				If the study were conducted using a <b>between-subjects design,</b> we would then randomly assign each person to one condition or the other (10 participants per condition). Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution. For the Fruit Condition, we draw 10 values from a distribution with a mean of 11 pounds and a standard deviation of 6 pounds. The 10 values in the Veggie Condition are drawn from a distribution with a mean of 25 pounds, with the same standard deviation of 6 pounds. These distributions reflect the weight lost in each condition (e.g. participants in the Fruit Condition lost an average of 11 pounds). The final result is obtained by subtracting each Fruit or Veggie Condition value from the corresponding baseline value. For example, Participant 1's weight at the start of the study is drawn from the baseline distribution, and the value is 205 pounds. This participant is in the Veggie Condition, so we simulate the amount of weight lost by drawing from another distribution, with a result of 15 pounds. Participant 1's weight on the graph would then be 190 pounds.<br>
+				<br>
+				<b>In the within-subjects design,</b> we draw the same baseline distribution and the same treatment distributions. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about the adjustment distributions.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within-subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
+			</div> -->
 			</div>
 		</div>
-		
-		<br>
-		<button id="ResampleButton" style="width:100px;display:none;float:left" onclick="UpdateData()">Resample</button>
-	</center>	
-	<br>
 
-	<div id="Text1">
-		<p>To expand on this point, let's look at what each design is actually comparing between the two conditions. Here we have some hypothetical data presented as a between-subjects comparison (on the left) and as a within-subjects comparison (on the right).</p>
-
-		<p>Notice that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know if one group is different from another group after some treatment. To examine this, we usually compare the mean DV scores for each group (the blue and orange lines in the graph on the left). In a within-subjects design, we want to know if one treatment works better than the other treatment for the same group of people. This is illustrated above by the lines connecting across the conditions: each line represents a participant, and each dot at the end of the line represents the participant's weight at the end of the Fruit or Veggie condition.</p>
-
-		<div id="Quiz3">
-			<p id="Question3">Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
-
-
-			<form id="Q3Answers">
-				<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design</label><br>
-				<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design</label><br>
-			</form><br>
-
-			<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
-			<!-- <button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button> -->
-			<br>
-			<div id="ResponseDiv3" style=""></div>
-<!-- 		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
-			<center><b>Data Simulations:</b></center><br>
-			To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample of either 10 (within-subjects) or 20 (between-subjects) values from a normal distribution (mean = 200, standard deviation = 9). This reflects the baseline weight of each participant in our study.<br>
-			<br>
-			If the study were conducted using a <b>between-subjects design,</b> we would then randomly assign each person to one condition or the other (10 participants per condition). Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution. For the Fruit Condition, we draw 10 values from a distribution with a mean of 11 pounds and a standard deviation of 6 pounds. The 10 values in the Veggie Condition are drawn from a distribution with a mean of 25 pounds, with the same standard deviation of 6 pounds. These distributions reflect the weight lost in each condition (e.g. participants in the Fruit Condition lost an average of 11 pounds). The final result is obtained by subtracting each Fruit or Veggie Condition value from the corresponding baseline value. For example, Participant 1's weight at the start of the study is drawn from the baseline distribution, and the value is 205 pounds. This participant is in the Veggie Condition, so we simulate the amount of weight lost by drawing from another distribution, with a result of 15 pounds. Participant 1's weight on the graph would then be 190 pounds.<br>
-			<br>
-			<b>In the within-subjects design,</b> we draw the same baseline distribution and the same treatment distributions. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about the adjustment distributions.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within-subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
-		</div> -->
+		<div id="AnswerA" style="display:none">
+			<p>Oh no, your intuition wasn't right this time! That's okay.</p>
 		</div>
+		<div id="AnswerB" style="display:none">
+			<p>Right!</p>
+		</div>
+		<div id="Text2" style="display:none">
+			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means. In technical terms, we lose <i>statistical power</i> when the population variance is higher.</p>
+
+			<p>Asking a different question using a within-subjects design means that a wider distribution in each group doesn't affect our statistical power like it does with a between-subjects design. <i>It doesn't matter that the points are spread out, because the lines that connect them are generally sloping in the same direction.</i></p>
+		</div>
+
+		<div id="Text3" style="display:none">
+			<p>Here we can see that the between-subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. It even comes out to be statistically significant (p < .05). However, notice that the p value for the within-subjects design is exactly the same regardless of the population variance: <b>within-subjects designs are not affected by the population variance</b>.</p>
+
+			<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
+		</div>
+		<center><button id="NextButton" style="width:12.5%;display:none">Continue</button></center>
 	</div>
 
-	<div id="AnswerA" style="display:none">
-		<p>Oh no, your intuition wasn't right this time! That's okay.</p>
+	<div class="sidebar">
+		<u><b><ul>Key Ideas:</ul></b></u>
+		<span id="vocabSpan" style="font-size: 14px">
+			<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br>
+			<li><i>Within-Subjects Designs</i> assign every person to every condition.</li><br>
+			<li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li><br>
+			<li>Between-subjects designs examine group means</li><br>
+			<li>Within-subjects designs examine difference scores</li>
+		</span>
+
 	</div>
-	<div id="AnswerB" style="display:none">
-		<p>Right!</p>
-	</div>
-	<div id="Text2" style="display:none">
-		<p>This is the first advantage of within-subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the more statistical power we lose in a between-subjects design.</p>
-
-		<p>Asking a different question using a within-subjects design means that the differences within each condition will only affect our statistical power if they affect the consistency of the difference scores (i.e. if they're the result of differences in the effectiveness of the treatment), <i>but they will not affect our power if they're the result of individual differences unrelated to the treatment, which is the case here!</i></p>
-	</div>
-
-	<div id="Text3" style="display:none">
-		<p>Here we can see that the between-subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. However, notice that the p value for the within-subjects design is exactly the same regardless of the population variance: <b>within-subjects designs are not affected by the population variance</b>.</p>
-
-		<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
-	</div>
-
-	<center><button id="NextButton" style="width:12.5%;display:none">Continue</button></center>
-
 
 </div>
 
@@ -132,16 +145,35 @@ var pValues = {{pValues1}};
 var sigTally = {{sigTally1}};
 var sig = [0,0,0,0]
 
+
+// Cache the DOM (good habit to start)
+var $vocabSpan = $('#vocabSpan');
+
+var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
+
+var $Text1 = $('#Text1');
+var $Text2 = $('#Text2');
+var $Text3 = $('#Text3');
+
+var $firstrow = $('#firstrow');
+var $secondrow = $('#secondrow');
+
+var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
+
+var $NextButton = $('#NextButton');
+
+
+
 function KeepScore(){
 	
 	for(var i = 0; i < pList.length; i++){
 		sig[i] += sigList[i]
 	}
 
-	$('#sigTrack1').html(sig[2]+'/'+datasets);
-	$('#sigTrack2').html(sig[3]+'/'+datasets);
-	$('#sigTrack3').html(sig[0]+'/'+datasets);
-	$('#sigTrack4').html(sig[1]+'/'+datasets);
+	$sigTrack[0].html(sig[2]+'/'+datasets);
+	$sigTrack[1].html(sig[3]+'/'+datasets);
+	$sigTrack[2].html(sig[0]+'/'+datasets);
+	$sigTrack[3].html(sig[1]+'/'+datasets);
 }
 
 function LearnVisible(){
@@ -152,6 +184,7 @@ function LearnVisible(){
 }
 
 function RecordQuiz3(){
+
 	$('.pdiv').show();
 	$('.sigTrack').show();
 	KeepScore();
@@ -168,23 +201,34 @@ function RecordQuiz3(){
 		$('#AnswerB').show();
 		
 	}
-	$('#Text1').hide();
+	$Text1.hide();
 	
 	// Show response and next button
-	$('#Text2, #NextButton').show();
+	$Text2.show();
+	$NextButton.show();
 	
-	$('#NextButton').click(function(){
+	$NextButton.click(function(){
 		
+
 		// Hide quiz, answers
-		$('#Text1, #Text2, #AnswerA, #AnswerB').hide();
+		$Text1.hide(); 
+		$Text2.hide();
+		$('#AnswerA, #AnswerB').hide();
 
 		// Show second row and instructions, resample button
-		$('#secondrow, #Text3, #ResampleButton').show();
-		$('#firstrow').find('span').css('visibility', 'visible');
+		$secondrow.show();
+		$Text3.show();
+		$('#ResampleButton').show();
+		
+		$firstrow.find('span').css('visibility', 'visible');
 
 		// Next button: move on after simulations
-		$('#NextButton').click(MySubmit);
+		$NextButton.click(MySubmit);
 		// $('#NextButton').css('display', 'inline-block');
+
+		$vocabSpan.append(
+			'<br><li>Within-subjects designs are insensitive to population variance</li>'
+			);
 	
 	});
 }
@@ -315,16 +359,16 @@ var FileList2 = ['/static/stimuli/WithinSubjects/widedata1.csv',
 
 // Randomly select a file from the list
 // var random = Math.floor(Math.random() * FileList.length);
-var random = 37;
+var random = 6;
 var File = FileList[random];
 var File2 = FileList2[random];
 var pList = pValues[random];
 var sigList = sigTally[random];
 
-$('#p1').html(pList[2]);
-$('#p2').html(pList[3]);
-$('#p3').html(pList[0]);
-$('#p4').html(pList[1]);
+$pdiv[0].html(pList[2]);
+$pdiv[1].html(pList[3]);
+$pdiv[2].html(pList[0]);
+$pdiv[3].html(pList[1]);
 
 /// Name variables here
 var	yLabel = "Weight",
@@ -358,7 +402,7 @@ function randomJitter(min, max) {
 
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 300 - margin.left - margin.right,
+    width = 250 - margin.left - margin.right,
     height = 200 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
@@ -934,11 +978,11 @@ function UpdateData(){
 	File2 = FileList2[random];
 	pList = pValues[random];
 	sigList = sigTally[random];
-
-	$('#p1').html(pList[2]);
-	$('#p2').html(pList[3]);
-	$('#p3').html(pList[0]);
-	$('#p4').html(pList[1]);
+	
+	$pdiv[0].html(pList[2]);
+	$pdiv[1].html(pList[3]);
+	$pdiv[2].html(pList[0]);
+	$pdiv[3].html(pList[1]);
 
 	KeepScore();
 

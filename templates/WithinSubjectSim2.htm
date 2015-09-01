@@ -16,82 +16,137 @@
 
 <div class="logout"><a href="/logout.htm">Logout</a></div>
 
-<div class="pg">
-	<center>
-			<span style="display:inline-block"><b>Between Subjects</b></span>
-			<span style="display:inline-block;position:relative;left:170px"><b>Within Subjects</b></span>
-		<div id="firstrow">
-			<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
-				<b>High<br>Correlation</b>
-			</span>
-			<div id="between1" style="display:inline-block">
-				<div id="graph1"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack1"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
+<div id="container">
+	<div class="corypg">
+		<center>
+				<span style="display:inline-block"><b>Between-Subjects</b></span>
+				<span style="display:inline-block;position:relative;left:135px"><b>Within-Subjects</b></span>
+			<div id="firstrow">
+				<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
+					<b>High<br>Correlation</b>
+				</span>
+				<div id="between1" style="display:inline-block">
+					<div id="graph1"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
+					
+					<!-- <div id="ttest1" class="ttest">
+						<span id="tspan1">t=1.00</span><br>
+						<span id="pspan1">p=.50</span><br>
+						<span id="dspan1">power=.8</span><br>
+					</div> -->
+				</div>
 				
-				<!-- <div id="ttest1" class="ttest">
-					<span id="tspan1">t=1.00</span><br>
-					<span id="pspan1">p=.50</span><br>
-					<span id="dspan1">power=.8</span><br>
-				</div> -->
+				<div id="within1" style="display:inline-block">
+					<div id="graph2"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
+				</div>
 			</div>
-			
-			<div id="within1" style="display:inline-block">
-				<div id="graph2"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack2"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
+			<br>
+
+			<br>
+
+
+			<div id="secondrow" style="display:none">
+				<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
+					<b>Low<br>Correlation</b>
+				</span>
+				<div id="between2" style="display:inline-block">
+					<div id="graph3"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px">Significant Results: <span id="sigTrack3"></span></div>
+					<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
+				</div>
+				
+				<div id="within2" style="display:inline-block">
+					<div id="graph4"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px">Significant Results: <span id="sigTrack4"></span></div>
+					<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
+				</div>
 			</div>
-		</div>
+		</center>	
 		<br>
 
-		<br>
+		<button id="ResampleButton" style="width:100px;display:none" onclick="UpdateData()">Resample</button>
 
+		<div id="Text1">
+			<p>Another advantage of within subject designs is that they are able to detect small but consistent differences that between-subjects designs cannot, again because the designs ask different questions of the data.</p>
 
-		<div id="secondrow" style="display:none">
-			<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
-				<b>Low<br>Correlation</b>
-			</span>
-			<div id="between2" style="display:inline-block">
-				<div id="graph3"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack3"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
-			</div>
-			
-			<div id="within2" style="display:inline-block">
-				<div id="graph4"></div>
-				<div class="sigTrack" style="display:none;position:relative;top:-55px">Significant Results: <span id="sigTrack4"></span></div>
-				<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
-			</div>
+			<p>Here we see the same example data from both between and within-subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. Remember our handy rule of thumb from earlier: if the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects.</p>	
+
+			<p>In a within-subjects experiment, the means of the effect in each condition might be very similar. However, if each subject saw increased weight loss in Veggie Condition compared to Fruit Condition, even if the increase is small, it might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
 		</div>
-	</center>	
-	<br>
+		
+		<div id="Text2" style="display:none">
+			<p>By contrast, if the datapoints are not correlated (as in the bottom row of graphs), it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that the lines on the bottom-right graph have wildly varying slopes. Some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. Consistent differences, even small ones, are the key in a within-subjects design.</p>
 
-	<button id="ResampleButton" style="width:100px;display:none" onclick="UpdateData()">Resample</button>
+			<p>Also notice that the correlation of the two conditions does not matter at all in the between-subjects design: the p value is the same if the correlation is high (r = .99) or low (r = -.02). This is because the groups consist of different people: you can't compare Bob's weight loss in the Fruit Condition to his weight loss in the Veggie Condition, because Bob was never in the Veggie Condition! The correlation doesn't really mean anything in the context of a between-subjects design, so it doesn't affect the p value.</p>
 
-	<div id="Text1">
-		<p>The second advantage of within subject designs (closely related to the first) is that they are able to detect small but consistent differences that between subjects designs cannot, again because the designs ask different questions of the data.</p>
+			<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
+		</div>
+		<button id="NextButton" style="width:100px" onclick="StartSimulations()">Continue</button>
 
-		<p>Here we see the same example data from both between and within subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. A handy rule of thumb is to imagine lines connecting each individual's data in one condition to his/her data in the other (as we have drawn here). If the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects.</p>	
-
-		<p>In a within-subjects experiment, the means of the effect in each condition might be very similar. However, if each subject saw increased weight loss in Veggie Condition compared to Fruit Condition, even if the increase is small, it might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
+		
+		
+		<center><button id="SubmitButton" style="display:none" onclick="Review()">Continue to Quiz</button></center>
 	</div>
-	
-	<div id="Text2" style="display:none">
-		<p>By contrast, if the datapoints are not correlated (as in the bottom row of graphs), it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that the lines on the bottom-left graph have wildly varying slopes. Some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. Consistent differences, even small ones, are the key in a within-subjects design.</p>
-
-		<p>Also notice that the correlation of the two conditions does not matter at all in the between-subjects design: the p value is the same if the correlation is high (r = .99) or low (r = -.02). This is because the groups consist of different people: you can't compare Bob's weight loss in the Fruit Condition to his weight loss in the Veggie Condition, because Bob was never in the Veggie Condition! The correlation doesn't really mean anything in the context of a between-subjects design, so it doesn't affect the p value.</p>
-
-		<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
+	<div class="sidebar">
+		<u><b><ul>Key Ideas:</ul></b></u>
+		<span id="vocabSpan" style="font-size: 14px">
+			<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br>
+			<li><i>Within-Subjects Designs</i> assign every person to every condition.</li><br>
+			<li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li><br>
+			<li>Between-subjects designs examine group means</li><br>
+			<li>Within-subjects designs examine difference scores</li><br>
+			<li>Within-subjects designs are insensitive to population variance</li>
+		</span>
 	</div>
-	<button id="NextButton" style="width:100px" onclick="StartSimulations()">Continue</button>
-
-	
-	
-	<center><button id="SubmitButton" style="display:none" onclick="MySubmit()">Continue to Quiz</button></center>
-	
-	
-
 </div>
+
+<div class="pg" style="width:1000px;display:none" id="review">
+	<h1>Ready for the Quiz?</h1>
+	<p> Take a moment to review before the quiz. Click below when you're ready!</p>
+
+	<u><b>Review:</b></u><ul>
+		<li><span id="list0"><i>Between-Subjects Designs</i> assign each person to one condition.</span></li><br>
+		<li><span id="list1"><i>Within-Subjects Designs</i> assign every person to every condition.</span></li><br>
+		<li><span id="list2">Between-subjects designs examine group means</span></li><br>
+		<li><span id="list3">Within-subjects designs examine difference scores</span></li><br>
+		<li><span id="list4">Within-subjects designs are insensitive to population variance</span></li><br>
+		<li><span id="list5">Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</span></li>
+	</ul>
+	
+	<button onclick="MySubmit()">Ready!</button>
+</div>
+
+<center>
+	<div class="review" id="listDiv0" style="top:-400px;left:230px; display:none; height:200px; width:350px">
+		<br><b>Between-Subjects</b>
+		<img src="/static/images/BetweenSubjects.png" style="height:150px"></img>
+	</div>
+
+	<div class="review" id="listDiv1" style="top:-400px;left:230px; display:none; height:200px; width:350px">
+		<br><b>Within-Subjects</b>
+		<img src="/static/images/WithinSubjects.png" style="height:150px"></img>
+	</div>
+
+	<div class="review" id="listDiv2" style="top:-330px;left:230px; display:none; height:200px; width:350px">
+		<img src="/static/images/BS2.png" style="height:200px"></img>
+	</div>
+
+	<div class="review" id="listDiv3" style="top:-330px;left:230px; display:none; height:200px; width:350px">
+		<img src="/static/images/WS1.png" style="height:200px"></img>
+	</div>
+
+	<div class="review" id="listDiv4" style="top:-320px;left:230px; display:none; height:220px; width:443px">
+		<img src="/static/images/PopVar.png" style="height:220px"></img>
+	</div>
+
+	<div class="review" id="listDiv5" style="top:-320px;left:230px; display:none; height:220px; width:443px">
+		<img src="/static/images/Correl.png" style="height:220px"></img>
+	</div>
+</center>
+
 
 <script>
 
@@ -104,16 +159,87 @@ var sigTally = {{sigTally2}};
 var correlations = {{correlations}};
 var sig = [0,0,0,0]
 
+// Cache the DOM
+
+var $vocabSpan = $('#vocabSpan');
+
+var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
+var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
+
+
+var $hide = [$('#Text1'), $('#NextButton')];
+var $show = [$('.sigTrack'), $('.pdiv'), $('#secondrow'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
+
+var $graphs = [$('#graph1'), $('#graph2'), $('#graph3'), $('#graph4')];
+
+
+var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
+
+var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5')];
+
+
+
+// bind events for hover
+HoverEvents = function(){
+
+	// not sure what "cancel" does...
+	var cancel = false;
+	$listItems[0].hover(function(){
+		$listDivs[0].show();
+	},function(){
+		if(!cancel)
+			$listDivs[0].hide();
+	});
+
+	$listItems[1].hover(function(){
+		$listDivs[1].show();
+	},function(){
+		if(!cancel)
+			$listDivs[1].hide();
+	});
+
+	$listItems[2].hover(function(){
+		$listDivs[2].show();
+	},function(){
+		if(!cancel)
+			$listDivs[2].hide();
+	});
+
+	$listItems[3].hover(function(){
+		$listDivs[3].show();
+	},function(){
+		if(!cancel)
+			$listDivs[3].hide();
+	});
+
+	$listItems[4].hover(function(){
+		$listDivs[4].show();
+	},function(){
+		if(!cancel)
+			$listDivs[4].hide();
+	});
+
+	$listItems[5].hover(function(){
+		$listDivs[5].show();
+	},function(){
+		if(!cancel)
+			$listDivs[5].hide();
+	});
+
+}
+
+HoverEvents();
+
 function KeepScore(){
 	
 	for(var i = 0; i < pList.length; i++){
 		sig[i] += sigList[i]
 	}
 
-	$('#sigTrack1').html(sig[0]+'/'+datasets);
-	$('#sigTrack2').html(sig[1]+'/'+datasets);
-	$('#sigTrack3').html(sig[2]+'/'+datasets);
-	$('#sigTrack4').html(sig[3]+'/'+datasets);
+	$sigTrack[0].html(sig[0]+'/'+datasets);
+	$sigTrack[1].html(sig[1]+'/'+datasets);
+	$sigTrack[2].html(sig[2]+'/'+datasets);
+	$sigTrack[3].html(sig[3]+'/'+datasets);
 }
 
 
@@ -121,19 +247,21 @@ function StartSimulations(){
 	console.log('Starting!');
 
 	// hide stuff
-	$('#Text1').hide();
-	$('#NextButton').hide();
+	for(var i = 0; i< $hide.length; i++){
+		$hide[i].hide();
+	}
+
 
 	// show stuff
-	$('.sigTrack').show();
-	$('.pdiv').show();
-	$('#ttest1').css('visibility', 'visible');
-	$('#ttest2').css('visibility', 'visible');
-	$('#secondrow').show();
-	$('#Text2').show();
-	$('#ResampleButton').show();
-	$('#SubmitButton').show();
+	for(var i = 0; i < $show.length; i++){
+		$show[i].show();
+	}
+
 	$('#firstrow').find('span').css('visibility', 'visible');
+
+	$vocabSpan.append(
+		'<br><li>Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</li>'
+		);
 
 	KeepScore();
 
@@ -146,6 +274,10 @@ function StartSimulations(){
 
 // }
 
+function Review(){
+	$('#container').hide();
+	$('#review').show();
+}
 
 function MySubmit(){
 	console.log('Submitting!');
@@ -272,10 +404,10 @@ sigList = sigTally[random];
 corList = correlations[random];
 
 
-$('#p1').html(pList[0]+',    r = '+corList[0]);
-$('#p2').html(pList[1]+',    r = '+corList[0]);
-$('#p3').html(pList[2]+',    r = '+corList[1]);
-$('#p4').html(pList[3]+',    r = '+corList[1]);
+$pdiv[0].html(pList[0]+',    r = '+corList[0]);
+$pdiv[1].html(pList[1]+',    r = '+corList[0]);
+$pdiv[2].html(pList[2]+',    r = '+corList[1]);
+$pdiv[3].html(pList[3]+',    r = '+corList[1]);
 
 /// Name variables here
 var	yLabel = "Weight",
@@ -306,7 +438,7 @@ function randomJitter(min, max) {
 
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 300 - margin.left - margin.right,
+    width = 250 - margin.left - margin.right,
     height = 200 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
@@ -377,7 +509,7 @@ var chart4 = d3.select("#graph4").append("svg")
 
 // Reads data from .csv file
 
-// for between subjects
+// for between-subjects
 
 // CHART 1
 d3.csv(File, function(error, data) {
@@ -488,7 +620,7 @@ d3.csv(File, function(error, data) {
 
 // CHART 2
 
-// for within subjects
+// for within-subjects
 d3.csv(File, function(error, data) {
   	if (error) throw error;
 
@@ -862,19 +994,19 @@ d3.csv(File2, function(error, data) {
 function UpdateData(){
 	datasets += 1;
 
-	$('#graph1').html('');
+	$graphs[0].html('');
 	meanFruitBetween = [];
 	meanVeggieBetween = [];
 
-	$('#graph2').html('');
+	$graphs[1].html('');
 	meanFruitWithin = [];
 	meanVeggieWithin = [];
 
-	$('#graph3').html('');
+	$graphs[2].html('');
 	meanWideFruitBetween = [];
 	meanWideVeggieBetween = [];
 
-	$('#graph4').html('');
+	$graphs[3].html('');
 	meanWideFruitWithin = [];
 	meanWideVeggieWithin = [];
 
@@ -892,10 +1024,10 @@ function UpdateData(){
 
 	KeepScore();
 
-	$('#p1').html(pList[0]+',    r = '+corList[0]);
-	$('#p2').html(pList[1]+',    r = '+corList[0]);
-	$('#p3').html(pList[2]+',    r = '+corList[1]);
-	$('#p4').html(pList[3]+',    r = '+corList[1]);
+	$pdiv[0].html(pList[0]+',    r = '+corList[0]);
+	$pdiv[1].html(pList[1]+',    r = '+corList[0]);
+	$pdiv[2].html(pList[2]+',    r = '+corList[1]);
+	$pdiv[3].html(pList[3]+',    r = '+corList[1]);
 
 
 	var chart1 = d3.select("#graph1").append("svg")
@@ -1030,7 +1162,7 @@ function UpdateData(){
 
 	// CHART 2
 
-	// for within subjects
+	// for within-subjects
 	d3.csv(File, function(error, data) {
 	  	if (error) throw error;
 
