@@ -14,28 +14,38 @@ var progress = {{progress}}
   var current = 0;
 
 /// Graph
-  var file = "/static/stimuli/OrderEffects/carryover20.csv";
+  var file1 = "/static/stimuli/OrderEffects/carryover1.csv";
+  var file2 = "/static/stimuli/OrderEffects/carryover3.csv";
+  var file3 = "/static/stimuli/OrderEffects/carryover4.csv";
 
 /// Name variables here
 	var	yLabel = "Accuracy",
 		condLabel = "Exercise routine",
 		xLabel = "Time (minutes)",
 		covariate = "Arousal"
-		xMax = 95,
+		xMax = 20,
 		yMax = 14;
 
 /// Variables for calculating stuff
   var parsedData;
   var iv = [];
   var dv = [];
-  var measure = [];
-  var meanControl = [];
-  var meanExperimental = [];
+  var measure1 = [];
+  var meanControl1 = [];
+  var meanExperimental1 = [];
+
+  var measure2 = [];
+  var meanControl2 = [];
+  var meanExperimental2 = [];
+
+  var measure3 = [];
+  var meanControl3 = [];
+  var meanExperimental3 = [];
 
 /// Text
 
   var text = [
-    "THIRD ONE",
+    "One thing that is typically carried out in within-subjects experiments is <b>counterbalancing</b>: <i>randomizing the order of the conditions so different subjects experience the conditions in different orders</i>. In our study, there are only two conditions, so there are only two possible orders they can be experienced in. On the left, you can see the original graph from the study where the experimental condition is experienced before the control condition. On the right, we will look at what happens for subjects who experience the control condition (reading the short story) before the experimental condition (the rigorous exercise regimen).",
 
     "Again, participants first go through the intense exercise regimen (the experimental condition), and then have their spatial reasoning ability measured. Just like in the earlier experiment, this results in reasonably high accuracy scores.",
 
@@ -85,23 +95,31 @@ function next(current) {
 
     //Does different things each time page advances
     if (current==1) { 
-      svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("path").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#controlMean2").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#controlM2").transition().duration(800).delay(200).style("opacity", 1);
     }
     else if (current==2) { 
-      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 0); 
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 0); 
+      // svg2.select("#experimentalMean2").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#experimentalM2").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("#lineBlocker2").transition().duration(800).delay(200).style("opacity", 0); 
     }
     else if (current==3) { 
-      svg.select("path").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.select("path").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.select("#experimentalMean2").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("#experimentalM2").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("#controlMean2").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("#controlM2").transition().duration(800).delay(200).style("opacity", 1);
+
+      svg1.select("path").transition().duration(800).delay(200).style("opacity", 0);
+      svg1.select("#experimentalMean1").transition().duration(800).delay(200).style("opacity", 1);
+      svg1.select("#experimentalM1").transition().duration(800).delay(200).style("opacity", 1);
+      svg1.select("#controlMean1").transition().duration(800).delay(200).style("opacity", 1);
+      svg1.select("#controlM1").transition().duration(800).delay(200).style("opacity", 1);
     }
-    else if (current==4) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==4) { svg2.select("#lineBlocker2").transition().duration(800).delay(200).style("opacity", 0); }
     else if (current==text.length-1) { 
       $("#next").attr("disabled", true);
       showQuiz(); 
@@ -139,25 +157,25 @@ function previous(current) {
 
     // Does different things each time page advances
     if (current==3) { 
-      svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 1); 
+      svg2.select("#lineBlocker2").transition().duration(800).delay(200).style("opacity", 1); 
     }
     else if (current==2) { 
-      svg.select("path").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 1);
+      svg2.select("path").transition().duration(800).delay(200).style("opacity", 0);
+      // svg2.select("#experimentalMean2").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#experimentalM2").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#controlMean2").transition().duration(800).delay(200).style("opacity", 1);
+      // svg2.select("#controlM2").transition().duration(800).delay(200).style("opacity", 1);
     }
     else if (current==1) { 
-      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); 
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 1); 
+      // svg2.select("#controlMean2").transition().duration(800).delay(200).style("opacity", 0);
+      // svg2.select("#controlM2").transition().duration(800).delay(200).style("opacity", 0);
     }
     else if (current==0) {
-      svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); 
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 1); 
+      svg2.select("#experimentalMean2").transition().duration(800).delay(200).style("opacity", 0);
+      svg2.select("#experimentalM2").transition().duration(800).delay(200).style("opacity", 0);
       $("#previous").attr("disabled", true); 
     }
 }
@@ -201,7 +219,7 @@ function MySubmit(){
 
 </script>
 
-<div class="pg">
+<div class="pg" style="height:940px">
 
 	<h2><center>Carryover effects</center></h2>
 	
@@ -221,7 +239,17 @@ function MySubmit(){
     <button id="previous" onclick="current--; previous(current)" disabled="true">&larr; Previous</button>&nbsp;&nbsp;<button id="next" onclick="current++; next(current);">Next &rarr;</button>
   </div>
 
-	<div id="graph" width="900" height="600" align="center"></div>
+  <div align="center">
+	   <div id="graph1" width="900" height="600" style="display:inline-block"></div>
+     <div id="graph2" width="900" height="600" style="display:inline-block"></div>
+  </div>
+
+  <br>
+
+  <div id="graph3" width="900" height="600" align="center" style="opacity:0.3"></div>
+
+  <!-- <div id="graph3" width="900" height="600" align="center" style="display:none"></div> -->
+
 
   <br>
 
@@ -282,6 +310,8 @@ function MySubmit(){
 
 </style>
 
+<!------------------ Graph 1 ------------------------>
+
 <script type="text/javascript">
 
 // Sets dimensions of graph and axes
@@ -289,8 +319,8 @@ function MySubmit(){
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     // width = 800 - margin.left - margin.right,
     // height = 400 - margin.top - margin.bottom;
-    width = 700 - margin.left - margin.right,
-    height = 350 - margin.top - margin.bottom;
+    width = 390 - margin.left - margin.right,
+    height = 290 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
     .range([0, width])
@@ -300,67 +330,61 @@ var y = d3.scale.linear()
     .range([height, 0])
     .domain([0,yMax]);
 
-var cond = d3.scale.ordinal()
+var cond1 = d3.scale.ordinal()
     .rangePoints([0, width],1)
-    // .domain(["Experimental","Control"]);
     .domain(["Exercise regimen","Read short story"]);
-    // .domain(["Control", "Experimental"]);
 
-var color = d3.scale.category10()
-    // .domain(["Experimental","Control"]);
-    .domain(["Exercise regimen","Read short story"]);
+var color1 = d3.scale.category10()
+    .domain(["Exercise regimen", "Read short story"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .ticks(xMax/10);
+    .ticks(xMax/2);
 
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var svg = d3.select("#graph").append("svg")
+var svg1 = d3.select("#graph1").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var line = d3.svg.line()
+var line1 = d3.svg.line()
   .interpolate("basis")
     .x(function(d) { return x(d.t); })
     .y(function(d) { return y(d.measure); });
 
 // Sets attributes of blockers
 
-var lineBlockerAttr = new Object();
-  lineBlockerAttr.x=width/3.5;
-  lineBlockerAttr.y=0;
+var lineBlockerAttr1 = new Object();
+  lineBlockerAttr1.x=width/3.5;
+  lineBlockerAttr1.y=0;
 
-var pointBlockerAttr = new Object();
-  pointBlockerAttr.x=width/2;
-  pointBlockerAttr.y=0;
+var pointBlockerAttr1 = new Object();
+  pointBlockerAttr1.x=width/2;
+  pointBlockerAttr1.y=0;
 
 // Reads data from .csv file
 
-d3.csv(file, function(error, data) {
+d3.csv(file1, function(error, data) {
     if (error) throw error;
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-    console.log(parsedData.length);
   
     for (i = 0; i < parsedData.length; i++) {
       iv.push(Number(parsedData[i].iv));
       dv.push(Number(parsedData[i].dv));
-      measure.push(Number(parsedData[i].measure));
+      measure1.push(Number(parsedData[i].measure));
 
-      // if (parsedData[i].condition=="Control") {
       if (parsedData[i].condition=="Read short story") {
-        meanControl.push(Number(parsedData[i].dv));
+        meanControl1.push(Number(parsedData[i].dv));
       }
-      // else if (parsedData[i].condition=="Experimental") {
       else if (parsedData[i].condition=="Exercise regimen") {
-        meanExperimental.push(Number(parsedData[i].dv));
+        meanExperimental1.push(Number(parsedData[i].dv));
       }
     }
     ////////////////////////////////////////////
@@ -372,108 +396,73 @@ d3.csv(file, function(error, data) {
       d.condition = d.condition;
     });
 
-    // x.domain(d3.extent(data, function(d) { return d.A; })).nice();
-    // y.domain(d3.extent(data, function(d) { return d.B; })).nice();
-    // x.domain([0,xMax+1]);
-    // y.domain([0,yMax])
-
     // Appends line
 
-    svg.append("path")
+    svg1.append("path")
       .attr("class", "line")
       .style("stroke", "red")
-      //.style("stroke-dasharray", "10, 5")
-      .style("opacity", 0)
-      .attr("d", line(data));
-
-    // Append line blocker
-
-    var lineBlocker = svg.append("rect")
-      .attr("id", "lineBlocker")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("x", function(d) {return lineBlockerAttr.x;})
-      .attr("y", function(d) {return lineBlockerAttr.y;})
-      .style("fill", "white")
-      .style("opacity", 1);
+      .style("opacity", 1)
+      .attr("d", line1(data));
 
     // Appends means
 
-    var controlMean = svg.append("line")
-      .attr("id", "controlMean")
-      // .attr("x1", cond("Control")-x(1))
-      // .attr("x2", cond("Control")+x(1))
-      .attr("x1", cond("Read short story")-x(5))
-      .attr("x2", cond("Read short story")+x(5))
-      .attr("y1", y(d3.mean(meanControl)))
-      .attr("y2", y(d3.mean(meanControl)))
+    var controlMean1 = svg1.append("line")
+      .attr("id", "controlMean1")
+      .attr("x1", cond1("Read short story")-x(1))
+      .attr("x2", cond1("Read short story")+x(1))
+      .attr("y1", y(d3.mean(meanControl1)))
+      .attr("y2", y(d3.mean(meanControl1)))
       .style("opacity", 0)
       .style("stroke-width", 2)
       // .style("stroke", color("Control"));
-      .style("stroke", color("Read short story"));
+      .style("stroke", color1("Read short story"));
 
-    var controlM = svg.append("text")
-        .attr("id", "controlM")
-        // .attr("x", cond("Control")+x(1.2))
-        .attr("x", cond("Read short story")+x(9.2))
-        .attr("y", y(d3.mean(meanControl)))
+    var controlM1 = svg1.append("text")
+        .attr("id", "controlM1")
+        .attr("x", cond1("Read short story")+x(2.2))
+        .attr("y", y(d3.mean(meanControl1)))
         .attr("dy", ".35em")
         .attr("dx", x(1))
         .style("opacity", 0)
         .style("text-anchor", "end")
-        .text(d3.mean(meanControl).toFixed(2));
+        .text(d3.mean(meanControl1).toFixed(2));
 
-    var experimentalMean = svg.append("line")
-      .attr("id", "experimentalMean")
-      // .attr("x1", cond("Experimental")-x(1))
-      // .attr("x2", cond("Experimental")+x(1))
-      .attr("x1", cond("Exercise regimen")-x(5))
-      .attr("x2", cond("Exercise regimen")+x(5))
-      .attr("y1", y(d3.mean(meanExperimental)))
-      .attr("y2", y(d3.mean(meanExperimental)))
+    var experimentalMean1 = svg1.append("line")
+      .attr("id", "experimentalMean1")
+      .attr("x1", cond1("Exercise regimen")-x(1))
+      .attr("x2", cond1("Exercise regimen")+x(1))
+      .attr("y1", y(d3.mean(meanExperimental1)))
+      .attr("y2", y(d3.mean(meanExperimental1)))
       .style("opacity", 0)
       .style("stroke-width", 2)
       // .style("stroke", color("Experimental"));
-      .style("stroke", color("Exercise regimen"));
+      .style("stroke", color1("Exercise regimen"));
 
-    var experimentalM = svg.append("text")
-      .attr("id", "experimentalM")
-      // .attr("x", cond("Experimental")+x(1.2))
-      .attr("x", cond("Exercise regimen")+x(9.2))
-      .attr("y", y(d3.mean(meanExperimental)))
+    var experimentalM1 = svg1.append("text")
+      .attr("id", "experimentalM1")
+      .attr("x", cond1("Exercise regimen")+x(2.2))
+      .attr("y", y(d3.mean(meanExperimental1)))
       .attr("dy", ".35em")
       .attr("dx", x(1))
       .style("opacity", 0)
       .style("text-anchor", "end")
-      .text(d3.mean(meanExperimental).toFixed(2));
+      .text(d3.mean(meanExperimental1).toFixed(2));
 
     // Appends points
 
-    svg.selectAll(".dot")
+    svg1.selectAll(".dot")
         .data(data)
     .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
-        //.attr("cx", function(d) { return x(d.iv); })
-        .attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-3,3)); })
+        .attr("cx", function(d) { return cond1(d.condition) + x(randomJitter(-0.5,0.5)); })
         .attr("cy", function(d) { return y(d.dv); })
-        .style("fill", function(d) { return color(d.condition); })
-        .style("opacity", 0);
-
-    // Append point blocker
-
-    var pointBlocker = svg.append("rect")
-      .attr("id", "pointBlocker")
-      .attr("width", width/2)
-      .attr("height", height)
-      .attr("x", function(d) {return pointBlockerAttr.x;})
-      .attr("y", function(d) {return pointBlockerAttr.y;})
-      .style("fill", "white")
-      .style("opacity", 1);
+        .style("fill", function(d) { return color1(d.condition); })
+        .style("opacity", 1);
 
     // Appends axes
 
-    svg.append("g")
+    svg1.append("g")
       .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
@@ -484,7 +473,7 @@ d3.csv(file, function(error, data) {
       .style("text-anchor", "end")
       .text(xLabel);
 
-    svg.append("g")
+    svg1.append("g")
         .attr("class", "y axis")
         .call(yAxis)
     .append("text")
@@ -495,65 +484,416 @@ d3.csv(file, function(error, data) {
       .style("text-anchor", "end")
       .text(yLabel);
 
-    svg.append("text")
-        // .attr("x", cond("Control"))
-        .attr("x", cond("Read short story"))
+    svg1.append("text")
+        .attr("x", cond1("Read short story"))
         .attr("y", y(2))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text("Read short story");
 
-    svg.append("text")
-        // .attr("x", cond("Experimental"))
-        .attr("x", cond("Exercise regimen"))
+    svg1.append("text")
+        .attr("x", cond1("Exercise regimen"))
         .attr("y", y(2))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text("Exercise regimen");
 
-    // Appends legend
+});
 
-    var legend = svg.selectAll(".legend")
-        .data(color.domain())
-    .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+</script>
 
-    legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
+<!------------------ Graph 2 ------------------------>
 
-    legend.append("text")
-        .attr("x", width - 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d) { return d; });
+<script type="text/javascript">
 
-    svg.append("rect")
-      .attr("x", width - 18)
-      .attr("y", 50)
-        .attr("width", 18)
-        .attr("height", 2)
-        .style("fill", "red");
+// Sets dimensions of graph and axes
 
-    svg.append("text")
-        .attr("x", width - 24)
-        .attr("y", 50)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(covariate);
+var x = d3.scale.linear()
+    .range([0, width])
+    .domain([0,xMax+1]);
 
-    var legendBlocker = svg.append("rect")
-      .attr("id", "legendBlocker")
-      .attr("width", 100)
-      .attr("height", 20)
-      .attr("x", width - 100)
-      .attr("y", 40)
+var y = d3.scale.linear()
+    .range([height, 0])
+    .domain([0,yMax]);
+
+var cond2 = d3.scale.ordinal()
+    .rangePoints([0, width],1)
+    .domain(["Read short story", "Exercise regimen"]);
+
+var color2 = d3.scale.category10()
+    .domain(["Exercise regimen", "Read short story"]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(xMax/2);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg2 = d3.select("#graph2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var line2 = d3.svg.line()
+  .interpolate("basis")
+    .x(function(d) { return x(d.t); })
+    .y(function(d) { return y(d.measure); });
+
+// Sets attributes of blockers
+
+var lineBlockerAttr2 = new Object();
+  lineBlockerAttr2.x=width/2;
+  lineBlockerAttr2.y=0;
+
+var pointBlockerAttr2 = new Object();
+  pointBlockerAttr2.x=width/2;
+  pointBlockerAttr2.y=0;
+
+// Reads data from .csv file
+
+d3.csv(file2, function(error, data) {
+    if (error) throw error;
+
+    //////// Saves data for calculation ////////
+    parsedData = JSON.parse(JSON.stringify(data));
+  
+    for (i = 0; i < parsedData.length; i++) {
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure2.push(Number(parsedData[i].measure));
+
+      if (parsedData[i].condition=="Read short story") {
+        meanControl2.push(Number(parsedData[i].dv));
+      }
+      else if (parsedData[i].condition=="Exercise regimen") {
+        meanExperimental2.push(Number(parsedData[i].dv));
+      }
+    }
+    ////////////////////////////////////////////
+
+    data.forEach(function(d) {
+      d.iv = +d.iv;
+      d.dv = +d.dv;
+      d.t = +d.t;
+      d.condition = d.condition;
+    });
+
+    // Appends line
+
+    svg2.append("path")
+      .attr("class", "line")
+      .style("stroke", "red")
+      .style("opacity", 0)
+      .attr("d", line2(data));
+
+    // Append line blocker
+
+    var lineBlocker2 = svg2.append("rect")
+      .attr("id", "lineBlocker2")
+      .attr("width", width/2)
+      .attr("height", height)
+      .attr("x", function(d) {return lineBlockerAttr2.x;})
+      .attr("y", function(d) {return lineBlockerAttr2.y;})
       .style("fill", "white")
-      .style("opacity", 0);
+      .style("opacity", 1);
+
+    // Appends means
+
+    var controlMean2 = svg2.append("line")
+      .attr("id", "controlMean2")
+      .attr("x1", cond2("Read short story")-x(1))
+      .attr("x2", cond2("Read short story")+x(1))
+      .attr("y1", y(d3.mean(meanControl2)))
+      .attr("y2", y(d3.mean(meanControl2)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      // .style("stroke", color("Control"));
+      .style("stroke", color2("Read short story"));
+
+    var controlM2 = svg2.append("text")
+        .attr("id", "controlM2")
+        .attr("x", cond2("Read short story")+x(2.2))
+        .attr("y", y(d3.mean(meanControl2)))
+        .attr("dy", ".35em")
+        .attr("dx", x(1))
+        .style("opacity", 0)
+        .style("text-anchor", "end")
+        .text(d3.mean(meanControl2).toFixed(2));
+
+    var experimentalMean2 = svg2.append("line")
+      .attr("id", "experimentalMean2")
+      .attr("x1", cond2("Exercise regimen")-x(1))
+      .attr("x2", cond2("Exercise regimen")+x(1))
+      .attr("y1", y(d3.mean(meanExperimental2)))
+      .attr("y2", y(d3.mean(meanExperimental2)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      .style("stroke", color2("Exercise regimen"));
+
+    var experimentalM2 = svg2.append("text")
+      .attr("id", "experimentalM2")
+      .attr("x", cond2("Exercise regimen")+x(2.2))
+      .attr("y", y(d3.mean(meanExperimental2)))
+      .attr("dy", ".35em")
+      .attr("dx", x(1))
+      .style("opacity", 0)
+      .style("text-anchor", "end")
+      .text(d3.mean(meanExperimental2).toFixed(2));
+
+    // Appends points
+
+    svg2.selectAll(".dot")
+        .data(data)
+    .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return cond2(d.condition) + x(randomJitter(-0.5,0.5)); })
+        .attr("cy", function(d) { return y(d.dv); })
+        .style("fill", function(d) { return color2(d.condition); })
+        .style("opacity", 0);
+
+    // Append point blocker
+
+    var pointBlocker2 = svg2.append("rect")
+      .attr("id", "pointBlocker2")
+      .attr("width", width/2)
+      .attr("height", height)
+      .attr("x", function(d) {return pointBlockerAttr2.x;})
+      .attr("y", function(d) {return pointBlockerAttr2.y;})
+      .style("fill", "white")
+      .style("opacity", 1);
+
+    // Appends axes
+
+    svg2.append("g")
+      .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text(xLabel);
+
+    svg2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text(yLabel);
+
+    svg2.append("text")
+        .attr("x", cond2("Read short story"))
+        .attr("y", y(2))
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text("Read short story");
+
+    svg2.append("text")
+        .attr("x", cond2("Exercise regimen"))
+        .attr("y", y(2))
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text("Exercise regimen");
+
+});
+
+</script>
+
+<!------------------ Graph 3 ------------------------>
+
+<script type="text/javascript">
+
+// Sets dimensions of graph and axes
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    // width = 800 - margin.left - margin.right,
+    // height = 400 - margin.top - margin.bottom;
+    width = 390 - margin.left - margin.right,
+    height = 290 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width])
+    .domain([0,xMax+1]);
+
+var y = d3.scale.linear()
+    .range([height, 0])
+    .domain([0,yMax]);
+
+var cond3 = d3.scale.ordinal()
+    .rangePoints([0, width],1)
+    .domain(["Exercise regimen","Read short story"]);
+
+var color3 = d3.scale.category10()
+    .domain(["Exercise regimen", "Read short story"]);
+
+var xAxis = d3.svg.axis()
+    .scale(cond3)
+    .orient("bottom")
+    .ticks(xMax/2);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg3 = d3.select("#graph3").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var line3 = d3.svg.line()
+  .interpolate("basis")
+    .x(function(d) { return x(d.t); })
+    .y(function(d) { return y(d.measure); });
+
+// Sets attributes of blockers
+
+var lineBlockerAttr3 = new Object();
+  lineBlockerAttr3.x=width/3.5;
+  lineBlockerAttr3.y=0;
+
+var pointBlockerAttr3 = new Object();
+  pointBlockerAttr3.x=width/2;
+  pointBlockerAttr3.y=0;
+
+// Reads data from .csv file
+
+d3.csv(file3, function(error, data) {
+    if (error) throw error;
+
+    //////// Saves data for calculation ////////
+    parsedData = JSON.parse(JSON.stringify(data));
+  
+    for (i = 0; i < parsedData.length; i++) {
+      iv.push(Number(parsedData[i].iv));
+      dv.push(Number(parsedData[i].dv));
+      measure3.push(Number(parsedData[i].measure));
+
+      if (parsedData[i].condition=="Read short story") {
+        meanControl3.push(Number(parsedData[i].dv));
+      }
+      else if (parsedData[i].condition=="Exercise regimen") {
+        meanExperimental3.push(Number(parsedData[i].dv));
+      }
+    }
+    ////////////////////////////////////////////
+
+    data.forEach(function(d) {
+      d.iv = +d.iv;
+      d.dv = +d.dv;
+      d.t = +d.t;
+      d.condition = d.condition;
+    });
+
+    // Appends line
+
+    // svg3.append("path")
+    //   .attr("class", "line")
+    //   .style("stroke", "red")
+    //   .style("opacity", 1)
+    //   .attr("d", line3(data));
+
+    // Appends means
+
+    var controlMean3 = svg3.append("line")
+      .attr("id", "controlMean1")
+      .attr("x1", cond3("Read short story")-x(1))
+      .attr("x2", cond3("Read short story")+x(1))
+      .attr("y1", y(d3.mean(meanControl3)))
+      .attr("y2", y(d3.mean(meanControl3)))
+      .style("opacity", 1)
+      .style("stroke-width", 2)
+      .style("stroke", color3("Read short story"));
+
+    var controlM3 = svg3.append("text")
+        .attr("id", "controlM1")
+        .attr("x", cond3("Read short story")+x(2.2))
+        .attr("y", y(d3.mean(meanControl3)))
+        .attr("dy", ".35em")
+        .attr("dx", x(1))
+        .style("opacity", 1)
+        .style("text-anchor", "end")
+        .text(d3.mean(meanControl3).toFixed(2));
+
+    var experimentalMean3 = svg3.append("line")
+      .attr("id", "experimentalMean1")
+      .attr("x1", cond3("Exercise regimen")-x(1))
+      .attr("x2", cond3("Exercise regimen")+x(1))
+      .attr("y1", y(d3.mean(meanExperimental3)))
+      .attr("y2", y(d3.mean(meanExperimental3)))
+      .style("opacity", 1)
+      .style("stroke-width", 2)
+      .style("stroke", color3("Exercise regimen"));
+
+    var experimentalM3 = svg3.append("text")
+      .attr("id", "experimentalM1")
+      .attr("x", cond3("Exercise regimen")+x(2.2))
+      .attr("y", y(d3.mean(meanExperimental1)))
+      .attr("dy", ".35em")
+      .attr("dx", x(1))
+      .style("opacity", 1)
+      .style("text-anchor", "end")
+      .text(d3.mean(meanExperimental3).toFixed(2));
+
+    // Appends points
+
+    svg3.selectAll(".dot")
+        .data(data)
+    .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return cond3(d.condition) + x(randomJitter(-0.5,0.5)); })
+        .attr("cy", function(d) { return y(d.dv); })
+        .style("fill", function(d) { return color3(d.condition); })
+        .style("opacity", 1);
+
+    // Appends axes
+
+    svg3.append("g")
+      .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+    // .append("text")
+    //   .attr("class", "label")
+    //   .attr("x", width)
+    //   .attr("y", -6)
+    //   .style("text-anchor", "end")
+    //   .text(xLabel);
+
+    svg3.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text(yLabel);
+
+    // svg3.append("text")
+    //     .attr("x", cond1("Read short story"))
+    //     .attr("y", y(2))
+    //     .attr("dy", ".35em")
+    //     .style("text-anchor", "middle")
+    //     .text("Read short story");
+
+    // svg3.append("text")
+    //     .attr("x", cond1("Exercise regimen"))
+    //     .attr("y", y(2))
+    //     .attr("dy", ".35em")
+    //     .style("text-anchor", "middle")
+    //     .text("Exercise regimen");
 
 });
 

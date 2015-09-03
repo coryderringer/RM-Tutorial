@@ -51,7 +51,7 @@ var progress = {{progress}}
 
     "This is a problem because it means their arousal levels in the control condition were much higher than they were supposed to be. It’s probably this that led to similar accuracy scores in the control condition – in terms of arousal; they were essentially still in the experimental condition!",
 
-    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
+    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, <i>a type of order effect where experiencing one condition changes the subjects' experience of a later condition</i>. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
     ]
 
 /// Function for noise
@@ -159,6 +159,11 @@ function previous(current) {
     }
 }
 
+/// Enables next button
+function enable() {
+  $('#answer').attr('disabled', false);
+}
+
 /// Function to show quiz
 
 function showQuiz() {
@@ -178,7 +183,7 @@ function answerQuiz2() {
   $('#A2').show();
   $('#submit').show();
 
-  $('#A2').html('<b>Actually, they\'re both valid ways!</b><br>If you used a between-subjects design, different groups of participants would experience the different conditions and each manipulation would not be able to contaminate the other. However, the usual drawbacks of this design still apply, and researchers generally look for other ways of dealing with carryover effects instead of always reverting to a between-subjects design.<br><br>If we want to stick with the within-subjects design, we could increase the time between the conditions so that arousal in the experimental condition has time to decay. However, we do not always know how long it takes for participants to return to normal on some important characteristic (in this case, because we measure their arousal with a heart-rate monitor, we have that information).<br><br>Another major drawback is that extending the time is not always practically feasible (assuming you don’t want an experiment to last for days). Looking at the graph, how long do you think it would take for the participants\' heart-rate to return to normal?');
+  $('#A2').html('<b>Actually, they\'re both valid ways!</b><br>If you used a between-subjects design, different groups of participants would experience the different conditions and each manipulation would not be able to contaminate the other. However, the usual drawbacks of this design still apply, and researchers generally look for other ways of dealing with carryover effects instead of always reverting to a between-subjects design.<br><br>If we want to stick with the within-subjects design, we could increase the time between the conditions so that arousal in the experimental condition has time to decay. However, we do not always know how long it takes for participants to return to normal on some important characteristic (in this case, because we measure their arousal with a heart-rate monitor, we have that information. Let\'s see what happens if we repeat this experiment, but this time stretching it out over a longer period of time.');
 }
 
 /// Submit function
@@ -222,11 +227,11 @@ function MySubmit(){
     <p><b>Which of the following ways is preferable for dealing with carryover effects?</b></p>
 
     <form id="Quiz2" style="position:relative;left:20px">
-      <input type="radio" value="A" name="q2" id="q2a"><label for="q2a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
-      <input type="radio" value="B" name="q2" id="q2b"><label for="q2b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
+      <input type="radio" value="A" name="q2" id="q2a" onchange="enable();"><label for="q2a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
+      <input type="radio" value="B" name="q2" id="q2b" onchange="enable();"><label for="q2b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
     </form><br>
 
-    <center><button id="answer" onclick="answerQuiz2()">Check answer</button></center>
+    <center><button id="answer" onclick="answerQuiz2()" disabled="true">Check answer</button></center>
 
     <div id="A2" style="display:none"></div>
 

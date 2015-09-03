@@ -14,7 +14,7 @@ var progress = {{progress}}
   var current = 0;
 
 /// Graph
-  var file = "/static/stimuli/OrderEffects/carryover20.csv";
+  var file = "/static/stimuli/OrderEffects/carryover2.csv";
 
 /// Name variables here
 	var	yLabel = "Accuracy",
@@ -45,7 +45,7 @@ var progress = {{progress}}
 
     "By the time they experience the control condition and read the short stories, their arousal levels have returned to their baseline levels! In this experiment, the control condition is not contaminated by the experimental condition. Therefore, their scores in the control condition are as we expected: their spatial reasoning has lower accuracy because their arousal levels are as we expected them to be when reading short stories.",
 
-    "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, a type of order effect where one condition ‘contaminates’ the other. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
+    "Of course, it is not always feasible to leave so much time between conditions in a within-subjects experiment. What if there are 3 or 4 conditions? What if you don't know how much time it takes for subjects to return to their baseline levels of some important characteristic?"
     ]
 
 /// Function for noise
@@ -162,6 +162,11 @@ function previous(current) {
     }
 }
 
+/// Enables next button
+function enable() {
+  $('#answer').attr('disabled', false);
+}
+
 /// Function to show quiz
 
 function showQuiz() {
@@ -201,7 +206,7 @@ function MySubmit(){
 
 </script>
 
-<div class="pg">
+<div class="pg" style="height:940px">
 
 	<h2><center>Carryover effects</center></h2>
 	
@@ -230,12 +235,12 @@ function MySubmit(){
     <p><b>What is the disa?</b></p>
 
     <form id="Quiz3" style="position:relative;left:20px">
-      <input type="radio" value="A" name="q3" id="q3a"><label for="q3a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
-      <input type="radio" value="B" name="q3" id="q3b"><label for="q3b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
-      <input type="radio" value="C" name="q3" id="q3c"><label for="q3c">&nbspUse a counterbalanced design where different subjects experience the conditions in different orders</label><br>
+      <input type="radio" value="A" name="q3" id="q3a" onchange="enable();"><label for="q3a"><span id="optionA">&nbspUse a between-subjects design</span></label><br>
+      <input type="radio" value="B" name="q3" id="q3b" onchange="enable();"><label for="q3b"><span id="optionB">&nbspIncrease the time between the experimental and control conditions so that arousal has time to decay</span></label><br>
+      <input type="radio" value="C" name="q3" id="q3c" onchange="enable();"><label for="q3c">&nbspUse a counterbalanced design where different subjects experience the conditions in different orders</label><br>
     </form><br>
 
-    <center><button id="answer" onclick="answerQuiz3()">Check answer</button></center>
+    <center><button id="answer" onclick="answerQuiz3()" disabled="true">Check answer</button></center>
 
     <div id="A3" style="display:none"></div>
 
@@ -347,7 +352,6 @@ d3.csv(file, function(error, data) {
 
     //////// Saves data for calculation ////////
     parsedData = JSON.parse(JSON.stringify(data));
-    console.log(parsedData.length);
   
     for (i = 0; i < parsedData.length; i++) {
       iv.push(Number(parsedData[i].iv));
