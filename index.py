@@ -220,6 +220,10 @@ class OrderEffectsHandler(webapp.RequestHandler):
 			doRender(self, "CarryoverEffects3.htm",
 				{'progress':self.session['M1_Progress']})
 
+		elif M1_Progress == 4:
+			doRender(self, "CarryoverEffectsQuiz.htm",
+				{'progress':self.session['M1_Progress']})
+
 		# self.session['Module1'] = 'Complete'
 
 		# Query the datastore
