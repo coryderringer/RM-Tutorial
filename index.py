@@ -25,6 +25,9 @@ class User(db.Model):
 	WSAnswer1 = 		db.StringProperty()
 	WSAnswer2 = 		db.StringProperty()
 	WSAnswer3 = 		db.StringProperty()
+	COEAnswer1 =		db.IntegerProperty()
+	COEAnswer2 =		db.IntegerProperty()
+	COEAnswer3 =		db.IntegerProperty()
 	numberOfGuesses = 	db.IntegerProperty()
 	numberOfSimulations = db.IntegerProperty()
 	numberOfSimulations2 = db.IntegerProperty()
@@ -224,8 +227,35 @@ class OrderEffectsHandler(webapp.RequestHandler):
 			doRender(self, "CarryoverEffectsQuiz.htm",
 				{'progress':self.session['M1_Progress']})
 
-		# self.session['Module1'] = 'Complete'
+		elif M1_Progress == 5:
+			OEAnswer1 = int(self.request.get('OEAnswer1'))
+			OEAnswer2 = int(self.request.get('OEAnswer2'))
+			OEAnswer3 = int(self.request.get('OEAnswer3'))
 
+			# Record that user completed the module
+			self.session['Module1'] = 'Complete'
+
+			# Query the datastore
+			que = db.Query(User)
+
+			# find the current user
+			que = que.filter('username =', self.session['username'])
+			results = que.fetch(limit=1)
+
+			# change the datastore result for module 1
+			for i in results:
+				i.OEAnswer1 = OEAnswer1
+				i.OEAnswer2 = OEAnswer2
+				i.OEAnswer3 = OEAnswer3
+				i.Module1 = self.session['Module1']
+				i.put()
+
+			logging.info('Datastore updated')
+
+			self.session['M1_Progress'] = 0
+			doRender(self, "FinishCarryoverEffects.htm")
+		else:
+			logging.info("something is wrong")
 		# Query the datastore
 		# que = db.Query(User)
 

@@ -171,7 +171,7 @@ function enable() {
 
 function showQuiz() {
   $('#continue').hide();
-  $('#quiz').show();
+  $('#submit').show();
 }
 
 /// Shows quiz answer
@@ -198,7 +198,7 @@ function answerQuiz3() {
 
 function MySubmit(){
   console.log('Submit dat!');
-  $('#Q3').val(Q3Outcome);
+  // $('#Q3').val(Q3Outcome);
   progress += 1;
   $('#progressinput').val(progress);
   $('#myForm').submit();
@@ -230,7 +230,7 @@ function MySubmit(){
 
   <br>
 
-	<div id="quiz" width="900" style="display:none">
+<!-- 	<div id="quiz" width="900" style="display:none">
 
     <p><b>What is the disa?</b></p>
 
@@ -240,18 +240,17 @@ function MySubmit(){
       <input type="radio" value="C" name="q3" id="q3c" onchange="enable();"><label for="q3c">&nbspUse a counterbalanced design where different subjects experience the conditions in different orders</label><br>
     </form><br>
 
-    <center><button id="answer" onclick="answerQuiz3()" disabled="true">Check answer</button></center>
+    <center><button id="answer" onclick="MySubmit()">Continue</button></center>
 
     <div id="A3" style="display:none"></div>
 
   </div>
-
-  <br>
+ -->
 
   <center>
     <form id="myForm" method="post" action="/OrderEffects">
       <input type="submit" id="submit" onclick="MySubmit()" value="Continue" style="display:none"/>
-      <input type="hidden" id="Q3" name="Q3" value="">
+      <!-- <input type="hidden" id="Q3" name="Q3" value=""> -->
       <input type="hidden" id="progressinput" name="progressinput" value="">
     </form>
   </center>
