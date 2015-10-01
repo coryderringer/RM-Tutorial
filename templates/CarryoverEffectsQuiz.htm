@@ -9,6 +9,7 @@
 
 var progress = {{progress}};
 var Outcomes = new Array();
+var end = 0;
 
 
 // Function to check if all questions have been answered
@@ -24,17 +25,26 @@ function answered() {
 }
 
 // Function to show answers
-function answerShow() {
-  $('#answer1').fadeTo('fast', 1)
-  $('#answer2').fadeTo('fast', 1)
-  $('#answer3').fadeTo('fast', 1)
+function MySubmit(end) {
+  if (end==0){
+    $('#answer1').fadeTo('fast', 1);
+    $('#answer2').fadeTo('fast', 1);
+    $('#answer3').fadeTo('fast', 1);
 
-  $('#Q1').attr('disabled', true)
-  $('#Q2').attr('disabled', true)
-  $('#Q3').attr('disabled', true)
+    $('#Q1').attr('disabled', true);
+    $('#Q2').attr('disabled', true);
+    $('#Q3').attr('disabled', true);
 
-  $('#answer').hide()
-  $('#Submit').fadeTo('fast', 1)
+    $('#buttontext').text("Continue");
+  }
+  else if (end==1){
+    progress += 1;
+    $('#progressinput').val(progress);
+    document.getElementById("Question1").value = document.getElementById("Q1").value;
+    document.getElementById("Question2").value = document.getElementById("Q2").value;
+    document.getElementById("Question3").value = document.getElementById("Q3").value;
+    document.getElementById("myForm").submit();
+  }
 }
 
 </script>
@@ -42,11 +52,12 @@ function answerShow() {
 
 
 
-<form id="dataform" method="post" action="/OrderEffects">
+<!-- <form id="dataform" method="post" action="/OrderEffects">
   <input id="AnswerInput" name="AnswerInput" type="hidden">
   <input id="progressinput" name="progressinput" type="hidden">
-  <!-- <input id="Submit" onclick="MySubmit()" value="Submit" type="hidden"> -->
+  <input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
+-->
 
 <div class="logout"><a href="/logout.htm">Logout</a></div>
 
@@ -54,7 +65,7 @@ function answerShow() {
 
   <h2><center>Carryover effects quiz</center></h2>
 
-  <form id="myform" method="post" action="/OrderEffects">
+  <form id="myForm" method="post" action="/CarryoverEffects">
 
     <br>
 
@@ -62,8 +73,8 @@ function answerShow() {
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q1" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
-        <option value="0">TRUE</option>
-        <option value="1">FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
       </select><br><br>
 
     <div id="answer1" style="display:show; height:100px; opacity:0" align="justify">
@@ -74,8 +85,8 @@ function answerShow() {
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q2" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
-        <option value="0">TRUE</option>
-        <option value="1">FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
       </select><br><br>
 
     <div id="answer2" style="display:show; height:100px; opacity:0" align="justify">
@@ -86,19 +97,24 @@ function answerShow() {
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q3" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
-        <option value="0">TRUE</option>
-        <option value="1">FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
       </select><br><br>
 
     <div id="answer3" style="display:show; height:100px; opacity:0" align="justify">
       The answer is here. It'll be hidden, and shown when we check answers.
     </div>
 
-    <center><button id="Submit" onclick="answerShow()" style="visibility:hidden">Finish tutorial</button></center>
+    <center>
+      <button type="button" id="answer" onclick="MySubmit(end); end++" disabled="true"><span id="buttontext">Check answers</span></button>
+    </center>
+
+    <input type="hidden" id="Question1" name="Question1" value="">
+    <input type="hidden" id="Question2" name="Question2" value="">
+    <input type="hidden" id="Question3" name="Question3" value="">
+    <input type="hidden" id="progressinput" name="progressinput" value="">
 
   </form>
-
-  <center><button id="answer" onclick="answerShow()" disabled="true">Submit and check your answers</button></center>
 
 </div>
   <!-- <ol type="1"><li>This is the text from Question 1</li></ol>
@@ -135,60 +151,60 @@ function answerShow() {
 
 <script>
 
-var progress = {{progress}};
-var Outcomes = new Array();
+// var progress = {{progress}};
+// var Outcomes = new Array();
 
 
 
-var QuestionList = ['What is the primary difference between a within-subjects design and a between-subjects design?','Which of the following is one advantage of using a within-subjects design?','Earlier I mentioned that within-subjects designs allow each participant to serve as his/her own control. Why is this important?']
+// var QuestionList = ['What is the primary difference between a within-subjects design and a between-subjects design?','Which of the following is one advantage of using a within-subjects design?','Earlier I mentioned that within-subjects designs allow each participant to serve as his/her own control. Why is this important?']
 
-var Q1Options = ['Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs assign one level of the IV to each participant, whereas between-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs can be posttest-only, whereas between-subjects designs always require a pretest and a posttest.']
+// var Q1Options = ['Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs assign one level of the IV to each participant, whereas between-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs can be posttest-only, whereas between-subjects designs always require a pretest and a posttest.']
 
-var Q2Options = ['Within-subject designs yield increased power to detect small but consistent differences between levels of the IV.','Within-subjects designs are true experiments, whereas all between-subjects designs are correlational.', 'Within-subjects designs allow us to randomize which participants get one level of the IV, and which get another level.']
+// var Q2Options = ['Within-subject designs yield increased power to detect small but consistent differences between levels of the IV.','Within-subjects designs are true experiments, whereas all between-subjects designs are correlational.', 'Within-subjects designs allow us to randomize which participants get one level of the IV, and which get another level.']
 
-var Q3Options = ['It eliminates noise in the data from population variance, increasing statistical power.','It decreases the cost of running experiments by reducing the number of participants needed.','It’s actually not important']
-
-
-// Fill in questions, can use this format to randomize the order as well.
-// $('#Question1').html(QuestionList[0]);
-// $('#Question2').html(QuestionList[1]);
-// $('#Question3').html(QuestionList[2]);
-
-// Fill in options for each question
-$('#Q1Option1').html(Q1Options[0]);
-$('#Q1Option2').html(Q1Options[1]);
-$('#Q1Option3').html(Q1Options[2]);
+// var Q3Options = ['It eliminates noise in the data from population variance, increasing statistical power.','It decreases the cost of running experiments by reducing the number of participants needed.','It’s actually not important']
 
 
-$('#Q2Option1').html(Q2Options[0]);
-$('#Q2Option2').html(Q2Options[1]);
-$('#Q2Option3').html(Q2Options[2]);
+// // Fill in questions, can use this format to randomize the order as well.
+// // $('#Question1').html(QuestionList[0]);
+// // $('#Question2').html(QuestionList[1]);
+// // $('#Question3').html(QuestionList[2]);
 
-$('#Q3Option1').html(Q3Options[0]);
-$('#Q3Option2').html(Q3Options[1]);
-$('#Q3Option3').html(Q3Options[2]);
+// // Fill in options for each question
+// $('#Q1Option1').html(Q1Options[0]);
+// $('#Q1Option2').html(Q1Options[1]);
+// $('#Q1Option3').html(Q1Options[2]);
 
-function MySubmit(){
 
-  Outcomes[0] = $('input[name=q1]:checked', '#Q1Answers').val();
-  Outcomes[1] = $('input[name=q2]:checked', '#Q2Answers').val();
-  Outcomes[2] = $('input[name=q3]:checked', '#Q3Answers').val();
+// $('#Q2Option1').html(Q2Options[0]);
+// $('#Q2Option2').html(Q2Options[1]);
+// $('#Q2Option3').html(Q2Options[2]);
+
+// $('#Q3Option1').html(Q3Options[0]);
+// $('#Q3Option2').html(Q3Options[1]);
+// $('#Q3Option3').html(Q3Options[2]);
+
+// // function MySubmit(){
+
+// //   Outcomes[0] = $('input[name=q1]:checked', '#Q1Answers').val();
+// //   Outcomes[1] = $('input[name=q2]:checked', '#Q2Answers').val();
+// //   Outcomes[2] = $('input[name=q3]:checked', '#Q3Answers').val();
   
-  for(var i = 0; i < Outcomes.length; i++){
-    if(Outcomes[i] != 'A' & Outcomes[i] != 'B' & Outcomes[i] != 'C' & Outcomes[i] != 'D'){
-      alert('Please answer all of the questions!');
-      return
-    }
-  }
+// //   for(var i = 0; i < Outcomes.length; i++){
+// //     if(Outcomes[i] != 'A' & Outcomes[i] != 'B' & Outcomes[i] != 'C' & Outcomes[i] != 'D'){
+// //       alert('Please answer all of the questions!');
+// //       return
+// //     }
+// //   }
 
-  console.log('Submitting!');
-  progress +=1;
-  $('#progressinput').val(String(progress));
-  $('#AnswerInput').val(String(Outcomes));
-  $('#dataform').submit();
+// //   console.log('Submitting!');
+// //   progress +=1;
+// //   $('#progressinput').val(String(progress));
+// //   $('#AnswerInput').val(String(Outcomes));
+// //   $('#dataform').submit();
   
-// scramble the order of the answers, keep track of which one is correct
-}
+// // // scramble the order of the answers, keep track of which one is correct
+// // }
 
 
 

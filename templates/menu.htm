@@ -13,12 +13,16 @@
 <p><center><span id="status_span">Span</span></center></p>
 
 <center>
-	<form id="Module1_Form" method="get" action="/OrderEffects">
+	<form id="Module1_Form" method="get" action="/CarryoverEffects">
 		<button id="Module1_Button">Button text</button>
 	</form>
 	<br>
 	<form id="Module2_Form" method="get" action="/WithinSubject">
 		<button id="Module2_Button">Button text</button>
+	</form>
+	<br>
+	<form id="Module3_Form" method="get" action="/TestingEffects">
+		<button id="Module3_Button">Button text</button>
 	</form>
 </center>
 
@@ -37,32 +41,38 @@
 // Variables
 var Module1 = '{{Module1}}';
 var Module2 = '{{Module2}}';
+var Module3 = '{{Module3}}';
 
 // Progress markers so we can use one handler per module with conditional statements. This might slow the program a tiny bit, revisit if it becomes a problem?
 var M1_Progress = 0;
 var M2_Progress = 0;
+var M3_Progress = 0;
 
 function MainDisplay(){
 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
 		$('#status_span').html('You have not completed either module yet. What would you like to do?');
-		$('#Module1_Button').html('Begin Order Effects Module');
+		$('#Module1_Button').html('Begin Carryover Effects Module');
 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-	}else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
+		$('#Module3_Button').html('Begin Testing Effects Module');
+	}
+	else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
 
 		$('#status_span').html('You have completed Single Subject Module, but not Within-Subjects Module. What would you like to do?');
-		$('#Module1_Button').html('Redo Order Effects Module');
+		$('#Module1_Button').html('Redo Carryover Effects Module');
 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-
-	}else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
+		$('#Module3_Button').html('Begin Testing Effects Module');
+	}
+	else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
 		$('#status_span').html('You have completed the Within-Subjects Module, but not the Single Subject Module. What would you like to do?');
-		$('#Module1_Button').html('Begin Order Effects Module');
+		$('#Module1_Button').html('Begin Carryover Effects Module');
 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-
-	}else if (Module1 == 'Complete' && Module2 == 'Complete'){
+		$('#Module3_Button').html('Begin Testing Effects Module');
+	}
+	else if (Module1 == 'Complete' && Module2 == 'Complete'){
 		$('#status_span').html('You have completed both modules! What would you like to do?');
-		$('#Module1_Button').html('Redo Order Effects Module');
+		$('#Module1_Button').html('Redo Carryover Effects Module');
 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-
+		$('#Module3_Button').html('Begin Testing Effects Module');
 	}
 }
 
