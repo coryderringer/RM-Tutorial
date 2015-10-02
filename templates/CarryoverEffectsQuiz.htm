@@ -68,8 +68,9 @@ function MySubmit(end) {
   <form id="myForm" method="post" action="/CarryoverEffects">
 
     <br>
+    <b>Please answer if the following statements are TRUE or FALSE.</b>
 
-    <b>This is the text from Question 1.</b><br><br>
+    <p>You are conducting an experiment using a between-subjects design. You test one group of participants first and after that test another group of participants. You do not need to be concerned about carryover effects here.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q1" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -77,11 +78,11 @@ function MySubmit(end) {
         <option value="0">FALSE</option>
       </select><br><br>
 
-    <div id="answer1" style="display:show; height:100px; opacity:0" align="justify">
-      The answer is here. It'll be hidden, and shown when we check answers.
+    <div id="answer1" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: TRUE. </b>In a between-subjects design, different groups of subjects are assigned to each condition. Carryover effects are only a concern in within-subjects designs, where the same participants experience multiple conditions during the experiment. Carryover effects happen when experiencing one condition changes important characteristics of the participant, causing them to respond differently in subsequent conditions.
     </div>
 
-    <b>This is the text from Question 2.</b><br><br>
+    <p>As long as you let enough time elapse between all the conditions in your study (e.g. a whole day), carryover effects will not be a problem.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q2" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -89,11 +90,11 @@ function MySubmit(end) {
         <option value="0">FALSE</option>
       </select><br><br>
 
-    <div id="answer2" style="display:show; height:100px; opacity:0" align="justify">
-      The answer is here. It'll be hidden, and shown when we check answers.
+    <div id="answer2" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>It is often impossible to know and measure every important characteristic in participants, and we usually do not know how long it takes for then return to their baseline states. In addition, some characteristics may never return to baseline. For example, if one of your testing conditions requires subjects to have no prior knowledge of a particular stimulus, then exposing them to that stimulus on an earlier condition will forever contaminate them and lead to a carryover effect.
     </div>
 
-    <b>This is the text from Question 3.</b><br><br>
+    <p>Counterbalancing is the best way to eliminate carryover effects.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q3" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -101,9 +102,11 @@ function MySubmit(end) {
         <option value="0">FALSE</option>
       </select><br><br>
 
-    <div id="answer3" style="display:show; height:100px; opacity:0" align="justify">
-      The answer is here. It'll be hidden, and shown when we check answers.
+    <div id="answer3" style="display:show; height:100px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>Counterbalancing doesn't eliminate carryover effects, but it will allow you to detect when they are a problem. By comparing how participants perform when they experience conditions in different orders, you can see if the way they perform in a particular condition is consistent regardless of the order it is experienced in. If you detect significant carryover effects, you may need to adjust your experimental method (changing procedures to address the specific carryover effect) or switch to a between-subjects design.
     </div>
+
+    <br>
 
     <center>
       <button type="button" id="answer" onclick="MySubmit(end); end++" disabled="true"><span id="buttontext">Check answers</span></button>
