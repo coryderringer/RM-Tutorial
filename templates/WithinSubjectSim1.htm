@@ -10,7 +10,6 @@
 	<input id="Q3" name="Q3" type="hidden">
 	<input id="numbersims" name="numbersims" type="hidden">
 	<input id="progressinput" name="progressinput" type="hidden">
-	<input id="directioninput" name="directioninput" type="hidden">
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
@@ -18,13 +17,12 @@
 <div id="container">
 
 	<div class="corypg">
-		<button id="backButton">Go Back</button>
 		<center>
 			<span style="display:inline-block;position:relative;left:45px"><b>Between-Subjects</b></span>
 			<span style="display:inline-block;position:relative;left:160px"><b>Within-Subjects</b></span>
 			<div id="firstrow">
 				<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
-					<b>Greater<br>Individual Differences</b>
+					<b>High<br>Population Variance</b>
 				</span>	
 				<div id="between1" style="display:inline-block">
 					<div id="graph1"></div>
@@ -50,7 +48,7 @@
 
 			<div id="secondrow" style="display:none">
 				<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
-					<b>Smaller<br>Individual Differences</b>
+					<b>Low<br>Population Variance</b>
 				</span>
 				<div id="between2" style="display:inline-block">
 					<div id="graph3"></div>
@@ -66,16 +64,16 @@
 			</div>
 			
 			
-			<button id="resampleButton" style="width:100px;display:none;float:left" onclick="UpdateData()">Resample</button>
-		</center>			
+			<button id="ResampleButton" style="width:100px;display:none;float:left" onclick="UpdateData()">Resample</button>
+		</center>	
 		<br>
 
-		<div id="text1">
-			<p>To expand on this point, and explore some of the advantages of within subjects designs, let's look at one set of hypothetical data presented as a between-subjects comparison and as a within-subjects comparison.</p>
+		<div id="Text1">
+			<p>To expand on this point, and explore some of the advantages of within subjects designs, let's look at some hypothetical data presented as a between-subjects comparison and as a within-subjects comparison.</p>
 
 			<p>Remember that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know <b>if one group is different from another group</b> after some treatment. In a within-subjects design, we want to know if one treatment works better than the other treatment <b>for the same group of people.</b> </p>
 
-			<div id="quiz3">
+			<div id="Quiz3">
 				<p id="Question3">Keeping in mind our Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
 
 
@@ -84,38 +82,39 @@
 					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design</label><br>
 				</form><br>
 
-				<!-- <button id="AnswerButton3" onclick="recordQuiz3()" style="width:100px">Next</button> -->
+				<button id="AnswerButton3" onclick="RecordQuiz3()" style="width:100px">Next</button>
 				<!-- <button id="LearnButton" onclick="LearnVisible()" style="float:right">Learn More</button> -->
 				
-				<!-- <div id="ResponseDiv3" style=""></div> -->
-
+				<div id="ResponseDiv3" style=""></div>
+		<!-- 		<div id="DataGenerationExplanation" class="pg" style="display:none;width:700px;border:2px solid gray;margin-top:20px">
+				<center><b>Data Simulations:</b></center><br>
+				To mimic the process of drawing a sample from the population, each design is simulated here by drawing a random sample of either 10 (within-subjects) or 20 (between-subjects) values from a normal distribution (mean = 200, standard deviation = 9). This reflects the baseline weight of each participant in our study.<br>
+				<br>
+				If the study were conducted using a <b>between-subjects design,</b> we would then randomly assign each person to one condition or the other (10 participants per condition). Because the treatments will not affect everyone the same way, we should represent the effectiveness of each treatment probabilistically using another normal distribution. For the Fruit Condition, we draw 10 values from a distribution with a mean of 11 pounds and a standard deviation of 6 pounds. The 10 values in the Veggie Condition are drawn from a distribution with a mean of 25 pounds, with the same standard deviation of 6 pounds. These distributions reflect the weight lost in each condition (e.g. participants in the Fruit Condition lost an average of 11 pounds). The final result is obtained by subtracting each Fruit or Veggie Condition value from the corresponding baseline value. For example, Participant 1's weight at the start of the study is drawn from the baseline distribution, and the value is 205 pounds. This participant is in the Veggie Condition, so we simulate the amount of weight lost by drawing from another distribution, with a result of 15 pounds. Participant 1's weight on the graph would then be 190 pounds.<br>
+				<br>
+				<b>In the within-subjects design,</b> we draw the same baseline distribution and the same treatment distributions. <b>Importantly, because we're comparing the same group at two different timepoints, we really only care about the adjustment distributions.</b> The baseline distribution itself could have a mean of 300 or 100, with a standard deviation of 5 or 50, and it would make no difference on the outcome for a within-subjects design. This is because instead of testing the difference between the means of each group, we take each individual's difference score (the difference between their weight lost in the fruit condition and in the vegetable condition), and test to see if the mean of the difference scores is significantly greater than zero.
+			</div> -->
 			</div>
 		</div>
 
-<!-- 		<div id="AnswerA" style="display:none">
+		<div id="AnswerA" style="display:none">
 			<p>Oh no, your intuition wasn't right this time! That's okay.</p>
 		</div>
 		<div id="AnswerB" style="display:none">
 			<p>Right!</p>
-		</div> -->
-		<!-- This isn't the right way to do this... -->
-
-		<div id="text2" style="display:none">
-			<span id="Q3Response" style="display:none"></span>
-
-			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to individual differences</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means. In technical terms, we lose <i>statistical power</i> when individual differences are greater.</p>
+		</div>
+		<div id="Text2" style="display:none">
+			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to the population variance</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means. In technical terms, we lose <i>statistical power</i> when the population variance is higher.</p>
 
 			<p>Asking a different question using a within-subjects design means that a wider distribution in each group doesn't affect our statistical power like it does with a between-subjects design. <i>It doesn't matter that the points are spread out, because the lines that connect them are generally sloping in the same direction.</i></p>
 		</div>
 
-		<div id="text3" style="display:none">
-			<p>Here we can see that the between-subjects design does much better when individual differences are small (p = .026 compared to .215). With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. It even comes out to be statistically significant (p < .05).</p>
-
-			<p>However, notice that the p value for the within-subjects design is exactly the same regardless of individual differences: <b>within-subjects designs are not affected by individual differences</b>. By contrast, between-subject designs lose power when individual differences in pre-study weight are large.</p>
+		<div id="Text3" style="display:none">
+			<p>Here we can see that the between-subjects design does much better when the population variance is low. With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. It even comes out to be statistically significant (p < .05). However, notice that the p value for the within-subjects design is exactly the same regardless of the population variance: <b>within-subjects designs are not affected by the population variance</b>.</p>
 
 			<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
 		</div>
-		<button id="nextButton">Next</button>
+		<center><button id="NextButton" style="width:12.5%;display:none">Continue</button></center>
 	</div>
 
 	<div class="sidebar">
@@ -137,7 +136,7 @@
 
 
 
-var sim1Progress = {{sim1Progress}};
+
 var Q3Outcome = 'unanswered';
 var datasets = 1;
 var progress = {{progress}};
@@ -148,50 +147,22 @@ var sig = [0,0,0,0]
 
 
 // Cache the DOM (good habit to start)
-var $container = $('#container');
+var $vocabSpan = $('#vocabSpan');
+
+var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
+
+var $Text1 = $('#Text1');
+var $Text2 = $('#Text2');
+var $Text3 = $('#Text3');
+
 var $firstrow = $('#firstrow');
 var $secondrow = $('#secondrow');
-var $firstSpan = $firstrow.find('span').css('visibility', 'visible');
 
-var $text1 = $('#text1');
-var $text2 = $('#text2');
-var $text3 = $('#text3');
 var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
-var $pdivClass = $('.pdiv');
-var $sigTrackClass = $('.sigTrack');
-var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
-var $resampleButton = $('#resampleButton');
 
-var $all = [$('#container'), $('#text1'), $('#text2'), $('#text3'), $('.pdiv'), $('.sigTrack'), $('#secondrow'), $('#resampleButton'), $('#vocabSpan')];
+var $NextButton = $('#NextButton');
 
 
-var $vocabSpan = $('#vocabSpan');
-var vocabArray = ['<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br><li><i>Within-Subjects Designs</i> assign every person to every condition.</li>', '<br><li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li>','<br><li>Within-subjects designs are insensitive to individual differences</li>'];
-
-var $nextButton = $('#nextButton');
-var $backButton = $('#backButton');
-
-
-var Q3Complete = false;
-var $Q3Response = $('#Q3Response');
-
-
-
-// Bind click events
-function EventBinder(){
-	$backButton.unbind().on('click', goBack);
-	
-	if(sim1Progress == 0){
-		if(Q3Complete == false){
-			$nextButton.unbind().on('click', recordQuiz3);
-		}else{
-			$nextButton.unbind().on('click', goForward);
-		}
-	}else{
-		$nextButton.unbind().on('click', goForward);
-	}
-
-}
 
 function KeepScore(){
 	
@@ -212,8 +183,11 @@ function LearnVisible(){
 	$('#DataGenerationExplanation').toggle();
 }
 
-function recordQuiz3(){
+function RecordQuiz3(){
 
+	$('.pdiv').show();
+	$('.sigTrack').show();
+	KeepScore();
 	
 	Q3Outcome = $('input[name=q3]:checked', '#Q3Answers').val();
 	if(Q3Outcome != 'A' & Q3Outcome != 'B'){
@@ -221,112 +195,43 @@ function recordQuiz3(){
 		return
 	
 	}else if(Q3Outcome == 'A'){
-		$Q3Response.html('<p>Oh no, your intuition wasn\'t right this time! That\'s okay.</p>');
+		$('#AnswerA').show();
 
 	}else if (Q3Outcome == 'B'){
-		$Q3Response.html('<p>Right!</p>');
+		$('#AnswerB').show();
 		
 	}
-	KeepScore();
-	Q3Complete = true;
-	goForward();
-
-	
-	
-
-
-	// $text1.hide();
+	$Text1.hide();
 	
 	// Show response and next button
-	// $text2.show();
-	// $nextButton.show();
+	$Text2.show();
+	$NextButton.show();
 	
-	// $nextButton.click(function(){
+	$NextButton.click(function(){
 		
 
-	// 	// Hide quiz, answers
-	// 	$text1.hide(); 
-	// 	$text2.hide();
-	// 	// $('#AnswerA, #AnswerB').hide();
+		// Hide quiz, answers
+		$Text1.hide(); 
+		$Text2.hide();
+		$('#AnswerA, #AnswerB').hide();
 
-	// 	// Show second row and instructions, resample button
-	// 	// $secondrow.show();
-	// 	// $text3.show();
-	// 	// $('#resampleButton').show();
-		
-	// 	// $firstrow.find('span').css('visibility', 'visible');
-
-	// 	// Next button: move on after simulations
-	// 	// $nextButton.click(MySubmit);
-	// 	// $('#nextButton').css('display', 'inline-block');
-
-	// 	$vocabSpan.append(
-	// 		'<br><li>Within-subjects designs are insensitive to individual differences</li>'
-	// 		);
-	
-	// });
-}
-
-function Render(){
-	for(var i = 0; i < $all.length; i++){
-		$all[i].hide();
-	}
-
-	// console.log('progress: '+sim1Progress);
-	$vocabSpan.html([vocabArray[0], vocabArray[1]]);
-	$vocabSpan.show();
-	
-	if(sim1Progress < 0){
-		BackPage();
-	}else if(sim1Progress == 0){
-		$text1.show();
-		
-		
-	}else if(sim1Progress == 1){
-		
-		$pdivClass.show();
-		$sigTrackClass.show();
-
-		$Q3Response.show();
-		$text2.show();
-		// $secondrow.show();
-		$resampleButton.show();
-		$firstSpan.show();
-		
-
-		$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
-	}else if(sim1Progress == 2){
-		// simulations and results
+		// Show second row and instructions, resample button
 		$secondrow.show();
-		$resampleButton.show();
-		$pdivClass.show();
-		$sigTrackClass.show();
-		$firstSpan.show();
+		$Text3.show();
+		$('#ResampleButton').show();
+		
+		$firstrow.find('span').css('visibility', 'visible');
 
-		// text
-		$text3.show();
+		// Next button: move on after simulations
+		$NextButton.click(MySubmit);
+		// $('#NextButton').css('display', 'inline-block');
 
-	}else if(sim1Progress == 3){
-		MySubmit();
-	}
-	$container.show();
+		$vocabSpan.append(
+			'<br><li>Within-subjects designs are insensitive to population variance</li>'
+			);
+	
+	});
 }
-
-
-function goForward(){
-	sim1Progress += 1;
-	console.log('Progress: '+sim1Progress);
-	EventBinder();
-	Render();
-}
-
-function goBack(){
-	sim1Progress -= 1;
-	EventBinder();
-	Render();
-}
-
-
 
 function ResampleFunction(){
 	// Generate new data
@@ -335,26 +240,17 @@ function ResampleFunction(){
 
 }
 
-function BackPage(){
-	console.log('Submitting!');
-	progress -=1;
-	$('#directioninput').val('backward');
-	$('#progressinput').val(String(progress));
-	$('#dataform').submit();
-}
 
 function MySubmit(){
 	console.log('Submitting!');
 	progress +=1;
 	$('#Q3').val(Q3Outcome);
-	$('#directioninput').val('forward');
 	$('#progressinput').val(String(progress));
 	$('#numbersims').val(datasets);
 	$('#dataform').submit();
 }
 
-EventBinder();
-Render();
+
 
 /// Graph
 // list of files
@@ -478,7 +374,7 @@ $pdiv[3].html(pList[1]);
 var	yLabel = "Weight",
 	condLabel = "Exercise routine",
 	xMax = 20,
-	yMax = 225;
+	yMax = 250;
 	
 
 /// Variables for calculating stuff
@@ -515,7 +411,7 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .range([height, 0])
-    .domain([125,yMax]);
+    .domain([100,yMax]);
 
 
 var cond = d3.scale.ordinal()
@@ -637,7 +533,7 @@ d3.csv(File, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+      	.attr("cx", function(d) { return cond(d.condition) ; })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -777,7 +673,7 @@ d3.csv(File, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -885,7 +781,7 @@ d3.csv(File2, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.wdv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -1001,7 +897,7 @@ d3.csv(File2, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.wdv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -1172,7 +1068,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+	      	.attr("cx", function(d) { return cond(d.condition) ; })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1292,7 +1188,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1399,7 +1295,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.wdv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1515,7 +1411,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5)); })
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.wdv); })
 	      	.style("fill", function(d) { return color(d.condition); })

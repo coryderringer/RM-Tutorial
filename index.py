@@ -26,7 +26,6 @@ class User(db.Model):
 	WSAnswer1 = 		db.StringProperty()
 	WSAnswer2 = 		db.StringProperty()
 	WSAnswer3 = 		db.StringProperty()
-	WSAnswer4 = 		db.StringProperty()
 	COEAnswer1 =		db.IntegerProperty()
 	COEAnswer2 =		db.IntegerProperty()
 	# OEAnswer1 =			db.IntegerProperty()
@@ -141,7 +140,7 @@ class SignupHandler(webapp.RequestHandler):
 			doRender(self,
 				'signupfail.htm',
 				{'error': 'Please fill in all fields.'})
-			# this keeps it from continuing with the rest of the handler if the "if" condition is met
+		# this keeps it from continuing with the rest of the handler if the "if" condition is met
 			return
 
 		# Check whether user already exists
@@ -151,28 +150,11 @@ class SignupHandler(webapp.RequestHandler):
 
 		# If the user already exists in the datastore
 		if len(results) > 0:
-			# doRender(self,
-			# 	'signupfail.htm',
-			# 	{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
-			# return
-
-			for i in results:
-				self.session['username'] = i.username
-				# self.session['password'] = i.password
-				self.session['firstname'] = i.firstname
-				self.session['usernum'] = i.usernum
-				self.session['Module1'] = i.Module1
-				self.session['Module2'] = i.Module2
-			
-			self.session['M1_Progress'] = 0
-			self.session['M2_Progress'] = 0
-			self.session['Logged_In'] = True
-
-			doRender(self, 'menu.htm',
-				{'firstname':self.session['firstname'],
-				'Module1':self.session['Module1'],
-				'Module2':self.session['Module2']})
+			doRender(self,
+				'signupfail.htm',
+				{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
 			return
+
 		# If the two passwords they entered do not match
 		# if password1 != password2:
 		# 	doRender(self,
@@ -370,8 +352,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		if self.session['M2_Progress'] == 0:
 			doRender(self, "WithinSubjectIntro.htm",
-				{'progress':self.session['M2_Progress'],
-				'introProgress':0})
+				{'progress':self.session['M2_Progress']})
 		# elif self.session['M2_Progress'] == 1:
 		# 	doRender(self, "WithinSubjectSim1.htm",
 		# 		{'progress':self.session['M2_Progress']})
@@ -386,73 +367,31 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		M2_Progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = M2_Progress
 		logging.info("Progress: "+str(M2_Progress))
-		direction = self.request.get('directioninput')
 
-		if self.session['M2_Progress'] == 0:
-			if direction == 'backward':
-				doRender(self, "WithinSubjectIntro.htm",
-					{'progress':self.session['M2_Progress'],
-					'introProgress':3})
-			else:
-				doRender(self, "WithinSubjectIntro.htm",
-					{'progress':self.session['M2_Progress'],
-					'introProgress':0})
+		if M2_Progress == 1:
+			# Record things from intro (answers to questions)
+			self.session['WSAnswer1'] = self.request.get('Q1')
+			self.session['WSAnswer2'] = self.request.get('Q2')
+			self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
 
-		elif M2_Progress == 1:
-			logging.info('checkpoint 2')
-			direction = self.request.get('directioninput')
-			logging.info('checkpoint 3')
-			logging.info('direction: '+direction)
+			pValues1 = [[0,0,0,0]] * 50
+			sigTally1 = [[0,0,0,0]] * 50
 			
-			if direction == 'forward':
-				logging.info('checkpoint 4')
-				# Record things from intro (answers to questions)
-				self.session['WSAnswer1'] = self.request.get('Q1')
-				self.session['WSAnswer2'] = self.request.get('Q2')
-				self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
+			f = open('pValues1.csv', 'rU')
+			mycsv = csv.reader(f)
+			mycsv = list(mycsv)   
 
-				pValues1 = [[0,0,0,0]] * 50
-				sigTally1 = [[0,0,0,0]] * 50
-				
-				f = open('pValues1.csv', 'rU')
-				mycsv = csv.reader(f)
-				mycsv = list(mycsv)   
+			for x in range(0,50):
+				pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+				sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
 
-				for x in range(0,50):
-					pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
-					sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+			self.session['pValues1'] = pValues1
+			self.session['sigTally1'] = sigTally1
 
-				self.session['pValues1'] = pValues1
-				self.session['sigTally1'] = sigTally1
-
-				doRender(self, "WithinSubjectSim1.htm",
-					{'progress':self.session['M2_Progress'],
-					'pValues1':pValues1,
-					'sigTally1':sigTally1,
-					'sim1Progress':0})
-
-			elif direction == 'backward':
-				pValues1 = [[0,0,0,0]] * 50
-				sigTally1 = [[0,0,0,0]] * 50
-				
-				f = open('pValues1.csv', 'rU')
-				mycsv = csv.reader(f)
-				mycsv = list(mycsv)   
-
-				for x in range(0,50):
-					pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
-					sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
-
-				self.session['pValues1'] = pValues1
-				self.session['sigTally1'] = sigTally1
-
-				doRender(self, "WithinSubjectSim1.htm",
-					{'progress':self.session['M2_Progress'],
-					'pValues1':pValues1,
-					'sigTally1':sigTally1,
-					'sim1Progress':2})
-
-
+			doRender(self, "WithinSubjectSim1.htm",
+				{'progress':self.session['M2_Progress'],
+				'pValues1':pValues1,
+				'sigTally1':sigTally1})
 
 		elif M2_Progress == 2:
 			# Record things from sim 1 
@@ -463,8 +402,8 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			sigTally2 = [[0,0,0,0]] * 50
 			correlations = [[0,0]] * 50
 
-			g = open('pValues2.csv', 'rU')
-			mycsv = csv.reader(g)
+			f = open('pValues2.csv', 'rU')
+			mycsv = csv.reader(f)
 			mycsv = list(mycsv)
 
 			for x in range(0,50):
@@ -482,7 +421,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		elif M2_Progress == 3:
 			# Record things from sim 2
 			self.session['numberOfSimulations2'] = int(self.request.get('numbersims2'))
-			self.session['WSAnswer4'] = self.request.get('Q4Answer')
 
 			doRender(self, "WithinSubjectQuiz.htm",
 				{'progress':self.session['M2_Progress']})
@@ -509,7 +447,6 @@ class WithinSubjectHandler(webapp.RequestHandler):
 				i.WSAnswer1 = self.session['WSAnswer1']
 				i.WSAnswer2 = self.session['WSAnswer2']
 				i.WSAnswer3 = self.session['WSAnswer3']
-				i.WSAnswer4 = self.session['WSAnswer4']
 				i.numberOfGuesses = self.session['numberOfGuesses']
 				i.numberOfSimulations = self.session['numberOfSimulations']
 				i.numberOfSimulations2 = self.session['numberOfSimulations2']

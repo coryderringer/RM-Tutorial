@@ -8,9 +8,7 @@
 
 <form id="dataform" method="post" action="/WithinSubject">
 	<input id="numbersims2" name="numbersims2" type="hidden">
-	<input id="Q4Answer" name="Q4Answer" type="hidden">
 	<input id="progressinput" name="progressinput" type="hidden">
-	<input id="directioninput" name="directioninput" type="hidden">
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
@@ -20,17 +18,17 @@
 
 <div id="container">
 	<div class="corypg">
-	<button id="backButton" onclick="goBack()">Go Back</button>
-	<br>
 		<center>
-			<span id="span1" style="display:inline-block;visibility:hidden;position:relative;left:-50px"><b>High Correlation</b></span>
-			<span id="span2" style="display:inline-block;position:relative;left:85px;visibility:hidden"><b>Low Correlation</b></span>
-			
-			<div id="firstrow" style="display:none">
-				<div id="within1" style="display:inline-block">
-					<div id="graph2"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p2"></span></div>
+				<span style="display:inline-block"><b>Between-Subjects</b></span>
+				<span style="display:inline-block;position:relative;left:135px"><b>Within-Subjects</b></span>
+			<div id="firstrow">
+				<span style="position:relative;top:-100px;display:inline-block;margin-right:25px;visibility:hidden">
+					<b>High<br>Correlation</b>
+				</span>
+				<div id="between1" style="display:inline-block">
+					<div id="graph1"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
 					
 					<!-- <div id="ttest1" class="ttest">
 						<span id="tspan1">t=1.00</span><br>
@@ -39,10 +37,10 @@
 					</div> -->
 				</div>
 				
-				<div id="within2" style="display:inline-block">
-					<div id="graph4"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack4"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p4"></span></div>
+				<div id="within1" style="display:inline-block">
+					<div id="graph2"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
 				</div>
 			</div>
 			<br>
@@ -71,38 +69,26 @@
 
 		<button id="ResampleButton" style="width:100px;display:none" onclick="UpdateData()">Resample</button>
 
-		<div id="Quiz4" style="display:none">
-			<p><b>Which of these shows a significant difference between the veggie and fruit conditions?</b></p>
-			<form id="Q4Answers" style="position:relative;left:20px">
-				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left</label><br>
-				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right</label><br>
-			</form><br>
-			<button onclick="goForward()">Submit</button>
+		<div id="Text1">
+			<p>Another advantage of within subject designs is that they are able to detect small but consistent differences that between-subjects designs cannot, again because the designs ask different questions of the data.</p>
 
-		</div>
-
-		<div id="Text1" style="display:none">
-
-			<p><span id="responseSpan"></span></p>
-
-			<p>Another advantage of within subject designs is that they are able to detect small but consistent differences that between-subjects designs cannot, again because within-subjects designs inherently control for individual differences.</p>
-
-			<p>Here we see the same example data from both between and within-subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. Remember our handy rule of thumb from earlier: if the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). When the lines are sloped in the same direction, the treatments probably have significantly different effects.</p>	
+			<p>Here we see the same example data from both between and within-subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. Remember our handy rule of thumb from earlier: if the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects.</p>	
 
 			<p>In a within-subjects experiment, the means of the effect in each condition might be very similar. However, if each subject saw increased weight loss in Veggie Condition compared to Fruit Condition, even if the increase is small, it might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
 		</div>
 		
 		<div id="Text2" style="display:none">
+			<p>By contrast, if the datapoints are not correlated (as in the bottom row of graphs), it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that the lines on the bottom-right graph have wildly varying slopes. Some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. Consistent differences, even small ones, are the key in a within-subjects design.</p>
+
+			<p>Also notice that the correlation of the two conditions does not matter at all in the between-subjects design: the p value is the same if the correlation is high (r = .99) or low (r = -.02). This is because the groups consist of different people: you can't compare Bob's weight loss in the Fruit Condition to his weight loss in the Veggie Condition, because Bob was never in the Veggie Condition! The correlation doesn't really mean anything in the context of a between-subjects design, so it doesn't affect the p value.</p>
+
 			<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
-
-			<p>If the datapoints are not correlated, it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that for the graphs you generate on the right, the lines often have wildly varying slopes. This means some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. <b>That's what it means for these interventions to be uncorrelated: knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition.</b> The correlation in the top right graph is very strong (.9874), meaning that if we know a participant's weight after the veggie condition, we have a very good idea of what their weight will be in the fruit condition (slightly higher, in this case). This small, but very consistent, difference gives us a very low p value (.0001).</p>
-			
 		</div>
-		<button id="NextButton" style="width:100px;display:none" onclick="goForward()">Continue</button>
+		<button id="NextButton" style="width:100px" onclick="StartSimulations()">Continue</button>
 
 		
 		
-		<center><button id="SubmitButton" style="display:none" onclick="goForward()">Continue to Quiz</button></center>
+		<center><button id="SubmitButton" style="display:none" onclick="Review()">Continue to Quiz</button></center>
 	</div>
 	<div class="sidebar">
 		<u><b><ul>Key Ideas:</ul></b></u>
@@ -118,7 +104,6 @@
 </div>
 
 <div class="pg" style="width:1000px;display:none" id="review">
-	<button id="backButton" onclick="goBack()">Go Back</button>
 	<h1>Ready for the Quiz?</h1>
 	<p> Take a moment to review before the quiz. You can mouse over each bullet point to see a visual aid. Click below when you're ready!</p>
 
@@ -169,15 +154,12 @@
 
 var datasets = 1;
 var progress = {{progress}};
-var Sim2Progress = 0;
 var pValues = {{pValues2}};
 var sigTally = {{sigTally2}};
 var correlations = {{correlations}};
 var sig = [0,0,0,0]
 
 // Cache the DOM
-
-var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#NextButton'), $('#SubmitButton'), $('#ResampleButton')];
 
 var $vocabSpan = $('#vocabSpan');
 
@@ -187,105 +169,17 @@ var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
 var $review = $('#review');
 var $header = $('#top');
 
-// var $spans = [$('#span1'), $('#span2')];
-
-// var $hide = [$('#Text1'), $('#NextButton')];
+var $hide = [$('#Text1'), $('#NextButton')];
+var $show = [$('.sigTrack'), $('.pdiv'), $('#secondrow'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
 
 var $graphs = [$('#graph1'), $('#graph2'), $('#graph3'), $('#graph4')];
 
-var $progress0 = [$('#Quiz4'), $('#firstrow')];
-var $progress1 = [$('#Text1'), $('#NextButton')];
-var $progress2 = [$('.sigTrack'), $('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
-var $invisibleStuff = [$('#p2'), $('#p4'), $('.pdiv'), $('#span1'), $('#span2')];
 
 var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
 
 var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5')];
 
-function Render(){
-	for(var i = 0; i < $all.length; i++){
-		$all[i].hide();
-	}
-	for(var i = 0; i < $invisibleStuff.length; i++){
-		$invisibleStuff[i].css('visibility', 'hidden');
-	}
 
-	if(Sim2Progress == 0){
-		for(var i = 0; i < $progress0.length; i++){
-			$progress0[i].show();			
-		}
-
-	}else if(Sim2Progress == 1){
-		// record the result
-		Q4Outcome = $('input[name=q4]:checked', '#Q4Answers').val();
-		if(Q4Outcome != 'A' & Q4Outcome != 'B'){
-			alert('Please make a selection!');
-			return
-		}else if(Q4Outcome == 'A'){
-			$('#responseSpan').html('Right!');
-		}else{
-			$('#responseSpan').html(
-				'Actually it\'s the one on the left. (Check out those p values!)'
-				);
-		}
-	
-		for(var i = 0; i < $progress1.length; i++){
-			$progress1[i].show();			
-		}
-
-		for(var i = 0; i < $invisibleStuff.length; i++){
-			$invisibleStuff[i].css("visibility", "visible");
-		}
-
-
-	}else if(Sim2Progress == 2){
-
-		console.log('Starting!');
-
-		// show stuff
-		for(var i = 0; i < $progress2.length; i++){
-			$progress2[i].show();
-		}
-
-		for(var i = 0; i < $invisibleStuff.length; i++){
-			$invisibleStuff[i].css("visibility", "visible");
-		}
-
-		$vocabSpan.append(
-			'<br><li>Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</li>'
-			);
-		// maybe this should be an empty span in the html and I should populate it with items in an array in JS
-
-		KeepScore();
-	}else if(Sim2Progress < 0){
-		BackPage();			
-	}
-	
-}
-Render();
-
-function goForward(){
-	
-	Sim2Progress += 1;
-	console.log('Progress: '+Sim2Progress);
-	Render();
-	if(Sim2Progress > 2){
-		Review();
-	}
-}
-
-function goBack(){
-	Sim2Progress -= 1;
-	Render();
-	
-	if(Sim2Progress <= 2){
-		$('#container').show();
-		$('#review').hide();
-	}
-	
-
-
-}
 
 // bind events for hover
 HoverEvents = function(){
@@ -396,6 +290,7 @@ HoverEvents = function(){
 
 }
 
+HoverEvents();
 
 function KeepScore(){
 	
@@ -410,21 +305,40 @@ function KeepScore(){
 }
 
 
+function StartSimulations(){
+	console.log('Starting!');
+
+	// hide stuff
+	for(var i = 0; i< $hide.length; i++){
+		$hide[i].hide();
+	}
 
 
+	// show stuff
+	for(var i = 0; i < $show.length; i++){
+		$show[i].show();
+	}
+
+	$('#firstrow').find('span').css('visibility', 'visible');
+
+	$vocabSpan.append(
+		'<br><li>Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</li>'
+		);
+
+	KeepScore();
+
+}
+
+// function ResampleFunction(){
+// 	// Generate new data
+// 	datasets += 1;
+// 	console.log('Resampling!');
+
+// }
 
 function Review(){
 	$('#container').hide();
 	$('#review').show();
-	HoverEvents();
-}
-
-function BackPage(){
-	console.log('Submitting!');
-	progress -=1;
-	$('#progressinput').val(String(progress));
-	$('#directioninput').val('backward');
-	$('#dataform').submit();
 }
 
 function MySubmit(){
@@ -432,20 +346,9 @@ function MySubmit(){
 	progress +=1;
 	$('#progressinput').val(String(progress));
 	$('#numbersims2').val(datasets);
-	$('#Q4Answer').val(Q4Answer);
 	$('#dataform').submit();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
 
 /// Graph
 // list of files
@@ -572,7 +475,7 @@ $pdiv[3].html(pList[3]+',    r = '+corList[1]);
 var	yLabel = "Weight",
 	condLabel = "Exercise routine",
 	xMax = 20,
-	yMax = 225;
+	yMax = 250;
 	
 
 /// Variables for calculating stuff
@@ -606,7 +509,7 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .range([height, 0])
-    .domain([125,yMax]);
+    .domain([100,yMax]);
 
 
 var cond = d3.scale.ordinal()
@@ -726,7 +629,7 @@ d3.csv(File, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+      	.attr("cx", function(d) { return cond(d.condition) ; })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -848,7 +751,7 @@ d3.csv(File, function(error, data) {
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -978,7 +881,7 @@ d3.csv(File, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -1098,7 +1001,7 @@ d3.csv(File2, function(error, data) {
    	.enter().append("circle")
       	.attr("class", "dot")
       	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+      	.attr("cx", function(d) { return cond(d.condition); })
       		// Not great because it's not scaled, but it works for now
       	.attr("cy", function(d) { return y(d.dv); })
       	.style("fill", function(d) { return color(d.condition); })
@@ -1269,7 +1172,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      	.attr("cx", function(d) { return cond(d.condition) ; })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1392,7 +1295,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1497,7 +1400,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
@@ -1616,7 +1519,7 @@ function UpdateData(){
 	   	.enter().append("circle")
 	      	.attr("class", "dot")
 	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      	.attr("cx", function(d) { return cond(d.condition); })
 	      		// Not great because it's not scaled, but it works for now
 	      	.attr("cy", function(d) { return y(d.dv); })
 	      	.style("fill", function(d) { return color(d.condition); })
