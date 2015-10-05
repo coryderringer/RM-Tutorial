@@ -1,6 +1,6 @@
 {% extends "_base.htm" %}
 {% block title %}
-	Carryover effects
+	Practice effects
 {% endblock%}
 
 {% block bodycontent %}
@@ -14,42 +14,43 @@ var progress = {{progress}};
 var current = 0;
 
 /// Graph
-var file = "/static/stimuli/OrderEffects/carryover1.csv";
+var file = "/static/stimuli/OrderEffects/practice1.csv";
 
 /// Name variables here
-var	yLabel = "Accuracy",
+var	yLabel = "Test score",
 		condLabel = "Exercise routine",
 		xLabel = "Time (minutes)",
-		covariate = "Arousal"
-		xMax = 20,
-		yMax = 14;
+		covariate = "Skill"
+		xMax = 60,
+		yMax = 16;
 
 /// Variables for calculating stuff
 var parsedData;
 var iv = [];
 var dv = [];
 var measure = [];
-var meanControl = [];
-var meanExperimental = [];
+var meanCond1 = [];
+var meanCond2 = [];
+var meanCond3 = [];
 
 /// Text
 
   var text = [
-    "Let’s look at the results for the experiment. On this graph, the x-axis shows the time elapsed in the experiment. The experimental condition is experienced first, and they are measured on their accuracy at about 5 minutes. After that, they experience the control condition, and their accuracy is measured again at about 15 minutes in the experiment. The y-axis represents their accuracy scores on the spatial reasoning task.",
+    "Let’s look at the results for the experiment. On this graph, the x-axis shows the time elapsed in the experiment. We have randomized the order that the conditions get experienced in. Each condition involves a different activity lasting about 10 minutes prior to the test, which then takes about 5 minutes to complete. Each time, the test has different questions, but they all measure the same intellectual abilities. After completing the test, participants continue with the next condition. The y-axis represents their test scores.",
 
-    "Participants first go through the intense exercise regimen (the experimental condition), and then have their spatial reasoning ability measured. Let’s look at their results! Each blue point represents the score of a single participant collected in this condition. The average accuracy score after engaging in the intense exercise regimen is shown below. This seems like a pretty good average – but we need to compare this score against the control task. ",
+    "Participants first listen to a relaxing song of their own choice using headphones and then try the test. We expect this condition to lower their anxiety, which will hopefully allow them to do better on the test. Each blue point represents the score of a single participant collected in this condition. As you can see, the average test score seems pretty low. But we need to see how this compares to the other conditions. Next up is the control condition, in which the subjects should do worse on the test because their anxiety levels should be higher. Let's see how well they do in the control condition!",
 
-    "Next (in the control condition), they read a short story while sitting down before having their spatial reasoning ability measured again. Let’s take a look at their results this time around, shown as orange points below. The average accuracy score after the control condition is also shown below. This is pretty similar to the previous average (after the intense exercise regimen).",
+    "That's strange! We expected participants to score lower in the control condition because they aren't engaged in an anxiety-reducing activity prior to the test, but they actually score higher in this condition! Let's see how they do in the next condition, when they engage in meditation prior to doing the test.",
 
-    "It seems our hypothesis is not supported as there doesn’t seem to be a difference in their spatial reasoning ability between both the experimental and control conditions! <br><br>While it could be that your hypothesis was just wrong and intense exercise truly has no effect on one’s spatial reasoning ability, let’s look at another possible reason for this result.",
+    "The scores in this condition are as we expected. But how can we explain why people score so poorly in the condition where they listen to relaxing music? Our prior research suggests that this should help decrease anxiety, so their test scores here be as high as in the meditation condition (or at least higher than the control condition).",
 
-    "We believe that arousal is the mechanism that leads to an improvement in people’s spatial reasoning ability. Imagine that we had measured their arousal level throughout the experiment using a heart-rate monitor. We can plot their arousal level on the same graph with a line (that will be red in color).",
+    "Let's consider that participants do the test 3 times during the experiment. Even though the specific questions they answer each time are different, there are similarities because they measure the same intellectual ability. Our 'Skill' at a task often increases the more times we do it, due to the practice offered by repetition. Let look at the average skill levels of participants as they go through the experiment (imagine we have some device that shows you this in real-time).",
 
-    "When they start the experiment, their arousal level is at its baseline. When they experience the experimental condition, their arousal level increases suddenly, so it looks like the intense exercise regimen successfully manipulated the arousal of the subjects! We expected this to lead to higher accuracy scores on the spatial reasoning task.",
+    "After the first condition and their first round trying out the test, their 'Skill' in the test increases. It turns out on this test, familiarizing yourslf with the test format and the type of questions goes a long way towards helping your ability to do it. Because participants start out with a low 'Skill' level, it's not surprising their scores in the first condition are lower. Let's see what happens with their ability after their second time doing the test!",
 
-    "But because the exercise was so intense, their arousal levels didn’t drop off soon enough after they finished the exercise routine! We can see that it tapers off gradually, but by the time they experience the control condition, their arousal levels are still higher than before they began the experiment.",
+    "More practice results in greater 'Skill'!",
 
-    "This is a problem because it means their arousal levels in the control condition were much higher than they were supposed to be. It’s probably this that led to similar accuracy scores in the control condition – in terms of arousal; they were essentially still in the experimental condition!",
+    "And by the last condition, participants have gotten even more practice, raising their 'Skill' further. We can note that relative to the skill level at each tim",
 
     "In general terms, this is called an order effect, where exposure to one condition changes a participant’s responses to a later condition. More specifically, this is an example of a <b>carryover effect</b>, <i>a type of order effect where experiencing one condition changes the subjects' experience of a later condition</i>. This is a serious threat to internal validity in within-subjects designs because it could mean a particular condition is not manipulating the mechanisms you are interested in (in this case, arousal) the way you intend."
     ]
@@ -92,19 +93,23 @@ function next(current) {
     // Does different things each time page advances
     if (current==1) { 
       svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean1").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M1").transition().duration(800).delay(200).style("opacity", 1);
     }
-    else if (current==2) { svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==2) { svg.select("#pointBlocker1").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==3) { svg.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 0); }    
     else if (current==4) { 
       svg.select("#legendBlocker").transition().duration(800).delay(0).style("opacity", 0); 
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#Mean1").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#M1").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#Mean2").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#M2").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#Mean3").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#M3").transition().duration(800).delay(200).style("opacity", 0);
     }
     else if (current==5) { svg.select("path").transition().duration(800).delay(200).style("opacity", 1); }
-    else if (current==6) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==6) { svg.select("#lineBlocker1").transition().duration(800).delay(200).style("opacity", 0); }
+    else if (current==7) { svg.select("#lineBlocker2").transition().duration(800).delay(200).style("opacity", 0); }
     else if (current==text.length-1) { 
       $("#next").attr("disabled", true);
       showQuiz(); 
@@ -141,21 +146,25 @@ function previous(current) {
     }
 
     // Does different things each time page advances
-    if (current==5) { svg.select("#lineBlocker").transition().duration(800).delay(200).style("opacity", 1); }
+    if (current==6) { svg.select("#lineBlocker2").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==5) { svg.select("#lineBlocker1").transition().duration(800).delay(200).style("opacity", 1); }
     else if (current==4) { svg.select("path").transition().duration(800).delay(200).style("opacity", 0); }
     else if (current==3) { 
       svg.select("#legendBlocker").transition().duration(800).delay(0).style("opacity", 1); 
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#controlMean").transition().duration(800).delay(200).style("opacity", 1);
-      svg.select("#controlM").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean1").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M1").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean2").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M2").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean3").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M3").transition().duration(800).delay(200).style("opacity", 1);
     }
-    else if (current==1) { svg.select("#pointBlocker").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==2) { svg.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 1); }
+    else if (current==1) { svg.select("#pointBlocker1").transition().duration(800).delay(200).style("opacity", 1); } 
     else if (current==0) { 
       $("#previous").attr("disabled", true); 
       svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalMean").transition().duration(800).delay(200).style("opacity", 0);
-      svg.select("#experimentalM").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#Mean1").transition().duration(800).delay(200).style("opacity", 0);
+      svg.select("#M1").transition().duration(800).delay(200).style("opacity", 0);
     }
 }
 
@@ -200,7 +209,7 @@ function MySubmit(){
 
 <div class="pg" style="height:940px">
 
-	<h2><center>Carryover effects</center></h2>
+	<h2><center>Practice effects</center></h2>
 	
 	<br>
   
@@ -285,7 +294,7 @@ function MySubmit(){
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     // width = 800 - margin.left - margin.right,
     // height = 400 - margin.top - margin.bottom;
-    width = 700 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
@@ -298,18 +307,15 @@ var y = d3.scale.linear()
 
 var cond = d3.scale.ordinal()
     .rangePoints([0, width],1)
-    // .domain(["Experimental","Control"]);
-    .domain(["Exercise regimen","Read short story"]);
-    // .domain(["Control", "Experimental"]);
+    .domain(["Relaxing music","Control","Meditation"]);
 
 var color = d3.scale.category10()
-    // .domain(["Experimental","Control"]);
-    .domain(["Exercise regimen","Read short story"]);
+    .domain(["Relaxing music","Control","Meditation"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .ticks(xMax/2);
+    .ticks(xMax/10);
 
 var yAxis = d3.svg.axis()
     .scale(y)
@@ -350,14 +356,16 @@ d3.csv(file, function(error, data) {
       dv.push(Number(parsedData[i].dv));
       measure.push(Number(parsedData[i].measure));
 
-      // if (parsedData[i].condition=="Control") {
-      if (parsedData[i].condition=="Read short story") {
-        meanControl.push(Number(parsedData[i].dv));
+      if (parsedData[i].condition=="Relaxing music") {
+        meanCond1.push(Number(parsedData[i].dv));
       }
-      // else if (parsedData[i].condition=="Experimental") {
-      else if (parsedData[i].condition=="Exercise regimen") {
-        meanExperimental.push(Number(parsedData[i].dv));
+      else if (parsedData[i].condition=="Control") {
+        meanCond2.push(Number(parsedData[i].dv));
       }
+      else if (parsedData[i].condition=="Meditation") {
+        meanCond3.push(Number(parsedData[i].dv));
+      }
+
     }
     ////////////////////////////////////////////
 
@@ -384,64 +392,85 @@ d3.csv(file, function(error, data) {
 
     // Append line blocker
 
-  	var lineBlocker = svg.append("rect")
-  		.attr("id", "lineBlocker")
-      .attr("width", width)
+  	var lineBlocker1 = svg.append("rect")
+  		.attr("id", "lineBlocker1")
+      .attr("width", width/3)
   		.attr("height", height)
-  		.attr("x", function(d) {return lineBlockerAttr.x;})
-  		.attr("y", function(d) {return lineBlockerAttr.y;})
+  		.attr("x", x(20))
+  		.attr("y", 0)
   		.style("fill", "white")
   		.style("opacity", 1);
 
+    var lineBlocker2 = svg.append("rect")
+      .attr("id", "lineBlocker2")
+      .attr("width", width/3)
+      .attr("height", height)
+      .attr("x", x(40))
+      .attr("y", 0)
+      .style("fill", "white")
+      .style("opacity", 1);
+
     // Appends means
 
-    var controlMean = svg.append("line")
-      .attr("id", "controlMean")
-      // .attr("x1", cond("Control")-x(1))
-      // .attr("x2", cond("Control")+x(1))
-      .attr("x1", cond("Read short story")-x(1))
-      .attr("x2", cond("Read short story")+x(1))
-      .attr("y1", y(d3.mean(meanControl)))
-      .attr("y2", y(d3.mean(meanControl)))
+    var Mean1 = svg.append("line")
+      .attr("id", "Mean1")
+      .attr("x1", cond("Relaxing music")-x(2))
+      .attr("x2", cond("Relaxing music")+x(2))
+      .attr("y1", y(d3.mean(meanCond1)))
+      .attr("y2", y(d3.mean(meanCond1)))
+      .style("opacity", 0)
+      .style("stroke-width", 2)
+      .style("stroke", color("Relaxing music"));
+
+    var M1 = svg.append("text")
+        .attr("id", "M1")
+        .attr("x", cond("Relaxing music")-x(1.2))
+        .attr("y", y(d3.mean(meanCond1)))
+        .attr("dy", ".35em")
+        .attr("dx", x(-2))
+        .style("opacity", 0)
+        .style("text-anchor", "end")
+        .text(d3.mean(meanCond1).toFixed(2));
+
+    var Mean2 = svg.append("line")
+      .attr("id", "Mean2")
+      .attr("x1", cond("Control")-x(2))
+      .attr("x2", cond("Control")+x(2))
+      .attr("y1", y(d3.mean(meanCond2)))
+      .attr("y2", y(d3.mean(meanCond2)))
       .style("opacity", 1)
       .style("stroke-width", 2)
-      // .style("stroke", color("Control"));
-      .style("stroke", color("Read short story"));
+      .style("stroke", color("Control"));
 
-    var controlM = svg.append("text")
-        .attr("id", "controlM")
-        // .attr("x", cond("Control")+x(1.2))
-        .attr("x", cond("Read short story")+x(1.2))
-        .attr("y", y(d3.mean(meanControl)))
+    var M2 = svg.append("text")
+        .attr("id", "M2")
+        .attr("x", cond("Control")-x(1.2))
+        .attr("y", y(d3.mean(meanCond2)))
         .attr("dy", ".35em")
-        .attr("dx", x(1))
+        .attr("dx", x(-2))
         .style("opacity", 1)
         .style("text-anchor", "end")
-        .text(d3.mean(meanControl).toFixed(2));
+        .text(d3.mean(meanCond2).toFixed(2));
 
-    var experimentalMean = svg.append("line")
-      .attr("id", "experimentalMean")
-      // .attr("x1", cond("Experimental")-x(1))
-      // .attr("x2", cond("Experimental")+x(1))
-      .attr("x1", cond("Exercise regimen")-x(1))
-      .attr("x2", cond("Exercise regimen")+x(1))
-      .attr("y1", y(d3.mean(meanExperimental)))
-      .attr("y2", y(d3.mean(meanExperimental)))
-      .style("opacity", 0)
+    var Mean3 = svg.append("line")
+      .attr("id", "Mean3")
+      .attr("x1", cond("Meditation")-x(2))
+      .attr("x2", cond("Meditation")+x(2))
+      .attr("y1", y(d3.mean(meanCond3)))
+      .attr("y2", y(d3.mean(meanCond3)))
+      .style("opacity", 1)
       .style("stroke-width", 2)
-      // .style("stroke", color("Experimental"));
-      .style("stroke", color("Exercise regimen"));
+      .style("stroke", color("Meditation"));
 
-    var experimentalM = svg.append("text")
-      .attr("id", "experimentalM")
-      // .attr("x", cond("Experimental")+x(1.2))
-      .attr("x", cond("Exercise regimen")+x(1.2))
-      .attr("y", y(d3.mean(meanExperimental)))
-      .attr("dy", ".35em")
-      .attr("dx", x(1))
-      .style("opacity", 0)
-      .style("text-anchor", "end")
-      .text(d3.mean(meanExperimental).toFixed(2));
+    var M3 = svg.append("text")
+        .attr("id", "M3")
+        .attr("x", cond("Meditation")-x(1.2))
+        .attr("y", y(d3.mean(meanCond3)))
+        .attr("dy", ".35em")
+        .attr("dx", x(-2))
+        .style("opacity", 1)
+        .style("text-anchor", "end")
+        .text(d3.mean(meanCond3).toFixed(2));
 
     // Appends points
 
@@ -458,14 +487,23 @@ d3.csv(file, function(error, data) {
 
     // Append point blocker
 
-    var pointBlocker = svg.append("rect")
-		.attr("id", "pointBlocker")
-    .attr("width", width/2)
+    var pointBlocker1 = svg.append("rect")
+		.attr("id", "pointBlocker1")
+    .attr("width", width/3)
 		.attr("height", height)
-		.attr("x", function(d) {return pointBlockerAttr.x;})
-		.attr("y", function(d) {return pointBlockerAttr.y;})
+		.attr("x", x(20))
+		.attr("y", 0)
 		.style("fill", "white")
 		.style("opacity", 1);
+
+    var pointBlocker2 = svg.append("rect")
+    .attr("id", "pointBlocker2")
+    .attr("width", width/3)
+    .attr("height", height)
+    .attr("x", x(40))
+    .attr("y", 0)
+    .style("fill", "white")
+    .style("opacity", 1);
 
     // Appends axes
 
@@ -493,19 +531,27 @@ d3.csv(file, function(error, data) {
 
     svg.append("text")
         // .attr("x", cond("Control"))
-        .attr("x", cond("Read short story"))
-        .attr("y", y(2))
+        .attr("x", cond("Relaxing music"))
+        .attr("y", y(1.8))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
-        .text("Read short story");
+        .text("Relaxing music");
 
     svg.append("text")
         // .attr("x", cond("Experimental"))
-        .attr("x", cond("Exercise regimen"))
-        .attr("y", y(2))
+        .attr("x", cond("Control"))
+        .attr("y", y(1.8))
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
-        .text("Exercise regimen");
+        .text("Control");
+
+    svg.append("text")
+        // .attr("x", cond("Experimental"))
+        .attr("x", cond("Meditation"))
+        .attr("y", y(1.8))
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text("Meditation");
 
     // Appends legend
 
@@ -530,14 +576,14 @@ d3.csv(file, function(error, data) {
 
     svg.append("rect")
     	.attr("x", width - 18)
-    	.attr("y", 50)
+    	.attr("y", 68)
       	.attr("width", 18)
       	.attr("height", 2)
       	.style("fill", "red");
 
     svg.append("text")
       	.attr("x", width - 24)
-      	.attr("y", 50)
+      	.attr("y", 68)
       	.attr("dy", ".35em")
       	.style("text-anchor", "end")
       	.text(covariate);
@@ -547,7 +593,7 @@ d3.csv(file, function(error, data) {
       .attr("width", 100)
       .attr("height", 20)
       .attr("x", width - 100)
-      .attr("y", 40)
+      .attr("y", 60)
       .style("fill", "white")
       .style("opacity", 1);
 
