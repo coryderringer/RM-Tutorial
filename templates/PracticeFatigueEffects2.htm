@@ -1,6 +1,6 @@
 {% extends "_base.htm" %}
 {% block title %}
-	Practice effects
+	Fatigue effects
 {% endblock%}
 
 {% block bodycontent %}
@@ -14,13 +14,13 @@ var progress = {{progress}};
 var current = 0;
 
 /// Graph
-var file = "/static/stimuli/OrderEffects/practice1.csv";
+var file = "/static/stimuli/OrderEffects/practice2.csv";
 
 /// Name variables here
 var	yLabel = "Test score",
 		condLabel = "Exercise routine",
 		xLabel = "Time (minutes)",
-		covariate = "Skill"
+		covariate = "Concentration"
 		xMax = 65,
 		yMax = 16;
 
@@ -36,9 +36,9 @@ var meanCond3 = [];
 /// Text
 
   var text = [
-    "Let’s look at the results for the experiment. On this graph, the x-axis shows the time elapsed in the experiment. We have randomized the order that the conditions get experienced in. Each condition involves a different activity lasting about 10 minutes prior to the test, which then takes about 5 minutes to complete. Each time, the test has different questions, but they all measure the same intellectual abilities. After completing the test, participants continue with the next condition. The y-axis represents their test scores.",
+    "Let’s imagine that we repeat the experiment, but this time all the participants are given practice and training in the test we will use to measure their problem-solving ability before they begin the experiment. This ensures that their skill levels are at ceiling (the maximum level), which means that the practice effects we just learned about are not a problem.",
 
-    "Participants first listen to a relaxing song of their own choice using headphones and then try the test (the <i>Relaxing Music</i> condition). We expect this condition to lower their anxiety, which will hopefully allow them to do better on the test. Each blue point represents the score of a single participant collected in this condition. As you can see, the average test score seems pretty low. But we need to see how this compares to the other conditions. Next up is the control condition, in which the subjects should do worse on the test because their anxiety levels should be higher. Let's see how well they do in the control condition!",
+    "As you can see, their <font color='red'>red line</font> levels are at a constantly high level, and stay that way the whole experiment. Based on our findings in the previous experiment, we would expect that in the <i>Relaxing Music</i> condition, participants' scores would be generally above the <font color='red'>red line</font> indicating skill (due to the boost it offers in performance by countering anxiety). We would expect scores in the control condition to roughly where the red line is. Finally, we would expect scores in the <i>Meditation</i> condition to be above the red line, too (due to the boost it offers in performance by countering anxiety).",
 
     "That's strange! We expected participants to score lower in the control condition because they aren't engaged in an anxiety-reducing activity prior to the test, but they actually score higher in this condition! Let's see how they do in the <i>Meditation</i> condition, when they engage in meditation prior to doing the test.",
 
@@ -93,10 +93,18 @@ function next(current) {
     }
 
     // Does different things each time page advances
-    if (current==1) { 
+    if (current==1) {
+      svg.select("#skill").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#legendBlocker").transition().duration(800).delay(0).style("opacity", 0); 
+    }
+    else if (current==2) { 
       svg.selectAll(".dot").transition().duration(800).delay(200).style("opacity", 1);
       svg.select("#Mean1").transition().duration(800).delay(200).style("opacity", 1);
       svg.select("#M1").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean2").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M2").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#Mean3").transition().duration(800).delay(200).style("opacity", 1);
+      svg.select("#M3").transition().duration(800).delay(200).style("opacity", 1);
     }
     else if (current==2) { svg.select("#pointBlocker1").transition().duration(800).delay(200).style("opacity", 0); }
     else if (current==3) { svg.select("#pointBlocker2").transition().duration(800).delay(200).style("opacity", 0); }    
@@ -230,7 +238,7 @@ function MySubmit(){
 
 <div class="pg" style="height:940px">
 
-	<h2><center>Practice effects</center></h2>
+	<h2><center>Fatigue effects</center></h2>
 	
 	<br>
   
@@ -406,8 +414,8 @@ d3.csv(file, function(error, data) {
 
     svg.append("path")
     	.attr("class", "line")
-    	.style("stroke", "red")
-    	//.style("stroke-dasharray", "10, 5")
+    	.style("stroke", "grey")
+    	.style("stroke-dasharray", "10, 5")
     	.style("opacity", 0)
       .attr("d", line(data));
 
@@ -459,7 +467,7 @@ d3.csv(file, function(error, data) {
       .attr("x2", cond("Control")+x(2))
       .attr("y1", y(d3.mean(meanCond2)))
       .attr("y2", y(d3.mean(meanCond2)))
-      .style("opacity", 1)
+      .style("opacity", 0)
       .style("stroke-width", 2)
       .style("stroke", color("Control"));
 
@@ -469,7 +477,7 @@ d3.csv(file, function(error, data) {
         .attr("y", y(d3.mean(meanCond2)))
         .attr("dy", ".35em")
         .attr("dx", x(-2))
-        .style("opacity", 1)
+        .style("opacity", 0)
         .style("text-anchor", "end")
         .text(d3.mean(meanCond2).toFixed(2));
 
@@ -479,7 +487,7 @@ d3.csv(file, function(error, data) {
       .attr("x2", cond("Meditation")+x(2))
       .attr("y1", y(d3.mean(meanCond3)))
       .attr("y2", y(d3.mean(meanCond3)))
-      .style("opacity", 1)
+      .style("opacity", 0)
       .style("stroke-width", 2)
       .style("stroke", color("Meditation"));
 
@@ -489,7 +497,7 @@ d3.csv(file, function(error, data) {
         .attr("y", y(d3.mean(meanCond3)))
         .attr("dy", ".35em")
         .attr("dx", x(-2))
-        .style("opacity", 1)
+        .style("opacity", 0)
         .style("text-anchor", "end")
         .text(d3.mean(meanCond3).toFixed(2));
 
@@ -515,7 +523,7 @@ d3.csv(file, function(error, data) {
 		.attr("x", x(20))
 		.attr("y", 0)
 		.style("fill", "white")
-		.style("opacity", 1);
+		.style("opacity", 0);
 
     var pointBlocker2 = svg.append("rect")
     .attr("id", "pointBlocker2")
@@ -524,7 +532,7 @@ d3.csv(file, function(error, data) {
     .attr("x", x(40))
     .attr("y", 0)
     .style("fill", "white")
-    .style("opacity", 1);
+    .style("opacity", 0);
 
     // Appends axes
 
@@ -607,16 +615,47 @@ d3.csv(file, function(error, data) {
       	.attr("y", 68)
       	.attr("dy", ".35em")
       	.style("text-anchor", "end")
-      	.text(covariate);
+      	.text("Skill");
 
     var legendBlocker = svg.append("rect")
       .attr("id", "legendBlocker")
-      .attr("width", 100)
+      .attr("width", 115)
       .attr("height", 20)
-      .attr("x", width - 100)
+      .attr("x", width - 115)
       .attr("y", 60)
       .style("fill", "white")
       .style("opacity", 1);
+
+    svg.append("rect")
+      .attr("id", "legendLine")
+      .attr("x", width - 18)
+      .attr("y", 68)
+        .attr("width", 18)
+        .attr("height", 2)
+        .style("fill", "grey")
+        .style("opacity", 0);
+
+    svg.append("text")
+        .attr("id", "legendText")
+        .attr("x", width - 24)
+        .attr("y", 68)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .style("opacity", 0)
+        .text(covariate);
+
+    // Appends constant line for 'skill'
+
+    svg.append("line")
+      .attr("id", "skill")
+      .attr("class", "line")
+      .style("stroke", "red")
+      .style("stroke-width", 1.5)
+      .style("opacity", 0)
+      .attr("x1", x(1))
+      .attr("y1", y(10))
+      .attr("x2", x(60))
+      .attr("y2", y(10));
 
 });
 
