@@ -22,20 +22,12 @@ class User(db.Model):
 	# password =			db.StringProperty()
 	Module1 =			db.StringProperty()
 	Module2 = 			db.StringProperty()
-	Module3 = 			db.StringProperty()
 	WSAnswer1 = 		db.StringProperty()
 	WSAnswer2 = 		db.StringProperty()
 	WSAnswer3 = 		db.StringProperty()
 	COEAnswer1 =		db.IntegerProperty()
 	COEAnswer2 =		db.IntegerProperty()
-	# OEAnswer1 =			db.IntegerProperty()
-	# OEAnswer2 =			db.IntegerProperty()
-	# OEAnswer3 =			db.IntegerProperty()
-	COEAnswer1 =		db.StringProperty()
-	COEAnswer2 =		db.StringProperty()
 	COEAnswer3 =		db.IntegerProperty()
-	COEAnswer4 =		db.IntegerProperty()
-	COEAnswer5 =		db.IntegerProperty()
 	numberOfGuesses = 	db.IntegerProperty()
 	numberOfSimulations = db.IntegerProperty()
 	numberOfSimulations2 = db.IntegerProperty()
@@ -170,8 +162,7 @@ class SignupHandler(webapp.RequestHandler):
 			lastname=self.request.get('lastname'),
 			# password=password1,
 			Module1="Incomplete",
-			Module2="Incomplete",
-			Module3="Incomplete");
+			Module2="Incomplete");
 
 		newuser.put();
 
@@ -183,17 +174,14 @@ class SignupHandler(webapp.RequestHandler):
 		# self.session['password']    = password1
 		self.session['Module1']   	= 'Incomplete'
 		self.session['Module2']  	= 'Incomplete'
-		self.session['Module3']  	= 'Incomplete'
 		self.session['Logged_In']	= True
 		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
-		self.session['M3_Progress'] = 0
 
 		doRender(self, 'menu.htm',
 			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2'],
-			'Module3':self.session['Module3']})
+			'Module2':self.session['Module2']})
 
 
 
@@ -201,12 +189,12 @@ class SignupHandler(webapp.RequestHandler):
 ######################### Individual Page Handlers ############################
 ###############################################################################
 
-class CarryoverEffectsHandler(webapp.RequestHandler):
+class OrderEffectsHandler(webapp.RequestHandler):
 
 	def get(self):
 		self.session = get_current_session()
 		if self.session['M1_Progress'] == 0:
-			doRender(self, "CarryoverEffectsIntro.htm",
+			doRender(self, "OrderEffects.htm",
 				{'progress':self.session['M1_Progress']})
 
 	def post(self):
@@ -218,19 +206,19 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 		logging.info("Progress: "+str(M1_Progress))
 		
 		if M1_Progress == 1:
-			self.session['COEAnswer1'] = self.request.get('Q1')
+			self.session['OEAnswer1'] = self.request.get('Q1')
 
 			doRender(self, "CarryoverEffects1.htm",
 				{'progress':self.session['M1_Progress']})
 
 		elif M1_Progress == 2:
-			self.session['COEAnswer2'] = self.request.get('Q2')
+			self.session['OEAnswer2'] = self.request.get('Q2')
 
 			doRender(self, "CarryoverEffects2.htm",
 				{'progress':self.session['M1_Progress']})
 
 		elif M1_Progress == 3:
-			# self.session['COEAnswer3'] = self.request.get('Q3')
+			self.session['OEAnswer3'] = self.request.get('Q3')
 
 			doRender(self, "CarryoverEffects3.htm",
 				{'progress':self.session['M1_Progress']})
@@ -240,9 +228,9 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 				{'progress':self.session['M1_Progress']})
 
 		elif M1_Progress == 5:
-			COEAnswer3 = int(self.request.get('Question1'))
-			COEAnswer4 = int(self.request.get('Question2'))
-			COEAnswer5 = int(self.request.get('Question3'))
+			OEAnswer1 = int(self.request.get('OEAnswer1'))
+			OEAnswer2 = int(self.request.get('OEAnswer2'))
+			OEAnswer3 = int(self.request.get('OEAnswer3'))
 
 			# Record that user completed the module
 			self.session['Module1'] = 'Complete'
@@ -256,12 +244,9 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 
 			# change the datastore result for module 1
 			for i in results:
-				i.COEAnswer1 = self.session['COEAnswer1']
-				i.COEAnswer2 = self.session['COEAnswer2']
-				# i.COEAnswer3 = self.session['COEAnswer3']
-				i.COEAnswer3 = COEAnswer3
-				i.COEAnswer4 = COEAnswer4
-				i.COEAnswer5 = COEAnswer5
+				i.OEAnswer1 = OEAnswer1
+				i.OEAnswer2 = OEAnswer2
+				i.OEAnswer3 = OEAnswer3
 				i.Module1 = self.session['Module1']
 				i.put()
 
@@ -271,79 +256,26 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 			doRender(self, "FinishCarryoverEffects.htm")
 		else:
 			logging.info("something is wrong")
+		# Query the datastore
+		# que = db.Query(User)
 
+		# # find the current user
+		# que = que.filter('username =', self.session['username'])
+		# results = que.fetch(limit=1)
 
+		# # change the datastore result for module 1
+		# for i in results:
+		# 	i.Module1 = self.session['Module1']
+		# 	i.put()
 
-class PracticeFatigueEffectsHandler(webapp.RequestHandler):
+		# logging.info('Datastore updated')
 
-	def get(self):
-		self.session = get_current_session()
-		if self.session['M3_Progress'] == 0:
-			doRender(self, "PracticeFatigueEffectsIntro.htm",
-				{'progress':self.session['M3_Progress']})
+		# doRender(self, 'menu.htm',
+		# 	{'firstname':self.session['firstname'],
+		# 	'Module1':self.session['Module1'],
+		# 	'Module2':self.session['Module2']})
 
-	def post(self):
-		logging.info("checkpoint 1")
-		self.session = get_current_session()
-
-		M1_Progress = int(self.request.get('progressinput'))
-		self.session['M3_Progress'] = M1_Progress
-		logging.info("Progress: "+str(M1_Progress))
 		
-		if M1_Progress == 1:
-			self.session['PFEAnswer1'] = self.request.get('Q1')
-
-			doRender(self, "PracticeFatigueEffects1.htm",
-				{'progress':self.session['M3_Progress']})
-
-		elif M1_Progress == 2:
-			self.session['COEAnswer2'] = self.request.get('Q2')
-
-			doRender(self, "CarryoverEffects2.htm",
-				{'progress':self.session['M3_Progress']})
-
-		elif M1_Progress == 3:
-			# self.session['COEAnswer3'] = self.request.get('Q3')
-
-			doRender(self, "CarryoverEffects3.htm",
-				{'progress':self.session['M3_Progress']})
-
-		elif M1_Progress == 4:
-			doRender(self, "CarryoverEffectsQuiz.htm",
-				{'progress':self.session['M1_Progress']})
-
-		elif M1_Progress == 5:
-			COEAnswer3 = int(self.request.get('Question1'))
-			COEAnswer4 = int(self.request.get('Question2'))
-			COEAnswer5 = int(self.request.get('Question3'))
-
-			# Record that user completed the module
-			self.session['Module3'] = 'Complete'
-
-			# Query the datastore
-			que = db.Query(User)
-
-			# find the current user
-			que = que.filter('username =', self.session['username'])
-			results = que.fetch(limit=1)
-
-			# change the datastore result for module 1
-			for i in results:
-				i.COEAnswer1 = self.session['COEAnswer1']
-				i.COEAnswer2 = self.session['COEAnswer2']
-				# i.COEAnswer3 = self.session['COEAnswer3']
-				i.COEAnswer3 = COEAnswer3
-				i.COEAnswer4 = COEAnswer4
-				i.COEAnswer5 = COEAnswer5
-				i.Module1 = self.session['Module3']
-				i.put()
-
-			logging.info('Datastore updated')
-
-			self.session['M3_Progress'] = 0
-			doRender(self, "FinishCarryoverEffects.htm")
-		else:
-			logging.info("something is wrong")
 
 
 
@@ -470,6 +402,10 @@ class LineGraphTestHandler(webapp.RequestHandler):
 			# 'x' : x,
 			# 'y' : y})
 
+class CarryoverEffectsHandler(webapp.RequestHandler):
+	def get(self):
+		doRender(self, 'CarryoverEffects1.htm')
+
 	# In this handler, add all the progress/back-end stuff, so that the first page rendered is the overall experiment description
 	# It should then cycle through the pages to the other parts with graphs and stuff
 
@@ -511,7 +447,6 @@ class LoginHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
-		self.session['M3_Progress'] = 0
 		# logging.info(Logged_In)
 		# If they're logged in, take them to the main menu
 		if 'Logged_In' in self.session:
@@ -519,8 +454,7 @@ class LoginHandler(webapp.RequestHandler):
 				doRender(self, 'menu.htm',
 					{'firstname':self.session['firstname'],
 					'Module1':self.session['Module1'],
-					'Module2':self.session['Module2'],
-					'Module3':self.session['Module3']})
+					'Module2':self.session['Module2']})
 			else:
 				doRender(self, 'login.htm')
 		# If they aren't, take them to the login page
@@ -566,11 +500,9 @@ class LoginHandler(webapp.RequestHandler):
 			self.session['usernum'] = i.usernum
 			self.session['Module1'] = i.Module1
 			self.session['Module2'] = i.Module2
-			self.session['Module3'] = i.Module3
 		
 		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
-		self.session['M3_Progress'] = 0
 		self.session['Logged_In'] = True
 
 
@@ -578,8 +510,7 @@ class LoginHandler(webapp.RequestHandler):
 		doRender(self,'menu.htm',
 			{'firstname':self.session['firstname'],
 			'Module1':self.session['Module1'],
-			'Module2':self.session['Module2'],
-			'Module3':self.session['Module3']})
+			'Module2':self.session['Module2']})
 
 
 class LogoutHandler(webapp.RequestHandler):
@@ -589,7 +520,7 @@ class LogoutHandler(webapp.RequestHandler):
 		self.session['Logged_In'] = False	
 		
 		# kill all the session stuff that would identify them (username, password, etc)
-		sessionlist = ['usernum', 'username', 'Module1', 'Module2', 'Module3', 'Logged_In', 'M1_Progress', 'M2_Progress', 'M3_Progress']
+		sessionlist = ['usernum', 'username', 'Module1', 'Module2', 'Logged_In', 'M2_Progress']
 
 		for i in sessionlist:
 			if i in self.session:
@@ -609,9 +540,8 @@ application = webapp.WSGIApplication([
 	('/logout', LogoutHandler),
 	('/login', LoginHandler),
 	('/signup', SignupHandler),
-	('/CarryoverEffects', CarryoverEffectsHandler),
+	('/OrderEffects', OrderEffectsHandler),
 	('/WithinSubject', WithinSubjectHandler),
-	('/PracticeFatigueEffects', PracticeFatigueEffectsHandler),
 	('/LineGraphTest', LineGraphTestHandler),
 	('/CarryoverEffects', CarryoverEffectsHandler),
 	('/.*',  LoginHandler)],  #default page
