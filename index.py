@@ -301,7 +301,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		M2_Progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = M2_Progress
 		logging.info("Progress: "+str(M2_Progress))
-		
+
 		if M2_Progress == 0:
 			doRender(self, "WithinSubjectIntro.htm",
 				{'progress':self.session['M2_Progress'],
@@ -422,6 +422,14 @@ class WithinSubjectHandler(webapp.RequestHandler):
 
 			self.session['M2_Progress'] = 0
 			doRender(self, "FinishWithinSubjects.htm")
+		
+		elif M2_Progress < 0:
+			M2_Progress += 1
+			doRender(self, 'menu.htm',
+				{'firstname':self.session['firstname'],
+				'Module1':self.session['Module1'],
+				'Module2':self.session['Module2']})
+
 		else:
 			logging.info("something is wrong")
 		

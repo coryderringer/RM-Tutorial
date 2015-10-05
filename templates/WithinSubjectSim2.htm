@@ -14,13 +14,13 @@
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
-<h2><center><span id="top">Within-Subjects Designs</span></center></h2>
+<h2 id="header2" style="display:none"><center>Within-Subjects Designs</center></h2>
 
-<div class="logout"><a href="/logout.htm">Logout</a></div>
+<div id="logout" style="display:none" class="logout"><a href="/logout.htm">Logout</a></div>
 
-<div id="container">
+<div id="container" style="display:none">
 	<div class="corypg">
-	<button id="backButton" onclick="goBack()">Go Back</button>
+	<button id="backButton">Go Back</button>
 	<br>
 		<center>
 			<span id="span1" style="display:inline-block;visibility:hidden;position:relative;left:-50px"><b>High Correlation</b></span>
@@ -77,7 +77,7 @@
 				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left</label><br>
 				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right</label><br>
 			</form><br>
-			<button onclick="goForward()">Submit</button>
+			<button id="nextButton">Submit</button>
 
 		</div>
 
@@ -98,7 +98,7 @@
 			<p>If the datapoints are not correlated, it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that for the graphs you generate on the right, the lines often have wildly varying slopes. This means some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. <b>That's what it means for these interventions to be uncorrelated: knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition.</b> The correlation in the top right graph is very strong (.9874), meaning that if we know a participant's weight after the veggie condition, we have a very good idea of what their weight will be in the fruit condition (slightly higher, in this case). This small, but very consistent, difference gives us a very low p value (.0001).</p>
 			
 		</div>
-		<button id="NextButton" style="width:100px;display:none" onclick="goForward()">Continue</button>
+		<button id="nextButton" style="width:100px;display:none" onclick="goForward()">Continue</button>
 
 		
 		
@@ -177,7 +177,11 @@ var sig = [0,0,0,0]
 
 // Cache the DOM
 
-var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#NextButton'), $('#SubmitButton'), $('#ResampleButton')];
+var $container = $('#container');
+var $logout = $('#logout');
+var $header = $('#header2');
+
+var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#nextButton'), $('#SubmitButton'), $('#ResampleButton')];
 
 var $vocabSpan = $('#vocabSpan');
 
@@ -185,22 +189,31 @@ var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack
 var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
 
 var $review = $('#review');
-var $header = $('#top');
+
+
+var $backButton = $('#backButton');
+var $nextButton = $('#nextButton');
 
 // var $spans = [$('#span1'), $('#span2')];
 
-// var $hide = [$('#Text1'), $('#NextButton')];
+// var $hide = [$('#Text1'), $('#nextButton')];
 
 var $graphs = [$('#graph1'), $('#graph2'), $('#graph3'), $('#graph4')];
 
 var $progress0 = [$('#Quiz4'), $('#firstrow')];
-var $progress1 = [$('#Text1'), $('#NextButton')];
+var $progress1 = [$('#Text1'), $('#nextButton')];
 var $progress2 = [$('.sigTrack'), $('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
 var $invisibleStuff = [$('#p2'), $('#p4'), $('.pdiv'), $('#span1'), $('#span2')];
 
 var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
 
 var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5')];
+
+function EventBinder(){
+	$backButton.unbind().on('click', goBack);
+	$nextButton.unbind().on('click', goForward);
+
+}
 
 function Render(){
 	for(var i = 0; i < $all.length; i++){
@@ -209,7 +222,7 @@ function Render(){
 	for(var i = 0; i < $invisibleStuff.length; i++){
 		$invisibleStuff[i].css('visibility', 'hidden');
 	}
-
+	
 	if(Sim2Progress == 0){
 		for(var i = 0; i < $progress0.length; i++){
 			$progress0[i].show();			
@@ -262,7 +275,8 @@ function Render(){
 	}
 	
 }
-Render();
+
+
 
 function goForward(){
 	
@@ -1664,6 +1678,14 @@ function UpdateData(){
 
 	});
 }
+
+$(document).ready(function(){
+	$header.show();
+	$logout.show();
+	$container.show();
+	Render();
+	EventBinder();
+});
 
 </script>
 

@@ -16,10 +16,10 @@
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
-<h2><center>Within-Subjects Designs</center></h2>
+<h2 id="header2" style="display:none"><center>Within-Subjects Designs</center></h2>
 
-<div class="logout"><a href="/logout.htm">Logout</a></div>
-<div id="container">
+<div id="logout" style="display:none" class="logout"><a href="/logout.htm">Logout</a></div>
+<div id="container" style="display:none">
 	<div class="corypg">
 		<button id="backButton">Go Back</button>
 		<div id="Text1">
@@ -215,11 +215,15 @@ var $text3 = $('#Text3');
 var $quiz1 = $('#Quiz1');
 var $quiz2 = $('#Quiz2');
 
+var $container = $('#container');
+var $logout = $('#logout');
+var $header = $('#header2');
+
 var $responseDiv2 = $('#ResponseDiv2');
 var $nextButton = $('#nextButton');
 var $backButton = $('#backButton');
 
-var $all = [$('#Text1'), $('#Text2'), $('#Text3'), $('#Quiz1')];
+var $all = [$('#container'), $('#logout'), $('#header2'), $('#Text1'), $('#Text2'), $('#Text3'), $('#Quiz1')];
 
 var $BSDisplay = $('#BSsig, #BSnonsig, #BS2, #BS3');
 var $WSDisplay = $('#WSsig, #WSnonsig, #WS1, #WS2');
@@ -343,13 +347,23 @@ function switchWS(){
 }
 
 function Render(){
-	// reset everything
+	// navigate away if you need to
+	if(introProgress == 4){
+		MySubmit();
+	}else if(introProgress < 0){
+		backPage();
+	}
+
+	// reset visuals on the page
 	for(var i = 0; i < $all.length; i++){
 		$all[i].hide();
 	}
 	$vocabSpan.html('');
 	
-
+	$header.show();
+	$logout.show();
+	$container.show();
+	
 	if(introProgress == 0){
 		$text1.show();
 
@@ -364,8 +378,6 @@ function Render(){
 	}else if(introProgress == 3){
 		$vocabSpan.html([vocabArray[0], vocabArray[1]]);
 		$text3.show();
-	}else if(introProgress == 4){
-		MySubmit();
 	}
 }
 
@@ -383,6 +395,13 @@ function goBack(){
 	Render();
 }
 
+function backPage(){
+	progress -= 1;
+	$('#directioninput').val('backward');
+	$('#progressinput').val(String(progress));
+	$('#dataform').submit();
+}
+
 function MySubmit(){
 	console.log('Submit dat!');
 	$('#Q1').val(Q1Outcome);
@@ -395,8 +414,10 @@ function MySubmit(){
 }
 
 
-EventBinder();
-Render();
+$(document).ready(function(){
+	EventBinder();
+	Render();
+});
 
 </script>
 {% endblock %}

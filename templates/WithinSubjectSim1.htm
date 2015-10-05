@@ -14,8 +14,10 @@
 	<input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
 </form>
 
+<h2 id="header2" style="display:none"><center><span id="top">Within-Subjects Designs</span></center></h2>
+<div  id="logout" class="logout" style="display:none"><a href="/logout.htm">Logout</a></div>
 
-<div id="container">
+<div id="container" style="display:none">
 
 	<div class="corypg">
 		<button id="backButton">Go Back</button>
@@ -76,7 +78,7 @@
 			<p>Remember that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know <b>if one group is different from another group</b> after some treatment. In a within-subjects design, we want to know if one treatment works better than the other treatment <b>for the same group of people.</b> </p>
 
 			<div id="quiz3">
-				<p id="Question3">Keeping in mind our Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
+				<p id="Question3">Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
 
 
 				<form id="Q3Answers">
@@ -153,6 +155,10 @@ var $firstrow = $('#firstrow');
 var $secondrow = $('#secondrow');
 var $firstSpan = $firstrow.find('span');
 
+var $container = $('#container');
+var $header = $('#header2');
+var $logout = $('#logout');
+
 var $text1 = $('#text1');
 var $text2 = $('#text2');
 var $text3 = $('#text3');
@@ -162,7 +168,7 @@ var $sigTrackClass = $('.sigTrack');
 var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
 var $resampleButton = $('#resampleButton');
 
-var $all = [$('#container'), $('#text1'), $('#text2'), $('#text3'), $('.pdiv'), $('.sigTrack'), $('#secondrow'), $('#resampleButton'), $('#vocabSpan')];
+var $all = [$('#text1'), $('#text2'), $('#text3'), $('.pdiv'), $('.sigTrack'), $('#secondrow'), $('#resampleButton'), $('#vocabSpan')];
 
 
 var $vocabSpan = $('#vocabSpan');
@@ -275,7 +281,7 @@ function Render(){
 	// console.log('progress: '+sim1Progress);
 	$vocabSpan.html([vocabArray[0], vocabArray[1]]);
 	$vocabSpan.show();
-	
+
 	if(sim1Progress < 0){
 		BackPage();
 	}else if(sim1Progress == 0){
@@ -291,9 +297,6 @@ function Render(){
 		$text2.show();
 		// $secondrow.show();
 		
-		
-		
-
 		$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
 	}else if(sim1Progress == 2){
 		// simulations and results
@@ -308,6 +311,16 @@ function Render(){
 		$text3.show();
 
 	}else if(sim1Progress == 3){
+		// simulations and results
+		$secondrow.show();
+		$resampleButton.show();
+		$pdivClass.show();
+		$sigTrackClass.show();
+		$firstSpan.css('visibility', 'visible');
+		$resampleButton.show();
+
+		// text
+		$text3.show();
 		MySubmit();
 	}
 	$container.show();
@@ -1564,6 +1577,15 @@ function UpdateData(){
 
 	});
 }
+
+$(document).ready(function(){
+	Render();
+	EventBinder();
+	$header.show();
+	$logout.show();
+	$container.show();
+
+});
 </script>
 
 {% endblock %}
