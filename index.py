@@ -284,7 +284,8 @@ class WithinSubjectHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		if self.session['M2_Progress'] == 0:
 			doRender(self, "WithinSubjectIntro.htm",
-				{'progress':self.session['M2_Progress']})
+				{'progress':self.session['M2_Progress'],
+				'introProgress':0})
 		# elif self.session['M2_Progress'] == 1:
 		# 	doRender(self, "WithinSubjectSim1.htm",
 		# 		{'progress':self.session['M2_Progress']})
