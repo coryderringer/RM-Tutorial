@@ -21,7 +21,7 @@
 <div id="logout" style="display:none" class="logout"><a href="/logout.htm">Logout</a></div>
 <div id="container" style="display:none">
 	<div class="corypg">
-		<button id="backButton">Go Back</button>
+		<button id="backButton">Go Back</button><br><br>
 		<div id="Text1">
 			<p>Imagine you hear about a study being planned at your local university. The researchers are trying to find out which of two interventions is more effective for weight loss over a 3-month timespan. We’ll call them the Fruit Condition and the Veggie Condition:</p>
 
@@ -32,9 +32,9 @@
 
 			<p>If we want to see which of these interventions is more effective, there are a couple of ways we could go about it.</p>
 
-			<p>First, we could use a <b>between-subjects design</b>. With this kind of research design, each person is assigned to one of the two conditions. We would randomly divide the participants into two groups. The Veggie group (Bob, Amy, and Jim) gets only the Veggie Condition, while the Fruit Group (Sarah, Todd, and Kelsey) gets only the Fruit Condition. If the Veggie group weighs less at the end of 3 months, we would conclude that the Veggie Condition is more effective for weight loss.</p>
+			<p>First, we could use a <b>between-subjects design</b>. With this kind of research design, each person is randomly assigned to one of the two conditions. The Veggie group (Bob, Amy, and Jim) gets only the Veggie Condition, while the Fruit Group (Sarah, Todd, and Kelsey) gets only the Fruit Condition. If the Veggie group weighs less at the end of 3 months, we would conclude that the Veggie Condition is more effective for weight loss.</p>
 
-			<p>Alternatively, we could use a <b>within-subjects design</b>. Using this approach, we would put everyone in both conditions at different points in time. So rather than only receiving the Veggie Condition, we would have Bob, Amy, and Jim spend 3 months in the Fruit Condition and 3 months in the Veggie Condition (with the order of these conditions being randomly assigned for each person). Then we would see if people consistently lose more weight in one condition than in the other.</p>
+			<p>Alternatively, we could use a <b>within-subjects design</b>. Using this approach, we would put everyone in both conditions at different points in time. So instead of being randomly assigned to receive one condition, each participant receives both conditions. Then we would see if people consistently lose more weight in one condition than in the other.</p>
 			<div>
 				<center>
 					<div class="minipg" style="padding:5px;width:250px;display:inline-block;margin-right:50px">
@@ -90,7 +90,7 @@
 			</div>
 
 			<div id="Feedback" style="display:none">
-				<p>Many researchers would agree that the within-subjects design is more informative. The within-subjects design allows for a direct comparison between the two interventions within the same individual participants. The main advantage of this approach is that <b>it eliminates individual differences between participants as a factor that could influence our dependent variable</b> (in this case: weight). Let’s examine this a bit closer.</p>
+				<p>Many researchers would agree that the within-subjects design is better. The within-subjects design allows for a direct comparison between the two interventions within the same individual participants. The main advantage of this approach is that <b>it eliminates individual differences between participants as a factor that could influence our dependent variable</b> (in this case: weight). Let’s examine this a bit closer.</p>
 				
 			</div>
 
@@ -173,7 +173,7 @@
 
 			<p><b>In a between-subjects design, we can examine whether one group is different from another group after some treatment.</b> To examine this, we usually compare the mean weights for each group after the treatment (the blue and orange lines in the graph on the left). If the means are far apart relative to the spread of the points in each group, the difference is more likely to be statistically significant.</p>
 
-			<p><b>In a within-subjects design, we can examine whether one treatment works better than the other treatment for the same group of people.</b> Statistically, this is done using difference scores (the difference between Bob's weight after the Veggie Condition and his weight after the Fruit Condition). The difference scores are illustrated above by the lines connecting across the conditions: similar difference scores appear as parallel lines. A handy rule of thumb is that if the lines are largely parallel, the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). If they're mostly sloped in the same direction, it tells us the treatments might have significantly different effects. Here we see that participants consistently weigh less after the Veggie Condition compared to the Fruit Condition.</p>
+			<p><b>In a within-subjects design, we can examine whether one treatment works better than the other treatment for the same group of people.</b> To illustrate this, the within-subjects graph above has lines connecting the dots that belong to the same subject. A handy rule of thumb is that if the lines are largely parallel, the difference between the treatments is consistent for each participant. If they're mostly parallel and sloped, it tells us the treatments might have significantly different effects. Here we see that participants consistently weigh less after the Veggie Condition compared to the Fruit Condition.</p>
 
 			<p>Use the "Change" button under each example graph to switch between examples of significant and nonsignificant differences for each kind of design. Try to pinpoint the key difference between significant and nonsignificant for each design.</p>
 
@@ -230,7 +230,7 @@ var $WSDisplay = $('#WSsig, #WSnonsig, #WS1, #WS2');
 
 var $vocabSpan = $('#vocabSpan');
 
-var vocabArray = ['<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br><li><i>Within-Subjects Designs</i> assign every person to every condition.</li>', '<br><li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li>'];
+var vocabArray = ['<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br><li><i>Within-Subjects Designs</i> assign each person to every condition.</li>', '<br><li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li>'];
 
 // Event binding
 
@@ -318,6 +318,26 @@ function RecordQuiz2(){
 			$responseDiv2.show();
 			guesses += 1;
 			Q2Complete = true;
+			$nextButton.unbind().on('click', goForward);
+			
+		}else if(Q2Outcome[guesses] == 'B'){
+			$responseDiv2.html(answers[1]);
+			$responseDiv2.show();
+			guesses += 1;
+
+		}else if(Q2Outcome[guesses] == 'C'){
+			$responseDiv2.html(answers[2]);
+			$responseDiv2.show();
+			guesses += 1;
+		}
+	}else{
+		if(Q2Outcome[guesses] == 'A'){
+			$responseDiv2.html(answers[0]);
+			// $('#AnswerButton2').hide();
+			$('#q2b, #optionB, #q2c, #optionC').css('opacity', '0.1');
+			$responseDiv2.show();
+			guesses += 1;
+			Q2Complete = true;
 			$nextButton.on('click', goForward);
 			
 		}else if(Q2Outcome[guesses] == 'B'){
@@ -331,8 +351,7 @@ function RecordQuiz2(){
 			guesses += 1;
 		}
 	}
-	Q2Complete = true;
-	$nextButton.unbind().on('click', goForward);
+	
 }
 
 
@@ -366,10 +385,13 @@ function Render(){
 		
 		if(introProgress == 0){
 			$text1.show();
+			$backButton.css('visibility', 'hidden');
+
 
 		}else if(introProgress == 1){
 			$quiz1.show();
 			$vocabSpan.html(vocabArray[0]);
+			$backButton.css('visibility', 'visible');
 
 		}else if(introProgress == 2){
 			$text2.show();
