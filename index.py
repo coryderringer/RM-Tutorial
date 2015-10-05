@@ -296,35 +296,66 @@ class WithinSubjectHandler(webapp.RequestHandler):
 	def post(self):
 		logging.info("checkpoint 1")
 		self.session = get_current_session()
+		direction = self.request.get('directioninput')
 
 		M2_Progress = int(self.request.get('progressinput'))
 		self.session['M2_Progress'] = M2_Progress
 		logging.info("Progress: "+str(M2_Progress))
-
-		if M2_Progress == 1:
-			# Record things from intro (answers to questions)
-			self.session['WSAnswer1'] = self.request.get('Q1')
-			self.session['WSAnswer2'] = self.request.get('Q2')
-			self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
-
-			pValues1 = [[0,0,0,0]] * 50
-			sigTally1 = [[0,0,0,0]] * 50
-			
-			f = open('pValues1.csv', 'rU')
-			mycsv = csv.reader(f)
-			mycsv = list(mycsv)   
-
-			for x in range(0,50):
-				pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
-				sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
-
-			self.session['pValues1'] = pValues1
-			self.session['sigTally1'] = sigTally1
-
-			doRender(self, "WithinSubjectSim1.htm",
+		
+		if M2_Progress == 0:
+			doRender(self, "WithinSubjectIntro.htm",
 				{'progress':self.session['M2_Progress'],
-				'pValues1':pValues1,
-				'sigTally1':sigTally1})
+				'introProgress':3})
+
+		elif M2_Progress == 1:
+			if direction == 'forward':
+
+				# Record things from intro (answers to questions)
+				self.session['WSAnswer1'] = self.request.get('Q1')
+				self.session['WSAnswer2'] = self.request.get('Q2')
+				self.session['numberOfGuesses'] = int(self.request.get('guessesinput'))
+
+				pValues1 = [[0,0,0,0]] * 50
+				sigTally1 = [[0,0,0,0]] * 50
+				
+				f = open('pValues1.csv', 'rU')
+				mycsv = csv.reader(f)
+				mycsv = list(mycsv)   
+
+				for x in range(0,50):
+					pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+					sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+
+				self.session['pValues1'] = pValues1
+				self.session['sigTally1'] = sigTally1
+
+				doRender(self, "WithinSubjectSim1.htm",
+					{'progress':self.session['M2_Progress'],
+					'pValues1':pValues1,
+					'sigTally1':sigTally1,
+					'sim1Progress':0})
+			else:
+				# Record things from intro (answers to questions)
+
+				pValues1 = [[0,0,0,0]] * 50
+				sigTally1 = [[0,0,0,0]] * 50
+				
+				f = open('pValues1.csv', 'rU')
+				mycsv = csv.reader(f)
+				mycsv = list(mycsv)   
+
+				for x in range(0,50):
+					pValues1[x] = [float(mycsv[x][0]), float(mycsv[x][1]), float(mycsv[x][2]), float(mycsv[x][3])]
+					sigTally1[x] = [int(mycsv[x][4]), int(mycsv[x][5]), int(mycsv[x][6]), int(mycsv[x][7])]
+
+				self.session['pValues1'] = pValues1
+				self.session['sigTally1'] = sigTally1
+
+				doRender(self, "WithinSubjectSim1.htm",
+					{'progress':self.session['M2_Progress'],
+					'pValues1':pValues1,
+					'sigTally1':sigTally1,
+					'sim1Progress':2})
 
 		elif M2_Progress == 2:
 			# Record things from sim 1 

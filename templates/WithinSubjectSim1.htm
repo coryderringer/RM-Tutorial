@@ -151,7 +151,7 @@ var sig = [0,0,0,0]
 var $container = $('#container');
 var $firstrow = $('#firstrow');
 var $secondrow = $('#secondrow');
-var $firstSpan = $firstrow.find('span').css('visibility', 'visible');
+var $firstSpan = $firstrow.find('span');
 
 var $text1 = $('#text1');
 var $text2 = $('#text2');
@@ -290,8 +290,8 @@ function Render(){
 		$Q3Response.show();
 		$text2.show();
 		// $secondrow.show();
-		$resampleButton.show();
-		$firstSpan.show();
+		
+		
 		
 
 		$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
@@ -301,7 +301,8 @@ function Render(){
 		$resampleButton.show();
 		$pdivClass.show();
 		$sigTrackClass.show();
-		$firstSpan.show();
+		$firstSpan.css('visibility', 'visible');
+		$resampleButton.show();
 
 		// text
 		$text3.show();
