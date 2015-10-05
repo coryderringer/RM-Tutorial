@@ -352,32 +352,33 @@ function Render(){
 		MySubmit();
 	}else if(introProgress < 0){
 		backPage();
-	}
+	}else{
 
-	// reset visuals on the page
-	for(var i = 0; i < $all.length; i++){
-		$all[i].hide();
-	}
-	$vocabSpan.html('');
-	
-	$header.show();
-	$logout.show();
-	$container.show();
-	
-	if(introProgress == 0){
-		$text1.show();
-
-	}else if(introProgress == 1){
-		$quiz1.show();
-		$vocabSpan.html(vocabArray[0]);
-
-	}else if(introProgress == 2){
-		$text2.show();
-		$vocabSpan.html([vocabArray[0], vocabArray[1]]);
+		// reset visuals on the page
+		for(var i = 0; i < $all.length; i++){
+			$all[i].hide();
+		}
+		$vocabSpan.html('');
 		
-	}else if(introProgress == 3){
-		$vocabSpan.html([vocabArray[0], vocabArray[1]]);
-		$text3.show();
+		$header.show();
+		$logout.show();
+		$container.show();
+		
+		if(introProgress == 0){
+			$text1.show();
+
+		}else if(introProgress == 1){
+			$quiz1.show();
+			$vocabSpan.html(vocabArray[0]);
+
+		}else if(introProgress == 2){
+			$text2.show();
+			$vocabSpan.html([vocabArray[0], vocabArray[1]]);
+			
+		}else if(introProgress == 3){
+			$vocabSpan.html([vocabArray[0], vocabArray[1]]);
+			$text3.show();
+		}
 	}
 }
 

@@ -77,7 +77,7 @@
 				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left</label><br>
 				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right</label><br>
 			</form><br>
-			<button id="nextButton">Submit</button>
+			<!-- <button id="nextButton">Submit</button> -->
 
 		</div>
 
@@ -98,11 +98,11 @@
 			<p>If the datapoints are not correlated, it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that for the graphs you generate on the right, the lines often have wildly varying slopes. This means some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. <b>That's what it means for these interventions to be uncorrelated: knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition.</b> The correlation in the top right graph is very strong (.9874), meaning that if we know a participant's weight after the veggie condition, we have a very good idea of what their weight will be in the fruit condition (slightly higher, in this case). This small, but very consistent, difference gives us a very low p value (.0001).</p>
 			
 		</div>
-		<button id="nextButton" style="width:100px;display:none" onclick="goForward()">Continue</button>
+		<button id="nextButton">Next</button>
 
 		
 		
-		<center><button id="SubmitButton" style="display:none" onclick="goForward()">Continue to Quiz</button></center>
+		<!-- <center><button id="SubmitButton" style="display:none" onclick="goForward()">Continue to Quiz</button></center> -->
 	</div>
 	<div class="sidebar">
 		<u><b><ul>Key Ideas:</ul></b></u>
@@ -181,7 +181,7 @@ var $container = $('#container');
 var $logout = $('#logout');
 var $header = $('#header2');
 
-var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#nextButton'), $('#SubmitButton'), $('#ResampleButton')];
+var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#ResampleButton')];
 
 var $vocabSpan = $('#vocabSpan');
 

@@ -274,56 +274,48 @@ function recordQuiz3(){
 }
 
 function Render(){
-	for(var i = 0; i < $all.length; i++){
-		$all[i].hide();
-	}
-
-	// console.log('progress: '+sim1Progress);
-	$vocabSpan.html([vocabArray[0], vocabArray[1]]);
-	$vocabSpan.show();
 
 	if(sim1Progress < 0){
 		BackPage();
-	}else if(sim1Progress == 0){
-		$text1.show();
-		
-		
-	}else if(sim1Progress == 1){
-		
-		$pdivClass.show();
-		$sigTrackClass.show();
-
-		$Q3Response.show();
-		$text2.show();
-		// $secondrow.show();
-		
-		$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
-	}else if(sim1Progress == 2){
-		// simulations and results
-		$secondrow.show();
-		$resampleButton.show();
-		$pdivClass.show();
-		$sigTrackClass.show();
-		$firstSpan.css('visibility', 'visible');
-		$resampleButton.show();
-
-		// text
-		$text3.show();
-
 	}else if(sim1Progress == 3){
-		// simulations and results
-		$secondrow.show();
-		$resampleButton.show();
-		$pdivClass.show();
-		$sigTrackClass.show();
-		$firstSpan.css('visibility', 'visible');
-		$resampleButton.show();
-
-		// text
-		$text3.show();
 		MySubmit();
+	}else{
+		for(var i = 0; i < $all.length; i++){
+			$all[i].hide();
+		}
+
+		// console.log('progress: '+sim1Progress);
+		$vocabSpan.html([vocabArray[0], vocabArray[1]]);
+		$vocabSpan.show();
+
+		if(sim1Progress == 0){
+			$text1.show();
+		}else if(sim1Progress == 1){
+			
+			$pdivClass.show();
+			$sigTrackClass.show();
+
+			$Q3Response.show();
+			$text2.show();
+			// $secondrow.show();
+			
+			$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
+		}else if(sim1Progress == 2){
+			// simulations and results
+			$secondrow.show();
+			$resampleButton.show();
+			$pdivClass.show();
+			$sigTrackClass.show();
+			$firstSpan.css('visibility', 'visible');
+			$resampleButton.show();
+
+			// text
+			$text3.show();
+
+		}
+		$container.show();
 	}
-	$container.show();
+	
 }
 
 
