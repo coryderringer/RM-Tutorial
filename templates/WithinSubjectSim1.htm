@@ -15,7 +15,6 @@
 </form>
 
 <h2 id="header2" style="display:none"><center><span id="top">Within-Subjects Designs</span></center></h2>
-<div  id="logout" class="logout" style="display:none"><a href="/logout.htm">Logout</a></div>
 
 <div id="container" style="display:none">
 
@@ -73,17 +72,17 @@
 		<br>
 
 		<div id="text1">
-			<p>To expand on this point, and explore some of the advantages of within subjects designs, let's look at one set of hypothetical data presented as a between-subjects comparison and as a within-subjects comparison.</p>
+			<p>To expand on this point, and explore some of the advantages of within subjects designs, let's look at one set of hypothetical data presented as a between-subjects comparison and as a within-subjects comparison (each graph displays the same dataset), with participants' weights as our dependent variable.</p>
 
-			<p>Remember that the lines in each graph reflect the difference between the questions we're asking with each design: In a between-subjects design, we want to know <b>if one group is different from another group</b> after some treatment. In a within-subjects design, we want to know if one treatment works better than the other treatment <b>for the same group of people.</b> </p>
+			<p>Remember: in a between-subjects design, we want to know <b>if the group averages are different</b> after some treatment. In a within-subjects design, we want to know if <b>one treatment consistently works better than the other for most people.</b></p>
 
 			<div id="quiz3">
-				<p id="Question3">Intuitively, which chart would you say is more convincing (i.e. which shows the Vegetable Condition having a stronger effect?)</p>
+				<p id="Question3">Intuitively, which chart would you say shows the largest difference between the two conditions?</p>
 
 
 				<form id="Q3Answers">
-					<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design</label><br>
-					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design</label><br>
+					<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design (I think the averages look pretty far apart).</label><br>
+					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design (I think the difference between the conditions looks consistent for most participants).</label><br>
 				</form><br>
 
 				<!-- <button id="AnswerButton3" onclick="recordQuiz3()" style="width:100px">Next</button> -->
@@ -105,15 +104,15 @@
 		<div id="text2" style="display:none">
 			<span id="Q3Response" style="display:none"></span>
 
-			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to individual differences</i>. Look at the wide distribution of weights in each condition for both graphs. With a between-subjects design (left side), we're punished statistically by the question we're asking. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means. In technical terms, we lose <i>statistical power</i> when individual differences are greater.</p>
+			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to individual differences</i>. Look at the wide distribution of weights in each condition for both graphs. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means.</p>
 
-			<p>Asking a different question using a within-subjects design means that a wider distribution in each group doesn't affect our statistical power like it does with a between-subjects design. <i>It doesn't matter that the points are spread out, because the lines that connect them are generally sloping in the same direction.</i></p>
+			<p>In a within-subjects design, the wide distribution for each condition wouldn't actually matter, <i>because the lines that connect them are generally sloping in the same direction.</i></p>
 		</div>
 
 		<div id="text3" style="display:none">
-			<p>Here we can see that the between-subjects design does much better when individual differences are small (p = .026 compared to .215). With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. It even comes out to be statistically significant (p < .05).</p>
+			<p>Here we can see that the between-subjects design does much better when individual differences are small (p = .026 on the bottom left, compared to .215 on the top left). With each group more tightly distributed around its mean, it’s easier to tell that there is a real difference between the group means. It even comes out to be statistically significant (p < .05).</p>
 
-			<p>However, notice that the p value for the within-subjects design is exactly the same regardless of individual differences: <b>within-subjects designs are not affected by individual differences</b>. By contrast, between-subject designs lose power when individual differences in pre-study weight are large.</p>
+			<p>However, notice that the p value for the within-subjects design is exactly the same regardless of individual differences, because <i>within-subjects designs are not affected by individual differences</i>.</p>
 
 			<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
 		</div>
@@ -133,6 +132,10 @@
 	</div>
 
 </div>
+
+<center>
+	<div id="logout" style="display:none" class="logout"><a href="/logout">Logout</a></div>
+</center>
 
 <script>
 

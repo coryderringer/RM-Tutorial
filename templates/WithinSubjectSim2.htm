@@ -16,8 +16,6 @@
 
 <h2 id="header2" style="display:none"><center>Within-Subjects Designs</center></h2>
 
-<div id="logout" style="display:none" class="logout"><a href="/logout.htm">Logout</a></div>
-
 <div id="container" style="display:none">
 	<div class="corypg">
 	<button id="backButton">Go Back</button><br><br>
@@ -85,17 +83,17 @@
 
 			<p><span id="responseSpan"></span></p>
 
-			<p>Another advantage of within subject designs is that they are able to detect small but consistent differences that between-subjects designs cannot, again because within-subjects designs inherently control for individual differences.</p>
+			<p>Within-subjects designs rely on <i>consistent</i> differences between the conditions, and they can detect these differences even if they're relatively small. If almost every person loses just a tiny bit more weight in the Veggie Condition than in the Fruit Condition (the graph on the left), the difference will probably be statistically significant.</p>
 
-			<p>Here we see the same example data from both between and within-subjects designs. Notice again that the comparisons we're drawing are fundamentally different in each case. On the left, we are comparing the means of each group in the context of each group's variance. On the right, we are comparing the consistency and magnitude of the differences between the Fruit and Veggie Conditions for the same participants. Remember our handy rule of thumb from earlier: if the lines are largely parallel, it tells us that the treatments are having similar effects for all of the participants (i.e. that the treatment scores are correlated). When the lines are sloped in the same direction, the treatments probably have significantly different effects.</p>	
+			<p>However, if some participants lose a lot of weight in the Veggie Condition, it might not be statistically significant if others lost a lot more weight in the Fruit Condition (like in the graph on the right).</p>	
 
-			<p>In a within-subjects experiment, the means of the effect in each condition might be very similar. However, if each subject saw increased weight loss in Veggie Condition compared to Fruit Condition, even if the increase is small, it might be significantly greater than 0. Small, consistent differences for each individual subject can yield a significant result.</p>
+			<p>In a within-subjects experiment, the average weight for each condition might be very similar, as they are here, but we could still find a statistically significant difference if the two interventions have consistently different effects for each participant.</p>
 		</div>
 		
 		<div id="Text2" style="display:none">
 			<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
 
-			<p>If the datapoints are not correlated, it means that the relationship between the effectiveness of each condition is not consistent across participants. Notice that for the graphs you generate on the right, the lines often have wildly varying slopes. This means some participants might lose more weight in the Fruit Condition, while others lose much more in the Veggie Condition, and some lose the same amount of weight in both. <b>That's what it means for these interventions to be uncorrelated: knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition.</b> The correlation in the top right graph is very strong (.9874), meaning that if we know a participant's weight after the veggie condition, we have a very good idea of what their weight will be in the fruit condition (slightly higher, in this case). This small, but very consistent, difference gives us a very low p value (.0001).</p>
+			<p>If the datapoints are not correlated, it means that the pattern of effectiveness for the two conditions is not consistent across participants (i.e. some people lose more weight in the Fruit Condition, some in the Veggie Condition): notice that for the graphs you generate on the right, the lines have wildly varying slopes. This means that knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition: <b>they're uncorrelated.</b></p>
 			
 		</div>
 		<button id="nextButton">Next</button>
@@ -112,7 +110,7 @@
 			<li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li><br>
 			<li>Between-subjects designs examine group means</li><br>
 			<li>Within-subjects designs examine difference scores</li><br>
-			<li>Within-subjects designs are insensitive to population variance</li>
+			<li>Within-subjects designs are insensitive to individual differences</li>
 		</span>
 	</div>
 </div>
@@ -127,7 +125,7 @@
 		<li><span id="list1"><i>Within-Subjects Designs</i> assign every person to every condition.</span></li><br>
 		<li><span id="list2">Between-subjects designs examine group means</span></li><br>
 		<li><span id="list3">Within-subjects designs examine difference scores</span></li><br>
-		<li><span id="list4">Within-subjects designs are insensitive to population variance</span></li><br>
+		<li><span id="list4">Within-subjects designs are insensitive to individual differences</span></li><br>
 		<li><span id="list5">Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</span></li>
 	</ul>
 	
@@ -135,32 +133,37 @@
 </div>
 
 <center>
-	<div class="review" id="listDiv0" style="top:-300px;left:230px; display:none; height:200px; width:350px">
+	<div id="logout" style="display:none" class="logout"><a href="/logout">Logout</a></div>
+</center>
+
+<center>
+	<div class="review" id="listDiv0" style="top:-310px;left:230px; display:none; height:200px; width:350px">
 		<br><b>Between-Subjects</b>
 		<img src="/static/images/BetweenSubjects.png" style="height:150px"></img>
 	</div>
 
-	<div class="review" id="listDiv1" style="top:-300px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv1" style="top:-310px;left:230px; display:none; height:200px; width:350px">
 		<br><b>Within-Subjects</b>
 		<img src="/static/images/WithinSubjects.png" style="height:150px"></img>
 	</div>
 
-	<div class="review" id="listDiv2" style="top:-300px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv2" style="top:-310px;left:230px; display:none; height:200px; width:350px">
 		<img src="/static/images/BS2.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv3" style="top:-300px;left:230px; display:none; height:200px; width:350px">
+	<div class="review" id="listDiv3" style="top:-310px;left:230px; display:none; height:200px; width:350px">
 		<img src="/static/images/WS1.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv4" style="top:-305px;left:230px; display:none; height:220px; width:443px">
+	<div class="review" id="listDiv4" style="top:-325px;left:230px; display:none; height:220px; width:443px">
 		<img src="/static/images/PopVar.png" style="height:220px"></img>
 	</div>
 
-	<div class="review" id="listDiv5" style="top:-305px;left:230px; display:none; height:220px; width:443px">
+	<div class="review" id="listDiv5" style="top:-325px;left:230px; display:none; height:220px; width:443px">
 		<img src="/static/images/Correl.png" style="height:220px"></img>
 	</div>
 </center>
+
 
 
 <script>
@@ -170,6 +173,7 @@
 var datasets = 1;
 var progress = {{progress}};
 var Sim2Progress = 0;
+var Q4Complete = false;
 var pValues = {{pValues2}};
 var sigTally = {{sigTally2}};
 var correlations = {{correlations}};
@@ -209,9 +213,34 @@ var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'
 
 var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5')];
 
+function recordQuiz4(){
+	// record the result
+	Q4Outcome = $('input[name=q4]:checked', '#Q4Answers').val();
+	if(Q4Outcome != 'A' & Q4Outcome != 'B'){
+		alert('Please make a selection!');
+		return
+	}else if(Q4Outcome == 'A'){
+		$('#responseSpan').html('Right!');
+	}else{
+		$('#responseSpan').html(
+			'Actually it\'s the one on the left. (Check out those p values!)'
+			);
+	}
+	Q4Complete = true;
+	goForward();
+}
+
 function EventBinder(){
 	$backButton.unbind().on('click', goBack);
-	$nextButton.unbind().on('click', goForward);
+	if(Sim2Progress == 0){
+		if(Q4Complete == false){
+			$nextButton.unbind().on('click', recordQuiz4);
+		}else{
+			$nextButton.unbind().on('click', goForward);
+		}
+	}else{
+		$nextButton.unbind().on('click', goForward);
+	}
 
 }
 
@@ -227,20 +256,10 @@ function Render(){
 		for(var i = 0; i < $progress0.length; i++){
 			$progress0[i].show();			
 		}
+		EventBinder();
 
 	}else if(Sim2Progress == 1){
-		// record the result
-		Q4Outcome = $('input[name=q4]:checked', '#Q4Answers').val();
-		if(Q4Outcome != 'A' & Q4Outcome != 'B'){
-			alert('Please make a selection!');
-			return
-		}else if(Q4Outcome == 'A'){
-			$('#responseSpan').html('Right!');
-		}else{
-			$('#responseSpan').html(
-				'Actually it\'s the one on the left. (Check out those p values!)'
-				);
-		}
+		
 	
 		for(var i = 0; i < $progress1.length; i++){
 			$progress1[i].show();			
@@ -282,6 +301,7 @@ function goForward(){
 	
 	Sim2Progress += 1;
 	console.log('Progress: '+Sim2Progress);
+	EventBinder();
 	Render();
 	if(Sim2Progress > 2){
 		Review();
