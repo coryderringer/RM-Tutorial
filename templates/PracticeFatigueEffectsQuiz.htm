@@ -65,12 +65,12 @@ function MySubmit(end) {
 
   <h2><center>Practice and fatigue effects quiz</center></h2>
 
-  <form id="myForm" method="post" action="/CarryoverEffects">
+  <form id="myForm" method="post" action="/PracticeFatigueEffects">
 
     <br>
     <b>Please answer if the following statements are TRUE or FALSE.</b>
 
-    <p>Fatigue effects only occur in experiments using within-subjects designs.</p>
+    <p>Testing effects and practice effects are equivalent.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q1" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -79,10 +79,10 @@ function MySubmit(end) {
       </select><br><br>
 
     <div id="answer1" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
-      <b>Correct answer: FALSE. </b>In a between-subjects design, different groups of subjects are assigned to each condition. Carryover effects are only a concern in within-subjects designs, where the same participants experience multiple conditions during the experiment. Carryover effects happen when experiencing one condition changes important characteristics of the participant, causing them to respond differently in subsequent conditions.
+      <b>Correct answer: FALSE. </b>A testing effect is a specific<i>type</i> of practice effect. Practice effects occur when increasing time and experience in an experiment lead people to do better on later tasks. If this experience or practice they gain can be attributed to their exposure to the test being used as a measure, then it can be called a testing effect.
     </div>
 
-    <p>Fatigue effects only occur in experiments using within-subjects designs.</p>
+    <p>Fatigue effects can also occur in experiments using between-subjects designs.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q2" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -91,10 +91,10 @@ function MySubmit(end) {
       </select><br><br>
 
     <div id="answer2" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
-      <b>Correct answer: FALSE. </b>Fatigue effects occur when increasing time spent in an experiment decreases a participant's performance due to them becoming fatigued (having their resources like energy/concentration/motivation depleted). 
+      <b>Correct answer: TRUE. </b>Fatigue effects occur when increasing time spent in an experiment decreases a participant's performance due to them becoming fatigued (having their resources depleted). This is <i>likelier</i> to occur in within-subject designs because participants have to experience more conditions, but is also possible in a between-subjects design. If participants have to experience a condition involving long/tiring/mundane procedures, they are likely to become fatigued by the end of the experiment, which could affect their scores on the dependent variable measure.
     </div>
 
-    <p>Counterbalancing is the best way to eliminate carryover effects.</p>
+    <p>We can always tell when practice and fatigue effects are present from the results of our experiment.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q3" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -103,10 +103,10 @@ function MySubmit(end) {
       </select><br><br>
 
     <div id="answer3" style="display:show; height:100px; opacity:0; padding-left:20px" align="justify">
-      <b>Correct answer: FALSE. </b>Counterbalancing doesn't eliminate carryover effects, but it will allow you to detect when they are a problem. By comparing how participants perform when they experience conditions in different orders, you can see if the way they perform in a particular condition is consistent regardless of the order it is experienced in. If you detect significant carryover effects, you may need to adjust your experimental method (changing procedures to address the specific carryover effect) or switch to a between-subjects design.
+      <b>Correct answer: FALSE. </b>While unexpected results can give us some clues about the possible problems with our experimental procedures, we usually cannot conclude from the results alone that there were practice or fatigue effects. In our demonstrations, we used <font color='red'>red</font> and <font color='grey'>gray</font> lines to represent important participant characteristics that were prone to these effects. However, it is unlikely we have independent measures of such characteristics in a real experiment. Usually, a mixture of past research and common sense will tell you if such effects are likely explanations for unexpected results. Finally, it is also entirely possible that your unexpected results are accurate, and that your theory made inaccurate predictions to begin with.
     </div>
 
-    <br>
+    <br><br><br><br>
 
     <center>
       <button type="button" id="answer" onclick="MySubmit(end); end++" disabled="true"><span id="buttontext">Check answers</span></button>

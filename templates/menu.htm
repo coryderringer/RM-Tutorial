@@ -17,13 +17,14 @@
 		<button id="Module1_Button">Button text</button>
 	</form>
 	<br>
+	<form id="Module3_Form" method="get" action="/PracticeFatigueEffects">
+		<button id="Module3_Button">Button text</button>
+	</form>
+	<br>
 	<form id="Module2_Form" method="get" action="/WithinSubject">
 		<button id="Module2_Button">Button text</button>
 	</form>
 	<br>
-	<form id="Module3_Form" method="get" action="/PracticeFatigueEffects">
-		<button id="Module3_Button">Button text</button>
-	</form>
 </center>
 
 <p><center>You are currently logged in. Would you like to <a href="/logout">log out?</a></center></p>
@@ -48,34 +49,57 @@ var M1_Progress = 0;
 var M2_Progress = 0;
 var M3_Progress = 0;
 
-function MainDisplay(){
-	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
-		$('#status_span').html('You have not completed either module yet. What would you like to do?');
-		$('#Module1_Button').html('Begin Carryover Effects Module');
-		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
-	}
-	else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
+function ButtonDisplay(){
+	if (Module1 == 'Complete') { $('#Module1_Button').html('Redo Carryover Effects Module'); }
+	if (Module2 == 'Complete') { $('#Module2_Button').html('Redo Within-Subjects Designs Module'); }
+	if (Module3 == 'Complete') { $('#Module3_Button').html('Redo Practice and Fatigue Effects Module'); }
+}
 
-		$('#status_span').html('You have completed Single Subject Module, but not Within-Subjects Module. What would you like to do?');
-		$('#Module1_Button').html('Redo Carryover Effects Module');
-		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+function MainDisplay(){
+	if (Module1 == 'Incomplete' && Module2 == 'Incomplete' && Module3 == 'Incomplete'){
+		$('#status_span').html('You have not completed any of the modules yet. What would you like to do?');
 	}
-	else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
-		$('#status_span').html('You have completed the Within-Subjects Module, but not the Single Subject Module. What would you like to do?');
-		$('#Module1_Button').html('Begin Carryover Effects Module');
-		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+	else if (Module1 == 'Complete' && Module2 == 'Complete' && Module3 == 'Complete'){
+		$('#status_span').html('You have completed all modules. What would you like to do?');
 	}
-	else if (Module1 == 'Complete' && Module2 == 'Complete'){
-		$('#status_span').html('You have completed both modules! What would you like to do?');
-		$('#Module1_Button').html('Redo Carryover Effects Module');
-		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+	else {
+		$('#status_span').html('You have the option of beginning a new module or repeating one. What would you like to do?');
 	}
 }
 
+// function MainDisplay(){
+// 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
+// 		$('#status_span').html('You have not completed either module yet. What would you like to do?');
+// 		$('#Module1_Button').html('Begin Carryover Effects Module');
+// 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
+// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 	}
+// 	else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
+
+// 		$('#status_span').html('You have completed Single Subject Module, but not Within-Subjects Module. What would you like to do?');
+// 		$('#Module1_Button').html('Redo Carryover Effects Module');
+// 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
+// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 	}
+// 	else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
+// 		$('#status_span').html('You have completed the Within-Subjects Module, but not the Single Subject Module. What would you like to do?');
+// 		$('#Module1_Button').html('Begin Carryover Effects Module');
+// 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
+// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 	}
+// 	else if (Module1 == 'Complete' && Module2 == 'Complete'){
+// 		$('#status_span').html('You have completed both modules! What would you like to do?');
+// 		$('#Module1_Button').html('Redo Carryover Effects Module');
+// 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
+// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 	}
+// }
+
+$('#Module1_Button').html('Begin Carryover Effects Module');
+$('#Module2_Button').html('Begin Within-Subjects Designs Module');
+$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+
+ButtonDisplay();
 MainDisplay();
 
 

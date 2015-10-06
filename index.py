@@ -31,6 +31,11 @@ class User(db.Model):
 	COEAnswer3 =		db.IntegerProperty()
 	COEAnswer4 =		db.IntegerProperty()
 	COEAnswer5 =		db.IntegerProperty()
+	PFEAnswer1 =		db.StringProperty()
+	PFEAnswer2 =		db.StringProperty()
+	PFEAnswer3 =		db.IntegerProperty()
+	PFEAnswer4 =		db.IntegerProperty()
+	PFEAnswer5 =		db.IntegerProperty()
 	numberOfGuesses = 	db.IntegerProperty()
 	numberOfSimulations = db.IntegerProperty()
 	numberOfSimulations2 = db.IntegerProperty()
@@ -321,12 +326,12 @@ class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 
 			# change the datastore result for module 1
 			for i in results:
-				i.PFEAnswer1 = self.session['COEAnswer1']
-				i.PFEAnswer2 = self.session['COEAnswer2']
+				i.PFEAnswer1 = self.session['PFEAnswer1']
+				i.PFEAnswer2 = self.session['PFEAnswer2']
 				# i.COEAnswer3 = self.session['COEAnswer3']
-				i.PFEAnswer3 = COEAnswer3
-				i.PFEAnswer4 = COEAnswer4
-				i.PFEAnswer5 = COEAnswer5
+				i.PFEAnswer3 = PFEAnswer3
+				i.PFEAnswer4 = PFEAnswer4
+				i.PFEAnswer5 = PFEAnswer5
 				i.Module3 = self.session['Module3']
 				i.put()
 
