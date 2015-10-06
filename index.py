@@ -253,7 +253,6 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 			for i in results:
 				i.COEAnswer1 = self.session['COEAnswer1']
 				i.COEAnswer2 = self.session['COEAnswer2']
-				# i.COEAnswer3 = self.session['COEAnswer3']
 				i.COEAnswer3 = COEAnswer3
 				i.COEAnswer4 = COEAnswer4
 				i.COEAnswer5 = COEAnswer5
@@ -266,7 +265,9 @@ class CarryoverEffectsHandler(webapp.RequestHandler):
 			doRender(self, "FinishCarryoverEffects.htm")
 		else:
 			logging.info("something is wrong")
-		
+
+
+
 class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 
 	def get(self):
@@ -290,25 +291,23 @@ class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 				{'progress':self.session['M3_Progress']})
 
 		elif M1_Progress == 2:
-			self.session['COEAnswer2'] = self.request.get('Q2')
+			self.session['PFEAnswer2'] = self.request.get('Q2')
 
 			doRender(self, "PracticeFatigueEffects2.htm",
 				{'progress':self.session['M3_Progress']})
 
 		elif M1_Progress == 3:
-			# self.session['COEAnswer3'] = self.request.get('Q3')
-
-			doRender(self, "CarryoverEffects3.htm",
+			doRender(self, "PracticeFatigueEffectsQuiz.htm",
 				{'progress':self.session['M3_Progress']})
 
 		elif M1_Progress == 4:
-			doRender(self, "CarryoverEffectsQuiz.htm",
-				{'progress':self.session['M1_Progress']})
+		# 	doRender(self, "CarryoverEffectsQuiz.htm",
+		# 		{'progress':self.session['M1_Progress']})
 
-		elif M1_Progress == 5:
-			COEAnswer3 = int(self.request.get('Question1'))
-			COEAnswer4 = int(self.request.get('Question2'))
-			COEAnswer5 = int(self.request.get('Question3'))
+		# elif M1_Progress == 5:
+			PFEAnswer3 = int(self.request.get('Question1'))
+			PFEAnswer4 = int(self.request.get('Question2'))
+			PFEAnswer5 = int(self.request.get('Question3'))
 
 			# Record that user completed the module
 			self.session['Module3'] = 'Complete'
@@ -322,19 +321,19 @@ class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 
 			# change the datastore result for module 1
 			for i in results:
-				i.COEAnswer1 = self.session['COEAnswer1']
-				i.COEAnswer2 = self.session['COEAnswer2']
+				i.PFEAnswer1 = self.session['COEAnswer1']
+				i.PFEAnswer2 = self.session['COEAnswer2']
 				# i.COEAnswer3 = self.session['COEAnswer3']
-				i.COEAnswer3 = COEAnswer3
-				i.COEAnswer4 = COEAnswer4
-				i.COEAnswer5 = COEAnswer5
-				i.Module1 = self.session['Module3']
+				i.PFEAnswer3 = COEAnswer3
+				i.PFEAnswer4 = COEAnswer4
+				i.PFEAnswer5 = COEAnswer5
+				i.Module3 = self.session['Module3']
 				i.put()
 
 			logging.info('Datastore updated')
 
 			self.session['M3_Progress'] = 0
-			doRender(self, "FinishCarryoverEffects.htm")
+			doRender(self, "FinishPracticeFatigueEffects.htm")
 		else:
 			logging.info("something is wrong")
 

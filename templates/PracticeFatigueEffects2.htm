@@ -42,9 +42,9 @@ var meanCond3 = [];
 
     "As expected, the scores in the control condition are roughly around (or slightly lower than) the <font color='red'>red line</font>. In this condition, participants sit around and wait before the test. This doesn't have the same calming effect of the other two conditions, so there is no 'boost' given to their performance. If some anxiety creeps in for some participants, they should perform below their skill level a little.<br><br>Finally, we expect scores in the <i>Meditation</i> condition to be above the <font color='red'>red line</font> due to the boost meditation offers in performance by countering anxiety (just like the <i>Relaxing Music</i> condition). Let's see how participants perform in this condition...",
 
-    "As you probably guessed from how this demonstration has gone, we find something unexpected. Participants in the <i>Meditation</i> condition do worse than those in the other two conditions. These scores are even below the <font color='red'>red line</font>, meaning that these scores are below what we expect based on participants' skill levels. Instead of giving a boost to performance, something about this condition seems to be hurting performance.",
+    "As you probably guessed from how this demonstration has gone, we find something unexpected. Participants in the <i>Meditation</i> condition do worse than those in the other two conditions. These scores are below the <font color='red'>red line</font>, meaning that these scores are below what we expect based on participants' skill levels. Instead of giving a boost to performance, something about this condition seems to be hurting performance.",
 
-    "Let's consider that in this version of the experiment, participants first get practice with the test for 30 minutes before they experience the first condition. This was done to ensure their <font color='red'>skill</font> levels were at ceiling. However, it is possible that by the time they begin the first condition and do the proper test the first time, they start to get a little tired or bored. If they aren't concentrating as much, they won't perform as well on the test. Let's look at how their average concentration levels change over the course of the experiment (indicated by a <font color='grey'>dashed gray line</font>).",
+    "Let's consider that in this version of the experiment, participants first get practice with the test for 30 minutes before they experience the first condition. This was done to ensure their <font color='red'>skill</font> levels were at ceiling. However, it is possible that by the time they begin the first condition and do the proper test the first time, they start to get a little tired or bored. If they aren't concentrating as much, it's likely they won't perform as well on the test. Let's look at how their average concentration levels change over the course of the experiment (indicated by a <font color='grey'>dashed gray line</font>).",
 
     "At the start of the experiment, participants' <font color='grey'>concentration</font> levels are still pretty high. But at this point, they've already been in the lab for more than 30 minutes from the training, and are probably getting a little tired, bored or distracted. Because of this, we see their <font color='grey'>concentration</font> levels starting to decrease gradually after finishing the first condition. Imagine participants wondering, 'How many times am I going to have to do this test?'",
 
@@ -201,7 +201,7 @@ function enable() {
 
 function showQuiz() {
   $('#continue').hide();
-  $('#quiz').show();
+  $('#submit').show();
 }
 
 /// Shows quiz answer
@@ -223,7 +223,7 @@ function answerQuiz2() {
 
 function MySubmit(){
   console.log('Submit dat!');
-  $('#Q2').val(Q2Outcome);
+  // $('#Q2').val(Q2Outcome);
   progress += 1;
   $('#progressinput').val(progress);
   $('#myForm').submit();
@@ -275,7 +275,7 @@ function MySubmit(){
   <center>
     <form id="myForm" method="post" action="/PracticeFatigueEffects">
       <input type="submit" id="submit" onclick="MySubmit()" value="Continue" style="display:none"/>
-      <input type="hidden" id="Q2" name="Q2" value="">
+      <!-- <input type="hidden" id="Q2" name="Q2" value=""> -->
       <input type="hidden" id="progressinput" name="progressinput" value="">
     </form>
   </center>

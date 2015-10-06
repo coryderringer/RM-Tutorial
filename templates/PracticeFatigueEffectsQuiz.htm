@@ -1,0 +1,216 @@
+{% extends "_base.htm" %}
+{% block title %}
+	Quiz
+{% endblock%}
+
+{% block bodycontent %}
+
+<script>
+
+var progress = {{progress}};
+var Outcomes = new Array();
+var end = 0;
+
+
+// Function to check if all questions have been answered
+function answered() {
+  responses = new Array();
+  responses.push(Number(Q1.value))
+  responses.push(Number(Q2.value))
+  responses.push(Number(Q3.value))
+
+  if (Math.min.apply(Math, responses)>(-1)) {
+    $('#answer').attr('disabled', false)
+  }
+}
+
+// Function to show answers
+function MySubmit(end) {
+  if (end==0){
+    $('#answer1').fadeTo('fast', 1);
+    $('#answer2').fadeTo('fast', 1);
+    $('#answer3').fadeTo('fast', 1);
+
+    $('#Q1').attr('disabled', true);
+    $('#Q2').attr('disabled', true);
+    $('#Q3').attr('disabled', true);
+
+    $('#buttontext').text("Continue");
+  }
+  else if (end==1){
+    progress += 1;
+    $('#progressinput').val(progress);
+    document.getElementById("Question1").value = document.getElementById("Q1").value;
+    document.getElementById("Question2").value = document.getElementById("Q2").value;
+    document.getElementById("Question3").value = document.getElementById("Q3").value;
+    document.getElementById("myForm").submit();
+  }
+}
+
+</script>
+
+
+
+
+<!-- <form id="dataform" method="post" action="/OrderEffects">
+  <input id="AnswerInput" name="AnswerInput" type="hidden">
+  <input id="progressinput" name="progressinput" type="hidden">
+  <input id="Submit" onclick="MySubmit()" value="Submit" type="hidden">
+</form>
+-->
+
+<div class="logout"><a href="/logout.htm">Logout</a></div>
+
+<div class="pg">
+
+  <h2><center>Practice and fatigue effects quiz</center></h2>
+
+  <form id="myForm" method="post" action="/CarryoverEffects">
+
+    <br>
+    <b>Please answer if the following statements are TRUE or FALSE.</b>
+
+    <p>Fatigue effects only occur in experiments using within-subjects designs.</p>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <select id="Q1" style="font-size:14px;" onchange="answered();">
+        <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
+      </select><br><br>
+
+    <div id="answer1" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>In a between-subjects design, different groups of subjects are assigned to each condition. Carryover effects are only a concern in within-subjects designs, where the same participants experience multiple conditions during the experiment. Carryover effects happen when experiencing one condition changes important characteristics of the participant, causing them to respond differently in subsequent conditions.
+    </div>
+
+    <p>Fatigue effects only occur in experiments using within-subjects designs.</p>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <select id="Q2" style="font-size:14px;" onchange="answered();">
+        <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
+      </select><br><br>
+
+    <div id="answer2" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>Fatigue effects occur when increasing time spent in an experiment decreases a participant's performance due to them becoming fatigued (having their resources like energy/concentration/motivation depleted). 
+    </div>
+
+    <p>Counterbalancing is the best way to eliminate carryover effects.</p>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <select id="Q3" style="font-size:14px;" onchange="answered();">
+        <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
+      </select><br><br>
+
+    <div id="answer3" style="display:show; height:100px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>Counterbalancing doesn't eliminate carryover effects, but it will allow you to detect when they are a problem. By comparing how participants perform when they experience conditions in different orders, you can see if the way they perform in a particular condition is consistent regardless of the order it is experienced in. If you detect significant carryover effects, you may need to adjust your experimental method (changing procedures to address the specific carryover effect) or switch to a between-subjects design.
+    </div>
+
+    <br>
+
+    <center>
+      <button type="button" id="answer" onclick="MySubmit(end); end++" disabled="true"><span id="buttontext">Check answers</span></button>
+    </center>
+
+    <input type="hidden" id="Question1" name="Question1" value="">
+    <input type="hidden" id="Question2" name="Question2" value="">
+    <input type="hidden" id="Question3" name="Question3" value="">
+    <input type="hidden" id="progressinput" name="progressinput" value="">
+
+  </form>
+
+</div>
+  <!-- <ol type="1"><li>This is the text from Question 1</li></ol>
+
+  <form id="Q1Answers">
+    <div class="answer">
+      <input type="radio" name="q1" value="A" id="q1a"><label for="q1a">True</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+      <input type="radio" name="q1" value="B" id="q1b"><label for="q1b">False</label>
+    </div>
+  </form><br>
+  
+  <p>2. <span id="Question2">This is the text from Question 2</span></p>
+
+  <form id="Q2Answers">
+    <div class="answer">
+      <input type="radio" name="q2" value="A" id="q2a"><label for="q2a">True</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+      <input type="radio" name="q2" value="B" id="q2b"><label for="q2b">False</label>
+    </div>
+  </form><br>
+
+  <p>3. <span id="Question3">This is the text from Question 3</span></p>
+
+  <form id="Q3Answers">
+    <div class="answer">
+      <input type="radio" name="q3" value="A" id="q3a"><label for="q3a">True</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+      <input type="radio" name="q3" value="B" id="q3b"><label for="q3b">False</label>
+    </div>
+  </form><br>
+  
+  <button id="SubmitButton" style="width:100px" onclick="MySubmit()">Submit</button>
+</div> -->
+
+
+
+<script>
+
+// var progress = {{progress}};
+// var Outcomes = new Array();
+
+
+
+// var QuestionList = ['What is the primary difference between a within-subjects design and a between-subjects design?','Which of the following is one advantage of using a within-subjects design?','Earlier I mentioned that within-subjects designs allow each participant to serve as his/her own control. Why is this important?']
+
+// var Q1Options = ['Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs assign one level of the IV to each participant, whereas between-subjects designs require every participant to receive every level of the IV.', 'Within-subjects designs can be posttest-only, whereas between-subjects designs always require a pretest and a posttest.']
+
+// var Q2Options = ['Within-subject designs yield increased power to detect small but consistent differences between levels of the IV.','Within-subjects designs are true experiments, whereas all between-subjects designs are correlational.', 'Within-subjects designs allow us to randomize which participants get one level of the IV, and which get another level.']
+
+// var Q3Options = ['It eliminates noise in the data from population variance, increasing statistical power.','It decreases the cost of running experiments by reducing the number of participants needed.','It’s actually not important']
+
+
+// // Fill in questions, can use this format to randomize the order as well.
+// // $('#Question1').html(QuestionList[0]);
+// // $('#Question2').html(QuestionList[1]);
+// // $('#Question3').html(QuestionList[2]);
+
+// // Fill in options for each question
+// $('#Q1Option1').html(Q1Options[0]);
+// $('#Q1Option2').html(Q1Options[1]);
+// $('#Q1Option3').html(Q1Options[2]);
+
+
+// $('#Q2Option1').html(Q2Options[0]);
+// $('#Q2Option2').html(Q2Options[1]);
+// $('#Q2Option3').html(Q2Options[2]);
+
+// $('#Q3Option1').html(Q3Options[0]);
+// $('#Q3Option2').html(Q3Options[1]);
+// $('#Q3Option3').html(Q3Options[2]);
+
+// // function MySubmit(){
+
+// //   Outcomes[0] = $('input[name=q1]:checked', '#Q1Answers').val();
+// //   Outcomes[1] = $('input[name=q2]:checked', '#Q2Answers').val();
+// //   Outcomes[2] = $('input[name=q3]:checked', '#Q3Answers').val();
+  
+// //   for(var i = 0; i < Outcomes.length; i++){
+// //     if(Outcomes[i] != 'A' & Outcomes[i] != 'B' & Outcomes[i] != 'C' & Outcomes[i] != 'D'){
+// //       alert('Please answer all of the questions!');
+// //       return
+// //     }
+// //   }
+
+// //   console.log('Submitting!');
+// //   progress +=1;
+// //   $('#progressinput').val(String(progress));
+// //   $('#AnswerInput').val(String(Outcomes));
+// //   $('#dataform').submit();
+  
+// // // scramble the order of the answers, keep track of which one is correct
+// // }
+
+
+
+</script>
+
+{% endblock %}
