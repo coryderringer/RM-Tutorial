@@ -26,9 +26,9 @@
 			
 			<div id="firstrow" style="display:none">
 				<div id="within1" style="display:inline-block">
-					<div id="graph2"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p2"></span></div>
+					<div id="graph1"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="pdiv" style="position:relative;top:20px">p = <span id="p1"></span></div>
 					
 					<!-- <div id="ttest1" class="ttest">
 						<span id="tspan1">t=1.00</span><br>
@@ -38,32 +38,14 @@
 				</div>
 				
 				<div id="within2" style="display:inline-block">
-					<div id="graph4"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack4"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p4"></span></div>
+					<div id="graph2"></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="pdiv" style="position:relative;top:20px">p = <span id="p2"></span></div>
 				</div>
 			</div>
 			<br>
 
 			<br>
-
-
-			<div id="secondrow" style="display:none">
-				<span style="display:inline-block;margin-right:25px;position:relative;top:-100px">
-					<b>Low<br>Correlation</b>
-				</span>
-				<div id="between2" style="display:inline-block">
-					<div id="graph3"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px">Significant Results: <span id="sigTrack3"></span></div>
-					<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
-				</div>
-				
-				<div id="within2" style="display:inline-block">
-					<div id="graph4"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px">Significant Results: <span id="sigTrack4"></span></div>
-					<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
-				</div>
-			</div>
 		</center>	
 		<br>
 
@@ -75,7 +57,7 @@
 				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left</label><br>
 				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right</label><br>
 			</form><br>
-			<!-- <button id="nextButton">Submit</button> -->
+			
 
 		</div>
 
@@ -190,7 +172,7 @@ var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#ResampleButton')];
 var $vocabSpan = $('#vocabSpan');
 
 var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
-var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
+var $pdiv = [$('#p1'), $('#p2')];
 
 var $review = $('#review');
 
@@ -202,12 +184,12 @@ var $nextButton = $('#nextButton');
 
 // var $hide = [$('#Text1'), $('#nextButton')];
 
-var $graphs = [$('#graph1'), $('#graph2'), $('#graph3'), $('#graph4')];
+var $graphs = [$('#graph1'), $('#graph2')];
 
 var $progress0 = [$('#Quiz4'), $('#firstrow')];
 var $progress1 = [$('#Text1'), $('#nextButton')];
 var $progress2 = [$('.sigTrack'), $('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
-var $invisibleStuff = [$('#p2'), $('#p4'), $('.pdiv'), $('#span1'), $('#span2')];
+var $invisibleStuff = [$('#p1'), $('#p2'), $('.pdiv'), $('#span1'), $('#span2')];
 
 var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
 
@@ -439,8 +421,6 @@ function KeepScore(){
 
 	$sigTrack[0].html(sig[0]+'/'+datasets);
 	$sigTrack[1].html(sig[1]+'/'+datasets);
-	$sigTrack[2].html(sig[2]+'/'+datasets);
-	$sigTrack[3].html(sig[3]+'/'+datasets);
 }
 
 
@@ -483,56 +463,56 @@ function MySubmit(){
 
 /// Graph
 // list of files
-var FileList = ['/static/stimuli/WithinSubjects/data1.csv',  
-	'/static/stimuli/WithinSubjects/data2.csv',  
-	'/static/stimuli/WithinSubjects/data3.csv',  
-	'/static/stimuli/WithinSubjects/data4.csv',  
-	'/static/stimuli/WithinSubjects/data5.csv',  
-	'/static/stimuli/WithinSubjects/data6.csv',  
-	'/static/stimuli/WithinSubjects/data7.csv',  
-	'/static/stimuli/WithinSubjects/data8.csv',  
-	'/static/stimuli/WithinSubjects/data9.csv',  
-	'/static/stimuli/WithinSubjects/data10.csv',  
-	'/static/stimuli/WithinSubjects/data11.csv',  
-	'/static/stimuli/WithinSubjects/data12.csv',  
-	'/static/stimuli/WithinSubjects/data13.csv',  
-	'/static/stimuli/WithinSubjects/data14.csv',  
-	'/static/stimuli/WithinSubjects/data15.csv',  
-	'/static/stimuli/WithinSubjects/data16.csv',  
-	'/static/stimuli/WithinSubjects/data17.csv',  
-	'/static/stimuli/WithinSubjects/data18.csv',  
-	'/static/stimuli/WithinSubjects/data19.csv',  
-	'/static/stimuli/WithinSubjects/data20.csv',  
-	'/static/stimuli/WithinSubjects/data21.csv',  
-	'/static/stimuli/WithinSubjects/data22.csv',  
-	'/static/stimuli/WithinSubjects/data23.csv',  
-	'/static/stimuli/WithinSubjects/data24.csv',  
-	'/static/stimuli/WithinSubjects/data25.csv',  
-	'/static/stimuli/WithinSubjects/data26.csv',  
-	'/static/stimuli/WithinSubjects/data27.csv',  
-	'/static/stimuli/WithinSubjects/data28.csv',  
-	'/static/stimuli/WithinSubjects/data29.csv',  
-	'/static/stimuli/WithinSubjects/data30.csv',  
-	'/static/stimuli/WithinSubjects/data31.csv',  
-	'/static/stimuli/WithinSubjects/data32.csv',  
-	'/static/stimuli/WithinSubjects/data33.csv',  
-	'/static/stimuli/WithinSubjects/data34.csv',  
-	'/static/stimuli/WithinSubjects/data35.csv',  
-	'/static/stimuli/WithinSubjects/data36.csv',  
-	'/static/stimuli/WithinSubjects/data37.csv',  
-	'/static/stimuli/WithinSubjects/data38.csv',  
-	'/static/stimuli/WithinSubjects/data39.csv',  
-	'/static/stimuli/WithinSubjects/data40.csv',  
-	'/static/stimuli/WithinSubjects/data41.csv',  
-	'/static/stimuli/WithinSubjects/data42.csv',  
-	'/static/stimuli/WithinSubjects/data43.csv',  
-	'/static/stimuli/WithinSubjects/data44.csv',  
-	'/static/stimuli/WithinSubjects/data45.csv',  
-	'/static/stimuli/WithinSubjects/data46.csv',  
-	'/static/stimuli/WithinSubjects/data47.csv',  
-	'/static/stimuli/WithinSubjects/data48.csv',  
-	'/static/stimuli/WithinSubjects/data49.csv',  
-	'/static/stimuli/WithinSubjects/data50.csv'];
+var FileList = ['/static/stimuli/WithinSubjects/highcorreldata1.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata2.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata3.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata4.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata5.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata6.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata7.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata8.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata9.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata10.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata11.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata12.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata13.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata14.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata15.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata16.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata17.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata18.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata19.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata20.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata21.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata22.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata23.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata24.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata25.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata26.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata27.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata28.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata29.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata30.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata31.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata32.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata33.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata34.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata35.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata36.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata37.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata38.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata39.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata40.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata41.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata42.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata43.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata44.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata45.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata46.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata47.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata48.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata49.csv',  
+	'/static/stimuli/WithinSubjects/highcorreldata50.csv'];
 
 var FileList2 = ['/static/stimuli/WithinSubjects/lowcorreldata1.csv',  
 	'/static/stimuli/WithinSubjects/lowcorreldata2.csv',  
@@ -598,9 +578,7 @@ corList = correlations[random];
 
 
 $pdiv[0].html(pList[0]+',    r = '+corList[0]);
-$pdiv[1].html(pList[1]+',    r = '+corList[0]);
-$pdiv[2].html(pList[2]+',    r = '+corList[1]);
-$pdiv[3].html(pList[3]+',    r = '+corList[1]);
+$pdiv[1].html(pList[1]+',    r = '+corList[1]);
 
 /// Name variables here
 var	yLabel = "Weight",
@@ -673,17 +651,6 @@ var chart2 = d3.select("#graph2").append("svg")
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var chart3 = d3.select("#graph3").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  	.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var chart4 = d3.select("#graph4").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  	.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // var line = d3.chart1.line()
 // 	.interpolate("basis")
@@ -739,32 +706,53 @@ d3.csv(File, function(error, data) {
 
     // Appends lines for means
 
-    var VeggieMeanBetween = chart1.append("line")
-      .attr("x1", cond("Veggie")-x(1))
-      .attr("x2", cond("Veggie")+3*x(1))
-      .attr("y1", y(d3.mean(meanVeggieBetween)))
-      .attr("y2", y(d3.mean(meanVeggieBetween)))
-      .attr("stroke", color("Veggie"));
+    // var VeggieMeanBetween = chart1.append("line")
+    //   .attr("x1", cond("Veggie")-x(1))
+    //   .attr("x2", cond("Veggie")+3*x(1))
+    //   .attr("y1", y(d3.mean(meanVeggieBetween)))
+    //   .attr("y2", y(d3.mean(meanVeggieBetween)))
+    //   .attr("stroke", color("Veggie"));
 
-    var FruitMeanBetween = chart1.append("line")
-      .attr("x1", cond("Fruit")-3*x(1))
-      .attr("x2", cond("Fruit")+x(1))
-      .attr("y1", y(d3.mean(meanFruitBetween)))
-      .attr("y2", y(d3.mean(meanFruitBetween)))
-      .attr("stroke", color("Fruit"));
+    // var FruitMeanBetween = chart1.append("line")
+    //   .attr("x1", cond("Fruit")-3*x(1))
+    //   .attr("x2", cond("Fruit")+x(1))
+    //   .attr("y1", y(d3.mean(meanFruitBetween)))
+    //   .attr("y2", y(d3.mean(meanFruitBetween)))
+    //   .attr("stroke", color("Fruit"));
 
     // Appends points
+	var line = chart1.selectAll("line")
+		.data(data)
+		.enter().append("line")
+			.filter(function(d) { return d.condition == 'Veggie' })
+				.attr("x1", cond("Veggie"))
+				.attr("x2", cond("Fruit"))
+				.attr("y1", function(d) { return y(d.dv); })
+				.attr("y2", function(d) { return y(d.dvb); })
+				.attr("stroke", "black");
+
 
   	chart1.selectAll(".dot")
       	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-      		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
+	   	.enter().append("circle")
+	      	.attr("class", "dot")
+	      	.attr("r", 3.5)
+	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	      		// Not great because it's not scaled, but it works for now
+	      	.attr("cy", function(d) { return y(d.dv); })
+	      	.style("fill", function(d) { return color(d.condition); })
+	      	.style("opacity", 1);
+
+  	// chart1.selectAll(".dot")
+   //    	.data(data)
+   // 	.enter().append("circle")
+   //    	.attr("class", "dot")
+   //    	.attr("r", 3.5)
+   //    	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+   //    		// Not great because it's not scaled, but it works for now
+   //    	.attr("cy", function(d) { return y(d.dv); })
+   //    	.style("fill", function(d) { return color(d.condition); })
+   //    	.style("opacity", 1);
 
     // Appends axes
 
@@ -814,7 +802,7 @@ d3.csv(File, function(error, data) {
 // CHART 2
 
 // for within-subjects
-d3.csv(File, function(error, data) {
+d3.csv(File2, function(error, data) {
   	if (error) throw error;
 
     //////// Saves data for calculation ////////
@@ -956,234 +944,6 @@ d3.csv(File, function(error, data) {
 });
 
 
-// CHART 3
-d3.csv(File, function(error, data) {
-  	if (error) throw error;
-
-    //////// Saves data for calculation ////////
-    parsedData = JSON.parse(JSON.stringify(data));
-  
-    for (i = 0; i < parsedData.length; i++) {
-      iv.push(Number(parsedData[i].iv));
-      dv.push(Number(parsedData[i].dv));
-      // measure.push(Number(parsedData[i].measure));
-
-      if (parsedData[i].condition=="Veggie") {
-        meanWideVeggieBetween.push(Number(parsedData[i].dv));
-      }
-      else if (parsedData[i].condition=="Fruit") {
-        meanWideFruitBetween.push(Number(parsedData[i].dv));
-      }
-    }
-    ////////////////////////////////////////////
-
-  	data.forEach(function(d) {
-    	d.iv = +d.iv + randomJitter(-0.3,0.3);
-    	d.dv = +d.dv;
-    	d.t = +d.t;
-    	d.condition = d.condition;
-  	});
-
-  	// create the scales x() and y()
-  	// x.domain([0,xMax+1]);
-  	// y.domain([0,yMax]);
-
-
-    // Appends lines for means
-
-    var VeggieMeanWithin = chart3.append("line")
-      .attr("x1", cond("Veggie")-x(1))
-      .attr("x2", cond("Veggie")+3*x(1))
-      .attr("y1", y(d3.mean(meanWideVeggieBetween)))
-      .attr("y2", y(d3.mean(meanWideVeggieBetween)))
-      .attr("stroke", color("Veggie"));
-
-    var FruitMeanWithin = chart3.append("line")
-      .attr("x1", cond("Fruit")-3*x(1))
-      .attr("x2", cond("Fruit")+x(1))
-      .attr("y1", y(d3.mean(meanWideFruitBetween)))
-      .attr("y2", y(d3.mean(meanWideFruitBetween)))
-      .attr("stroke", color("Fruit"));
-
-    // Appends points
-
-  	chart3.selectAll(".dot")
-      	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-      		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
-
-    // Appends axes
-
-  	chart3.append("g")
-    	.attr("class", "x axis")
-      	.attr("transform", "translate(0," + height + ")")
-      	.call(xAxis)
-
-
-  	chart3.append("g")
-      	.attr("class", "y axis")
-      	.call(yAxis)
-   	// .append("text")
-    // 	.attr("class", "label")
-    // 	.attr("transform", "rotate(-90)")
-    // 	.attr("y", 6)
-    // 	.attr("dy", ".71em")
-    // 	.style("text-anchor", "end")
-    // 	.text(yLabel)
-
-    // Appends legend
-
-  	// var legend = chart3.selectAll(".legend")
-   //    	.data(color.domain())
-   //  .enter().append("g")
-   //    	.attr("class", "legend")
-   //    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  	// legend.append("rect")
-   //    	.attr("x", width - 18)
-   //    	.attr("width", 18)
-   //    	.attr("height", 18)
-   //    	.style("fill", color);
-
-  	// legend.append("text")
-   //    	.attr("x", width - 24)
-   //    	.attr("y", 9)
-   //    	.attr("dy", ".35em")
-   //    	.style("text-anchor", "end")
-   //    	.text(function(d) { return d; });
-
-});
-
-
-// CHART 4
-d3.csv(File2, function(error, data) {
-  	if (error) throw error;
-
-    //////// Saves data for calculation ////////
-    parsedData = JSON.parse(JSON.stringify(data));
-	console.log(parsedData.length);
-    for (i = 0; i < 20; i++) {
-      iv.push(Number(parsedData[i].iv));
-      dv.push(Number(parsedData[i].dv));
-      dvb.push(Number(parsedData[i].dvb));
-      // measure.push(Number(parsedData[i].measure));
-
-      if (parsedData[i].condition=="Veggie") {
-        meanVeggieWithin.push(Number(parsedData[i].dv));
-      }
-      else if (parsedData[i].condition=="Fruit") {
-        meanFruitWithin.push(Number(parsedData[i].dv));
-      }
-    }
-    ////////////////////////////////////////////
-
-  	data.forEach(function(d) {
-    	d.iv = +d.iv;
-    	d.dv = +d.dv;
-    	d.dvb = +d.dvb;
-    	d.t = +d.t;
-    	d.condition = d.condition;
-  	});
-
-  	// create the scales x() and y()
-  	// x.domain([0,xMax+1]);
-  	// y.domain([0,yMax]);
-
-
-    // Appends lines for means
-
-    // var VeggieMeanWithin = chart4.append("line")
-    //   .attr("x1", cond("Veggie")-x(1))
-    //   .attr("x2", cond("Veggie")+3*x(1))
-    //   .attr("y1", y(d3.mean(meanWideVeggieWithin)))
-    //   .attr("y2", y(d3.mean(meanWideVeggieWithin)))
-    //   .attr("stroke", color("Veggie"));
-
-    // var FruitMeanWithin = chart4.append("line")
-    //   .attr("x1", cond("Fruit")-3*x(1))
-    //   .attr("x2", cond("Fruit")+x(1))
-    //   .attr("y1", y(d3.mean(meanWideFruitWithin)))
-    //   .attr("y2", y(d3.mean(meanWideFruitWithin)))
-    //   .attr("stroke", color("Fruit"));
-
-    // Appends points
-
-
-	
-
-	var line = chart4.selectAll("line")
-		.data(data)
-		.enter().append("line")
-			.filter(function(d) { return d.condition == 'Veggie' })
-				.attr("x1", cond("Veggie"))
-				.attr("x2", cond("Fruit"))
-				.attr("y1", function(d) { return y(d.dv); })
-				.attr("y2", function(d) { return y(d.dvb); })
-				.attr("stroke", "black");
-
-  	chart4.selectAll(".dot")
-      	.data(data)
-   	.enter().append("circle")
-      	.attr("class", "dot")
-      	.attr("r", 3.5)
-      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-      		// Not great because it's not scaled, but it works for now
-      	.attr("cy", function(d) { return y(d.dv); })
-      	.style("fill", function(d) { return color(d.condition); })
-      	.style("opacity", 1);
-
-    // Appends axes
-
-  	chart4.append("g")
-    	.attr("class", "x axis")
-      	.attr("transform", "translate(0," + height + ")")
-      	.call(xAxis)
-
-
-  	chart4.append("g")
-      	.attr("class", "y axis")
-      	.call(yAxis)
-   	// .append("text")
-    // 	.attr("class", "label")
-    // 	.attr("transform", "rotate(-90)")
-    // 	.attr("y", 6)
-    // 	.attr("dy", ".71em")
-    // 	.style("text-anchor", "end")
-    // 	.text(yLabel)
-
-    // Appends legend
-
-  	// var legend = chart4.selectAll(".legend")
-   //    	.data(color.domain())
-   //  .enter().append("g")
-   //    	.attr("class", "legend")
-   //    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  	// legend.append("rect")
-   //    	.attr("x", width - 18)
-   //    	.attr("width", 18)
-   //    	.attr("height", 18)
-   //    	.style("fill", color);
-
-  	// legend.append("text")
-   //    	.attr("x", width - 24)
-   //    	.attr("y", 9)
-   //    	.attr("dy", ".35em")
-   //    	.style("text-anchor", "end")
-   //    	.text(function(d) { return d; });
-
-});
-
-
-
-
-
 function UpdateData(){
 	datasets += 1;
 
@@ -1194,14 +954,6 @@ function UpdateData(){
 	$graphs[1].html('');
 	meanFruitWithin = [];
 	meanVeggieWithin = [];
-
-	$graphs[2].html('');
-	meanWideFruitBetween = [];
-	meanWideVeggieBetween = [];
-
-	$graphs[3].html('');
-	meanWideFruitWithin = [];
-	meanWideVeggieWithin = [];
 
 
 	// randomly select a datafile
@@ -1218,9 +970,7 @@ function UpdateData(){
 	KeepScore();
 
 	$pdiv[0].html(pList[0]+',    r = '+corList[0]);
-	$pdiv[1].html(pList[1]+',    r = '+corList[0]);
-	$pdiv[2].html(pList[2]+',    r = '+corList[1]);
-	$pdiv[3].html(pList[3]+',    r = '+corList[1]);
+	$pdiv[1].html(pList[1]+',    r = '+corList[1]);
 
 
 	var chart1 = d3.select("#graph1").append("svg")
@@ -1235,17 +985,6 @@ function UpdateData(){
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var chart3 = d3.select("#graph3").append("svg")
-	    .attr("width", width + margin.left + margin.right)
-	    .attr("height", height + margin.top + margin.bottom)
-	  	.append("g")
-	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	var chart4 = d3.select("#graph4").append("svg")
-	    .attr("width", width + margin.left + margin.right)
-	    .attr("height", height + margin.top + margin.bottom)
-	  	.append("g")
-	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	// CHART 1
 	d3.csv(File, function(error, data) {
@@ -1282,33 +1021,43 @@ function UpdateData(){
 
 	    // Appends lines for means
 
-	    var VeggieMeanBetween = chart1.append("line")
-	      .attr("x1", cond("Veggie")-x(1))
-	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y(d3.mean(meanVeggieBetween)))
-	      .attr("y2", y(d3.mean(meanVeggieBetween)))
-	      .attr("stroke", color("Veggie"));
+	    // var VeggieMeanBetween = chart1.append("line")
+	    //   .attr("x1", cond("Veggie")-x(1))
+	    //   .attr("x2", cond("Veggie")+3*x(1))
+	    //   .attr("y1", y(d3.mean(meanVeggieBetween)))
+	    //   .attr("y2", y(d3.mean(meanVeggieBetween)))
+	    //   .attr("stroke", color("Veggie"));
 
-	    var FruitMeanBetween = chart1.append("line")
-	      .attr("x1", cond("Fruit")-3*x(1))
-	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y(d3.mean(meanFruitBetween)))
-	      .attr("y2", y(d3.mean(meanFruitBetween)))
-	      .attr("stroke", color("Fruit"));
+	    // var FruitMeanBetween = chart1.append("line")
+	    //   .attr("x1", cond("Fruit")-3*x(1))
+	    //   .attr("x2", cond("Fruit")+x(1))
+	    //   .attr("y1", y(d3.mean(meanFruitBetween)))
+	    //   .attr("y2", y(d3.mean(meanFruitBetween)))
+	    //   .attr("stroke", color("Fruit"));
 
 	    // Appends points
 
+	  	var line = chart1.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.dv); })
+					.attr("y2", function(d) { return y(d.dvb); })
+					.attr("stroke", "black");
+
+
 	  	chart1.selectAll(".dot")
 	      	.data(data)
-	   	.enter().append("circle")
-	      	.attr("class", "dot")
-	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y(d.dv); })
-	      	.style("fill", function(d) { return color(d.condition); })
-	      	.style("opacity", 1);
-
+		   	.enter().append("circle")
+		      	.attr("class", "dot")
+		      	.attr("r", 3.5)
+		      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+		      		// Not great because it's not scaled, but it works for now
+		      	.attr("cy", function(d) { return y(d.dv); })
+		      	.style("fill", function(d) { return color(d.condition); })
+		      	.style("opacity", 1);
 	    // Appends axes
 
 	  	chart1.append("g")
@@ -1356,7 +1105,7 @@ function UpdateData(){
 	// CHART 2
 
 	// for within-subjects
-	d3.csv(File, function(error, data) {
+	d3.csv(File2, function(error, data) {
 	  	if (error) throw error;
 
 	    //////// Saves data for calculation ////////
@@ -1420,17 +1169,38 @@ function UpdateData(){
 
 
 	    // Appends points
+	  	var line = chart2.selectAll("line")
+			.data(data)
+			.enter().append("line")
+				.filter(function(d) { return d.condition == 'Veggie' })
+					.attr("x1", cond("Veggie"))
+					.attr("x2", cond("Fruit"))
+					.attr("y1", function(d) { return y(d.dv); })
+					.attr("y2", function(d) { return y(d.dvb); })
+					.attr("stroke", "black");
+
 
 	  	chart2.selectAll(".dot")
 	      	.data(data)
-	   	.enter().append("circle")
-	      	.attr("class", "dot")
-	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y(d.dv); })
-	      	.style("fill", function(d) { return color(d.condition); })
-	      	.style("opacity", 1);
+		   	.enter().append("circle")
+		      	.attr("class", "dot")
+		      	.attr("r", 3.5)
+		      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+		      		// Not great because it's not scaled, but it works for now
+		      	.attr("cy", function(d) { return y(d.dv); })
+		      	.style("fill", function(d) { return color(d.condition); })
+		      	.style("opacity", 1);
+	  	
+	  	// chart2.selectAll(".dot")
+	   //    	.data(data)
+	   // 	.enter().append("circle")
+	   //    	.attr("class", "dot")
+	   //    	.attr("r", 3.5)
+	   //    	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
+	   //    		// Not great because it's not scaled, but it works for now
+	   //    	.attr("cy", function(d) { return y(d.dv); })
+	   //    	.style("fill", function(d) { return color(d.condition); })
+	   //    	.style("opacity", 1);
 
 	    // Appends axes
 
@@ -1474,229 +1244,6 @@ function UpdateData(){
 
 	});
 
-
-	// CHART 3
-	d3.csv(File2, function(error, data) {
-	  	if (error) throw error;
-
-	    //////// Saves data for calculation ////////
-	    parsedData = JSON.parse(JSON.stringify(data));
-	  
-	    for (i = 0; i < parsedData.length; i++) {
-	      iv.push(Number(parsedData[i].iv));
-	      dv.push(Number(parsedData[i].dv));
-	      // measure.push(Number(parsedData[i].measure));
-
-	      if (parsedData[i].condition=="Veggie") {
-	        meanWideVeggieBetween.push(Number(parsedData[i].dv));
-	      }
-	      else if (parsedData[i].condition=="Fruit") {
-	        meanWideFruitBetween.push(Number(parsedData[i].dv));
-	      }
-	    }
-	    ////////////////////////////////////////////
-
-	  	data.forEach(function(d) {
-	    	d.iv = +d.iv + randomJitter(-0.3,0.3);
-	    	d.dv = +d.dv;
-	    	d.t = +d.t;
-	    	d.condition = d.condition;
-	  	});
-
-	  	// create the scales x() and y()
-	  	// x.domain([0,xMax+1]);
-	  	// y.domain([0,yMax]);
-
-
-	    // Appends lines for means
-
-	    var VeggieMeanWithin = chart3.append("line")
-	      .attr("x1", cond("Veggie")-x(1))
-	      .attr("x2", cond("Veggie")+3*x(1))
-	      .attr("y1", y(d3.mean(meanWideVeggieBetween)))
-	      .attr("y2", y(d3.mean(meanWideVeggieBetween)))
-	      .attr("stroke", color("Veggie"));
-
-	    var FruitMeanWithin = chart3.append("line")
-	      .attr("x1", cond("Fruit")-3*x(1))
-	      .attr("x2", cond("Fruit")+x(1))
-	      .attr("y1", y(d3.mean(meanWideFruitBetween)))
-	      .attr("y2", y(d3.mean(meanWideFruitBetween)))
-	      .attr("stroke", color("Fruit"));
-
-	    // Appends points
-
-	  	chart3.selectAll(".dot")
-	      	.data(data)
-	   	.enter().append("circle")
-	      	.attr("class", "dot")
-	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y(d.dv); })
-	      	.style("fill", function(d) { return color(d.condition); })
-	      	.style("opacity", 1);
-
-	    // Appends axes
-
-	  	chart3.append("g")
-	    	.attr("class", "x axis")
-	      	.attr("transform", "translate(0," + height + ")")
-	      	.call(xAxis)
-
-
-	  	chart3.append("g")
-	      	.attr("class", "y axis")
-	      	.call(yAxis)
-	   	// .append("text")
-	    // 	.attr("class", "label")
-	    // 	.attr("transform", "rotate(-90)")
-	    // 	.attr("y", 6)
-	    // 	.attr("dy", ".71em")
-	    // 	.style("text-anchor", "end")
-	    // 	.text(yLabel)
-
-	    // Appends legend
-
-	  	// var legend = chart3.selectAll(".legend")
-	   //    	.data(color.domain())
-	   //  .enter().append("g")
-	   //    	.attr("class", "legend")
-	   //    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	  	// legend.append("rect")
-	   //    	.attr("x", width - 18)
-	   //    	.attr("width", 18)
-	   //    	.attr("height", 18)
-	   //    	.style("fill", color);
-
-	  	// legend.append("text")
-	   //    	.attr("x", width - 24)
-	   //    	.attr("y", 9)
-	   //    	.attr("dy", ".35em")
-	   //    	.style("text-anchor", "end")
-	   //    	.text(function(d) { return d; });
-
-	});
-
-
-	// CHART 4
-	d3.csv(File2, function(error, data) {
-	  	if (error) throw error;
-
-	    //////// Saves data for calculation ////////
-	    parsedData = JSON.parse(JSON.stringify(data));
-		console.log(parsedData.length);
-	    for (i = 0; i < 20; i++) {
-	      iv.push(Number(parsedData[i].iv));
-	      dv.push(Number(parsedData[i].dv));
-	      dvb.push(Number(parsedData[i].dvb));
-	      // measure.push(Number(parsedData[i].measure));
-
-	      if (parsedData[i].condition=="Veggie") {
-	        meanVeggieWithin.push(Number(parsedData[i].dv));
-	      }
-	      else if (parsedData[i].condition=="Fruit") {
-	        meanFruitWithin.push(Number(parsedData[i].dv));
-	      }
-	    }
-	    ////////////////////////////////////////////
-
-	  	data.forEach(function(d) {
-	    	d.iv = +d.iv;
-	    	d.dv = +d.dv;
-	    	d.dvb = +d.dvb;
-	    	d.t = +d.t;
-	    	d.condition = d.condition;
-	  	});
-	  	// create the scales x() and y()
-	  	// x.domain([0,xMax+1]);
-	  	// y.domain([0,yMax]);
-
-
-	    // Appends lines for means
-
-	    // var VeggieMeanWithin = chart4.append("line")
-	    //   .attr("x1", cond("Veggie")-x(1))
-	    //   .attr("x2", cond("Veggie")+3*x(1))
-	    //   .attr("y1", y(d3.mean(meanWideVeggieWithin)))
-	    //   .attr("y2", y(d3.mean(meanWideVeggieWithin)))
-	    //   .attr("stroke", color("Veggie"));
-
-	    // var FruitMeanWithin = chart4.append("line")
-	    //   .attr("x1", cond("Fruit")-3*x(1))
-	    //   .attr("x2", cond("Fruit")+x(1))
-	    //   .attr("y1", y(d3.mean(meanWideFruitWithin)))
-	    //   .attr("y2", y(d3.mean(meanWideFruitWithin)))
-	    //   .attr("stroke", color("Fruit"));
-
-
-		var line = chart4.selectAll("line")
-			.data(data)
-			.enter().append("line")
-				.filter(function(d) { return d.condition == 'Veggie' })
-					.attr("x1", cond("Veggie"))
-					.attr("x2", cond("Fruit"))
-					.attr("y1", function(d) { return y(d.dv); })
-					.attr("y2", function(d) { return y(d.dvb); })
-					.attr("stroke", "black");
-
-
-
-	    // Appends points
-
-	  	chart4.selectAll(".dot")
-	      	.data(data)
-	   	.enter().append("circle")
-	      	.attr("class", "dot")
-	      	.attr("r", 3.5)
-	      	.attr("cx", function(d) { return cond(d.condition) + x(randomJitter(-0.5,0.5));})
-	      		// Not great because it's not scaled, but it works for now
-	      	.attr("cy", function(d) { return y(d.dv); })
-	      	.style("fill", function(d) { return color(d.condition); })
-	      	.style("opacity", 1);
-
-	    // Appends axes
-
-	  	chart4.append("g")
-	    	.attr("class", "x axis")
-	      	.attr("transform", "translate(0," + height + ")")
-	      	.call(xAxis)
-
-
-	  	chart4.append("g")
-	      	.attr("class", "y axis")
-	      	.call(yAxis)
-	   	// .append("text")
-	    // 	.attr("class", "label")
-	    // 	.attr("transform", "rotate(-90)")
-	    // 	.attr("y", 6)
-	    // 	.attr("dy", ".71em")
-	    // 	.style("text-anchor", "end")
-	    // 	.text(yLabel)
-
-	    // Appends legend
-
-	  	// var legend = chart4.selectAll(".legend")
-	   //    	.data(color.domain())
-	   //  .enter().append("g")
-	   //    	.attr("class", "legend")
-	   //    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	  	// legend.append("rect")
-	   //    	.attr("x", width - 18)
-	   //    	.attr("width", 18)
-	   //    	.attr("height", 18)
-	   //    	.style("fill", color);
-
-	  	// legend.append("text")
-	   //    	.attr("x", width - 24)
-	   //    	.attr("y", 9)
-	   //    	.attr("dy", ".35em")
-	   //    	.style("text-anchor", "end")
-	   //    	.text(function(d) { return d; });
-
-	});
 }
 
 $(document).ready(function(){
