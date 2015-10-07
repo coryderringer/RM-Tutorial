@@ -52,10 +52,10 @@
 		<button id="ResampleButton" style="width:100px;display:none" onclick="UpdateData()">Resample</button>
 
 		<div id="Quiz4" style="display:none">
-			<p><b>Which of these shows a significant difference between the veggie and fruit conditions?</b></p>
+			<p><b>Here are two graphs showing data collected using within-subjects designs. Which of these graphs do you think shows a significant difference between the veggie and fruit conditions?</b></p>
 			<form id="Q4Answers" style="position:relative;left:20px">
-				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left</label><br>
-				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right</label><br>
+				<input type="radio" name="q4" value="A" id="q4a"><label for="q4a">The graph on the left (because it shows consistent differences, even though they're small).</label><br>
+				<input type="radio" name="q4" value="B" id="q4b"><label for="q4b">The graph on the right (because some of those lines have a much steeper slope).</label><br>
 			</form><br>
 			
 
@@ -65,17 +65,16 @@
 
 			<p><span id="responseSpan"></span></p>
 
-			<p>Within-subjects designs rely on <i>consistent</i> differences between the conditions, and they can detect these differences even if they're relatively small. If almost every person loses just a tiny bit more weight in the Veggie Condition than in the Fruit Condition (the graph on the left), the difference will probably be statistically significant.</p>
+			<p>Within-subjects designs rely on <i>consistent</i> differences between the conditions, and they can detect these differences even if they're relatively small. Remember from before: if almost every person loses just a tiny bit more weight in the Veggie Condition than in the Fruit Condition (see the graph on the left), the difference will probably be statistically significant. However, if some participants lose a lot of weight in the Veggie Condition, it might not be statistically significant if others lost a lot more weight in the Fruit Condition (see the graph on the right).</p>	
 
-			<p>However, if some participants lose a lot of weight in the Veggie Condition, it might not be statistically significant if others lost a lot more weight in the Fruit Condition (like in the graph on the right).</p>	
+			<p>In a within-subjects experiment, the average weight for each condition might be very similar, as they are here, but we could still find a statistically significant difference if the two interventions have consistently different effects for each participant. One way to measure the consistency of the difference between the two conditions is using a Pearson correlation, which is why we're showing the correlation coefficients here as well.</p>
 
-			<p>In a within-subjects experiment, the average weight for each condition might be very similar, as they are here, but we could still find a statistically significant difference if the two interventions have consistently different effects for each participant.</p>
 		</div>
 		
 		<div id="Text2" style="display:none">
-			<p>Try simulating a few datasets with the "Resample" button. Notice how when the lines are more parallel (i.e. the correlation is high between the two conditions), small differences between the treatments can be statistically significant in a within-subjects design.</p>
+			<p>Try simulating a few datasets with the "Resample" button. Notice how when the correlation coefficient is higher, the lines tend to be more parallel, and even small differences between the treatments can be statistically significant because they are consistent.</p>
 
-			<p>If the datapoints are not correlated, it means that the pattern of effectiveness for the two conditions is not consistent across participants (i.e. some people lose more weight in the Fruit Condition, some in the Veggie Condition): notice that for the graphs you generate on the right, the lines have wildly varying slopes. This means that knowing someone's weight loss in the fruit condition gives us no information about their weight loss in the veggie condition: <b>they're uncorrelated.</b></p>
+			
 			
 		</div>
 		<button id="nextButton">Next</button>
@@ -108,7 +107,7 @@
 		<li><span id="list2">Between-subjects designs examine group means</span></li><br>
 		<li><span id="list3">Within-subjects designs examine difference scores</span></li><br>
 		<li><span id="list4">Within-subjects designs are insensitive to individual differences</span></li><br>
-		<li><span id="list5">Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</span></li>
+		<li><span id="list5">Within-subjects designs can detect very small differences as long as they're consistent</span></li>
 	</ul>
 	
 	<button onclick="MySubmit()">Ready!</button>
@@ -266,7 +265,7 @@ function Render(){
 		}
 
 		$vocabSpan.append(
-			'<br><li>Within-subjects designs can detect small but consistent differences that between-subjects designs cannot detect</li>'
+			'<br><li>Within-subjects designs can detect very small differences as long as they\'re consistent</li>'
 			);
 		// maybe this should be an empty span in the html and I should populate it with items in an array in JS
 

@@ -17,7 +17,7 @@
 <div class="pg">
 	<p><b>Please answer if the following statements are TRUE or FALSE</b></p>
 
-	<p>You are conducting a study to test a new IQ-boosting drug. In your study, some of the participants receive the drug and some receive a placebo. This is a between-subjects design, because not everyone receives every level of the independent variable.</p>	
+	<p>You are conducting a study to test a new IQ-boosting drug. To use a within-subjects design, each participant should receive the IQ drug at one time and a placebo at another time.</p>	
 
 	<select id="Q1" style="font-size:14px;" onchange="answered();">
 		<option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -25,9 +25,9 @@
 		<option value="0">FALSE</option>
 	</select><br>
 	
-	<p id="answer1" style="opacity:0; padding-left:20px"><b>Correct Answer: TRUE.</b> Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV. In this case, because each participant only received either the drug or the placebo, it is a between-subjects design.</p><br>
+	<p id="answer1" style="opacity:0; padding-left:20px"><b>Correct Answer: TRUE.</b> Between-subjects designs assign one level of the IV to each participant, whereas within-subjects designs require every participant to receive every level of the IV. In this case, because each participant received both the drug and the placebo, it is a within-subjects design.</p><br>
 
-	<p>Within-subjects designs are true experiments, whereas all between-subjects designs are correlational.</p>
+	<p>After collecting your data, you notice that the IQ drug mean and the placebo mean are very similar. There might still be a significant effect, because you used a within-subjects design.</p>
 
 	<select id="Q2" style="font-size:14px;" onchange="answered();">
 		<option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -35,9 +35,9 @@
 		<option value="0">FALSE</option>
 	</select><br>
 	
-	<p id="answer2" style="opacity:0; padding-left:20px"><b>Correct Answer: FALSE.</b> Whether or not a design is a true experiment is related to random assignment, not whether the design is between-subjects or within-subjects. Either design can be a true experiment.</p><br>
+	<p id="answer2" style="opacity:0; padding-left:20px"><b>Correct Answer: TRUE.</b> Within-subjects designs examine the magnitude and consistency of difference scores for each individual subject, not the group means. As we saw earlier, it's possible to have group means that are very similar, but still have significant p values.</p><br>
 
-	<p>Between-subjects designs eliminate noise in the data from individual differences, increasing statistical power.</p>
+	<p>You also notice that there are pretty large individual differences in the IQ scores of your participants. You should be worried that your result will be affected.</p>
 
 	<select id="Q3" style="font-size:14px;" onchange="answered();">
 		<option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -45,9 +45,10 @@
 		<option value="0">FALSE</option>
 	</select><br>
 	
-	<p id="answer3" style="opacity:0; padding-left:20px"><b>Correct Answer: FALSE.</b> It's actually <i>within-subjects designs</i> that control for individual differences!</p><br>
+	<p id="answer3" style="opacity:0; padding-left:20px"><b>Correct Answer: FALSE.</b> You should be cool as a cucumber, because within-subjects designs are insensitive to individual differences!</p><br>
 	
 	<button id="nextButton" disabled="true"><span>Check Answers</span></button>
+
 </div>
 <center>
 	<div class="logout"><a href="/logout">Logout</a></div>

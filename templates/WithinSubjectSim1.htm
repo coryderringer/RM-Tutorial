@@ -81,8 +81,8 @@
 
 
 				<form id="Q3Answers">
-					<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design (I think the averages look pretty far apart).</label><br>
-					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design (I think the difference between the conditions looks consistent for most participants).</label><br>
+					<input type="radio" name="q3" value="A" id="q3a"><label for="q3a">The between-subjects design (The group means look pretty far apart).</label><br>
+					<input type="radio" name="q3" value="B" id="q3b"><label for="q3b">The within-subjects design (The difference between the conditions looks consistent for most participants).</label><br>
 				</form><br>
 
 				<!-- <button id="AnswerButton3" onclick="recordQuiz3()" style="width:100px">Next</button> -->
@@ -104,9 +104,11 @@
 		<div id="text2" style="display:none">
 			<span id="Q3Response" style="display:none"></span>
 
-			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to individual differences</i>. Look at the wide distribution of weights in each condition for both graphs. When we want to know if the difference between the group means is reliably (i.e. significantly) greater than zero, we have to have a context against which to judge the difference. That context is the variation in each group: the wider each group is spread, the harder it is for our statistical test to tell if there is a real difference between the group means.</p>
+			<p>This example highlights another advantage of within-subject designs: <i>they're insensitive to individual differences</i>.</p> 
 
-			<p>In a within-subjects design, the wide distribution for each condition wouldn't actually matter, <i>because the lines that connect them are generally sloping in the same direction.</i></p>
+			<p>Think of it this way: imagine that somehow we knew for a fact that there was no difference between the Fruit Condition and the Veggie Condition. If this were true (in other words, if the <i>null hypothesis</i> were true), how much of a coincidence would the graph on the left be? Those group means are pretty close together, and with individual differences this large, it's not unrealistic for groups to be slightly different just by chance. But if we ask the same question about the graph on the right it tells a different story: if there is really no difference between the two interventions, how likely is it that <i>almost all of our participants</i> weigh a little less after the Veggie Condition than after the Fruit Condition? Not likely at all!</p>
+
+			<p>And that's just what our p-value is saying here: if the null hypothesis is true (if there's no difference between these conditions), the odds of getting the results like the graph on the left are about 1 in 5 (p = .215). <i>But the odds of getting the results on the right are 1 in 10,000!</i></p>
 		</div>
 
 		<div id="text3" style="display:none">
