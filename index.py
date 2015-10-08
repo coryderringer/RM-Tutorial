@@ -35,7 +35,7 @@ class User(db.Model):
 	PFEAnswer2 =		db.StringProperty()
 	PFEAnswer3 =		db.IntegerProperty()
 	PFEAnswer4 =		db.IntegerProperty()
-	PFEAnswer5 =		db.IntegerProperty()
+	# PFEAnswer5 =		db.IntegerProperty()
 	numberOfGuesses = 	db.IntegerProperty()
 	numberOfSimulations = db.IntegerProperty()
 	numberOfSimulations2 = db.IntegerProperty()
@@ -311,7 +311,7 @@ class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 
 		# elif M1_Progress == 5:
 			PFEAnswer3 = int(self.request.get('Question1'))
-			PFEAnswer4 = int(self.request.get('Question2'))
+			# PFEAnswer4 = int(self.request.get('Question2'))
 			PFEAnswer5 = int(self.request.get('Question3'))
 
 			# Record that user completed the module
@@ -330,8 +330,8 @@ class PracticeFatigueEffectsHandler(webapp.RequestHandler):
 				i.PFEAnswer2 = self.session['PFEAnswer2']
 				# i.COEAnswer3 = self.session['COEAnswer3']
 				i.PFEAnswer3 = PFEAnswer3
-				i.PFEAnswer4 = PFEAnswer4
-				i.PFEAnswer5 = PFEAnswer5
+				i.PFEAnswer4 = PFEAnswer5
+				# i.PFEAnswer5 = PFEAnswer5
 				i.Module3 = self.session['Module3']
 				i.put()
 

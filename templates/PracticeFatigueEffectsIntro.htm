@@ -13,13 +13,15 @@
 
 <div id="test" align="justify">
 
-	<p><i>There are several threats to internal validity we need to watch out for when using within-subject designs – the same subjects experience multiple conditions and get measured for the DV each time. Order effects are when exposure to one condition changes participants’ responses to a later condition. We will look at a related group of order effects here - <u>practice and fatigue effects</u>.</i></p>
+	<p><i>There are several threats to internal validity we need to watch out for when using within-subject designs – the same subjects experience multiple conditions and get measured for the DV each time. Order effects are when exposure to one condition changes participants’ responses to a later condition. You already took a tutorial on carryover effects, one type of order effect. We will look at a related group of order effects here - <u>practice and fatigue effects</u>.</i></p>
 
-	<p>Imagine you are a researcher studying the effects of a different relaxation techniques on one's problem-solving ability in brain-teaser and puzzle-type problems. According to our theory, a big reason people don't do as well as they could on tests is performance anxiety. If this is the case, relaxation techniques that decrease anxiety should result in better performance on such tests.</p>
+	<p>Imagine you are a researcher studying the effects of different relaxation techniques on one's problem-solving ability in crossword puzzles. According to our theory, a big reason people don't do as well as they could on mentally challenging puzzles like this is performance anxiety. If this is the case, relaxation techniques that decrease anxiety should result in better performance on such puzzles.</p>
 
-	<p>To test this, you recruit a group of participants and make them take a test of brain-teasers and puzzles several times (each time, the problems on the test are different, but test the same intellectual abilities). Before each time they take the test, they experience a different condition. In one condition, they perform a meditation exercise lasting about 10 minutes. In another condition, each participant listens to a song of their own choice that they deem relaxing (on repeat for 10 minutes). There is also a control condition where the participants just sit in a waiting area for 10 minutes.</p>
+	<p>To test this, you recruit a group of participants and make them do crossword puzzles several times (each time, the puzzles are different but of equal difficulty). Participants are given 5 minutes to solve as much of the crossword puzzle as they can each time. A participant's score is determined by the number of words correctly filled in, weighted by the difficulty - there's some mathematical formula to compute this but we won't get into it here...</p>
 
-	<p>You hypothesize that subjects will do better in the test if they either meditate or listen to their favorite relaxing song beforehand because this decreases their anxiety. In contrast, leaving them to wait without doing anything before the test (the control condition) should lead to poorer test performance.</p>
+	<p>Before each time they do a puzzle, participants experience a different condition. In one condition, they perform a meditation exercise lasting about 10 minutes. In another condition, each participant listens to a song of their own choice that they deem relaxing (on repeat for 10 minutes). There is also a control condition where the participants just sit in a waiting area for 10 minutes.</p>
+
+	<p>You hypothesize that participants will do better on the crossword puzzles if they either meditate or listen to their favorite relaxing song beforehand because this decreases their anxiety. In contrast, leaving them to wait without doing anything before doing the puzzle (the control condition) should lead to poorer performance (measured by the number of words they correctly fill in).</p>
 
 	<center><button id="continue" onclick="showQuiz()">Continue</button></center>
 
@@ -72,10 +74,10 @@ function answerQuiz1() {
 	$('#submit').show();
 
 	if (Q1Outcome=='C') { 
-		$('#A1').html('<b>Correct!</b><br>This study uses a within-subjects design because the same group experiences all conditions - the control condition, listening to music, and meditation – and gets measured on the dependent variable (performance on a test) after completing each condition.');
+		$('#A1').html('<b>Correct!</b><br>This study uses a within-subjects design because the same group experiences all conditions - the control condition, listening to music, and meditation – and gets measured on the dependent variable (performance on a crossword puzzle) after completing each condition.');
 	}
 	else {
-		$('#A1').html('<b>Sorry, that is incorrect!</b><br>This study uses a within-subjects design because the same group experiences all conditions - the control condition, listening to music, and meditation – and gets measured on the dependent variable (performance on a test) after completing each condition.');
+		$('#A1').html('<b>Sorry, that is incorrect!</b><br>This study uses a within-subjects design because the same group experiences all conditions - the control condition, listening to music, and meditation – and gets measured on the dependent variable (performance on a crossword puzzle) after completing each condition.');
 	}
 }
 

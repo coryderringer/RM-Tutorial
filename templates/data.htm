@@ -22,6 +22,7 @@ User:
 <!-- <th>password</th> -->
 <th>Module1</th>
 <th>Module2</th>
+<th>Module3</th>
 </tr>
 
 
@@ -35,6 +36,7 @@ User:
 <!-- <th>{{ i.password }}</th> -->
 <th>{{ i.Module1 }}</th>
 <th>{{ i.Module2 }}</th>
+<th>{{ i.Module3 }}</th>
 
 </tr>
 {% endfor %}
@@ -91,6 +93,72 @@ Within Subjects Tutorial
 
 
 
+<!-- Module 1 Progress -->
+Carryover Effects Tutorial
+<table>
+<!-- Header Row -->
+<tr>
+<th>usernum</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>username</th>
+<th>COEAnswer1</th>
+<th>COEAnswer2</th>
+<th>COEAnswer3</th>
+<th>COEAnswer4</th>
+<th>COEAnswer5</th>
+</tr>
+
+<!-- Subsequent Rows -->
+{% for i in users %}
+<tr>
+<th>{{ i.usernum }}</th>
+<th>{{ i.firstname }}</th>
+<th>{{ i.lastname }}</th>
+<th>{{ i.username }}</th>
+<th>{{ i.COEAnswer1 }}</th>
+<th>{{ i.COEAnswer2 }}</th>
+<th>{{ i.COEAnswer3 }}</th>
+<th>{{ i.COEAnswer4 }}</th>
+<th>{{ i.COEAnswer5 }}</th>
+
+</tr>
+{% endfor %}
+
+</table>
+
+
+<!-- Module 3 Progress -->
+Practice and Fatigue Effects Tutorial
+<table>
+<!-- Header Row -->
+<tr>
+<th>usernum</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>username</th>
+<th>PFEAnswer1</th>
+<th>PFEAnswer2</th>
+<th>PFEAnswer3</th>
+<th>PFEAnswer4</th>
+</tr>
+
+<!-- Subsequent Rows -->
+{% for i in users %}
+<tr>
+<th>{{ i.usernum }}</th>
+<th>{{ i.firstname }}</th>
+<th>{{ i.lastname }}</th>
+<th>{{ i.username }}</th>
+<th>{{ i.PFEAnswer1 }}</th>
+<th>{{ i.PFEAnswer2 }}</th>
+<th>{{ i.PFEAnswer3 }}</th>
+<th>{{ i.PFEAnswer4 }}</th>
+
+</tr>
+{% endfor %}
+
+</table>
 
 
 </body>

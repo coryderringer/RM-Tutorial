@@ -18,11 +18,11 @@
 	</form>
 	<br>
 	<form id="Module1_Form" method="get" action="/CarryoverEffects">
-		<button id="Module1_Button">Button text</button>
+		<button id="Module1_Button" disabled="true">Button text</button>
 	</form>
 	<br>
 	<form id="Module3_Form" method="get" action="/PracticeFatigueEffects">
-		<button id="Module3_Button">Button text</button>
+		<button id="Module3_Button" disabled="true">Button text</button>
 	</form>
 	<br>
 </center>
@@ -50,20 +50,26 @@ var M2_Progress = 0;
 var M3_Progress = 0;
 
 function ButtonDisplay(){
-	if (Module1 == 'Complete') { $('#Module1_Button').html('Redo Carryover Effects Module'); }
-	if (Module2 == 'Complete') { $('#Module2_Button').html('Redo Within-Subjects Designs Module'); }
+	if (Module1 == 'Complete') { 
+		$('#Module1_Button').html('Redo Carryover Effects Module'); 
+		$('#Module3_Button').attr('disabled', false);
+	}
+	if (Module2 == 'Complete') { 
+		$('#Module2_Button').html('Redo Within-Subjects Designs Module'); 
+		$('#Module1_Button').attr('disabled', false);
+	}
 	if (Module3 == 'Complete') { $('#Module3_Button').html('Redo Practice and Fatigue Effects Module'); }
 }
 
 function MainDisplay(){
 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete' && Module3 == 'Incomplete'){
-		$('#status_span').html('You have not completed any of the modules yet. What would you like to do?');
+		$('#status_span').html('You have not completed any of the modules yet. Please complete the first tutorial.');
 	}
 	else if (Module1 == 'Complete' && Module2 == 'Complete' && Module3 == 'Complete'){
 		$('#status_span').html('You have completed all modules. What would you like to do?');
 	}
 	else {
-		$('#status_span').html('You have the option of beginning a new module or repeating one. What would you like to do?');
+		$('#status_span').html('Please proceed to the next tutorial or redo one you have completed for a refresher!');
 	}
 }
 

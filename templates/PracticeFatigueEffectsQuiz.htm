@@ -16,7 +16,7 @@ var end = 0;
 function answered() {
   responses = new Array();
   responses.push(Number(Q1.value))
-  responses.push(Number(Q2.value))
+  // responses.push(Number(Q2.value))
   responses.push(Number(Q3.value))
 
   if (Math.min.apply(Math, responses)>(-1)) {
@@ -28,11 +28,11 @@ function answered() {
 function MySubmit(end) {
   if (end==0){
     $('#answer1').fadeTo('fast', 1);
-    $('#answer2').fadeTo('fast', 1);
+    // $('#answer2').fadeTo('fast', 1);
     $('#answer3').fadeTo('fast', 1);
 
     $('#Q1').attr('disabled', true);
-    $('#Q2').attr('disabled', true);
+    // $('#Q2').attr('disabled', true);
     $('#Q3').attr('disabled', true);
 
     $('#buttontext').text("Continue");
@@ -41,7 +41,7 @@ function MySubmit(end) {
     progress += 1;
     $('#progressinput').val(progress);
     document.getElementById("Question1").value = document.getElementById("Q1").value;
-    document.getElementById("Question2").value = document.getElementById("Q2").value;
+    // document.getElementById("Question2").value = document.getElementById("Q2").value;
     document.getElementById("Question3").value = document.getElementById("Q3").value;
     document.getElementById("myForm").submit();
   }
@@ -70,7 +70,7 @@ function MySubmit(end) {
     <br>
     <b>Please answer if the following statements are TRUE or FALSE.</b>
 
-    <p>Testing effects and practice effects are equivalent.</p>
+    <!-- <p>Testing effects and practice effects are equivalent.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q1" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -80,9 +80,21 @@ function MySubmit(end) {
 
     <div id="answer1" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
       <b>Correct answer: FALSE. </b>A testing effect is a specific<i>type</i> of practice effect. Practice effects occur when increasing time and experience in an experiment lead people to do better on later tasks. If this experience or practice they gain can be attributed to their exposure to the test being used as a measure, then it can be called a testing effect.
+    </div> -->
+
+    <p>Practice effects and fatigue effects are a type of carryover effect.</p>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <select id="Q1" style="font-size:14px;" onchange="answered();">
+        <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
+        <option value="1">TRUE</option>
+        <option value="0">FALSE</option>
+      </select><br><br>
+
+    <div id="answer1" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
+      <b>Correct answer: FALSE. </b>Practice and fatigue effects are when participants change over the course of the experiment due to increasing time - this either results in them getting better over time at the tasks involved in the experiment due to practice, or them getting worse over time at the tasks due to fatigue. Carryover effects occur when a particular condition changes characteristics of the participants, making them respond differently to subsequent conditions in the experiment. Practice and fatigue effects are not determined by the specific conditions - they occur because the participants experience repeated conditions and are tested multiple times. 
     </div>
 
-    <p>Fatigue effects can also occur in experiments using between-subjects designs.</p>
+    <!-- <p>Fatigue effects can also occur in experiments using between-subjects designs.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <select id="Q2" style="font-size:14px;" onchange="answered();">
         <option selected="selected" disabled="true" value="-1">Select TRUE or FALSE</option>
@@ -92,7 +104,7 @@ function MySubmit(end) {
 
     <div id="answer2" style="display:show; height:110px; opacity:0; padding-left:20px" align="justify">
       <b>Correct answer: TRUE. </b>Fatigue effects occur when increasing time spent in an experiment decreases a participant's performance due to them becoming fatigued (having their resources depleted). This is <i>likelier</i> to occur in within-subject designs because participants have to experience more conditions, but is also possible in a between-subjects design. If participants have to experience a condition involving long/tiring/mundane procedures, they are likely to become fatigued by the end of the experiment, which could affect their scores on the dependent variable measure.
-    </div>
+    </div> -->
 
     <p>We can always tell when practice and fatigue effects are present from the results of our experiment.</p>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -113,7 +125,7 @@ function MySubmit(end) {
     </center>
 
     <input type="hidden" id="Question1" name="Question1" value="">
-    <input type="hidden" id="Question2" name="Question2" value="">
+    <!-- <input type="hidden" id="Question2" name="Question2" value=""> -->
     <input type="hidden" id="Question3" name="Question3" value="">
     <input type="hidden" id="progressinput" name="progressinput" value="">
 
