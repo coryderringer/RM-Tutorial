@@ -27,6 +27,11 @@
 	<br>
 </center>
 
+<div align="center" id="finish" style="display:hidden">
+	Please complete the survey <a href="https://pitt.co1.qualtrics.com/SE/?SID=SV_bg51h9hKs5mu4PH" target='_blank'>HERE</a> (you must complete it to get credit for this homework assignment).<br>
+	Secret word (you will need this to complete the survey): <b>bensei</b>
+</div>
+
 <p><center>You are currently logged in. Would you like to <a href="/logout">log out?</a></center></p>
 
 
@@ -63,13 +68,14 @@ function ButtonDisplay(){
 
 function MainDisplay(){
 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete' && Module3 == 'Incomplete'){
-		$('#status_span').html('You have not completed any of the modules yet. Please complete the first tutorial.');
+		$('#status_span').html('You have not completed any of the modules yet. Please complete the first tutorial.<br>You will need to complete all tutorials to complete this homework assignment.');
 	}
 	else if (Module1 == 'Complete' && Module2 == 'Complete' && Module3 == 'Complete'){
 		$('#status_span').html('You have completed all modules. What would you like to do?');
+		$('#finish').show();
 	}
 	else {
-		$('#status_span').html('Please proceed to the next tutorial or redo one you have completed for a refresher!');
+		$('#status_span').html('Please proceed to the next tutorial or redo one you have completed for a refresher!<br>You will need to complete all tutorials to complete this homework assignment.');
 	}
 }
 
