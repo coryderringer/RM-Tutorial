@@ -419,7 +419,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 					{'progress':self.session['M2_Progress'],
 					'pValues1':pValues1,
 					'sigTally1':sigTally1,
-					'sim1Progress':2})
+					'sim1Progress':3})
 
 		elif M2_Progress == 2:
 			# Record things from sim 1 

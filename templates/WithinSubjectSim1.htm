@@ -19,7 +19,6 @@
 <div id="container" style="display:none">
 
 	<div class="corypg">
-		<button id="backButton">Go Back</button><br><br>
 		<center>
 			<span style="display:inline-block;position:relative;left:45px"><b>Between-Subjects</b></span>
 			<span style="display:inline-block;position:relative;left:160px"><b>Within-Subjects</b></span>
@@ -29,7 +28,7 @@
 				</span>	
 				<div id="between1" style="display:inline-block">
 					<div id="graph1"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:15px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
 					<div class="pdiv" style="display:none">p = <span id="p1"></span></div>
 					
 					<!-- <div id="ttest1" class="ttest">
@@ -41,7 +40,7 @@
 				
 				<div id="within1" style="display:inline-block">
 					<div id="graph2"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:15px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:20px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
 					<div class="pdiv" style="display:none">p = <span id="p2"></span></div>
 				</div>
 			</div>
@@ -55,13 +54,13 @@
 				</span>
 				<div id="between2" style="display:inline-block">
 					<div id="graph3"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack3"></span></font></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:20px"><font color="green">Significant Results: <span id="sigTrack3"></span></font></div>
 					<div class="pdiv" style="display:none">p = <span id="p3"></span></div>
 				</div>
 				
 				<div id="within2" style="display:inline-block">
 					<div id="graph4"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:15px"><font color="green">Significant Results: <span id="sigTrack4"></span></font></div>
+					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:20px"><font color="green">Significant Results: <span id="sigTrack4"></span></font></div>
 					<div class="pdiv" style="display:none">p = <span id="p4"></span></div>
 				</div>
 			</div>
@@ -72,7 +71,7 @@
 		<br>
 
 		<div id="text1">
-			<p>To expand on this point, and explore some of the advantages of within-subjects designs, let's look at some hypothetical data. Here we two graphs displaying the same data. On the left it is presented as a between-subjects comparison, and on the right as a within-subjects comparison, with participants' weights as our dependent variable.</p>
+			<p>To expand on this point, and explore some of the advantages of within-subjects designs, let's look at some hypothetical data. Here we two graphs displaying the same data. On the left it is presented as a between-subjects comparison, and on the right as a within-subjects comparison, with participants' BP as our dependent variable.</p>
 
 			<p>Remember: in a between-subjects design, we want to know <b>if the group averages are different</b> after some treatment. In a within-subjects design, we want to know if <b>one treatment consistently works better than the other for most people.</b></p>
 
@@ -106,9 +105,9 @@
 
 			<p>This example highlights another advantage of within-subjects designs: <i>they're insensitive to individual differences</i>.</p> 
 
-			<p>Think of it this way: imagine that somehow we knew for a fact that there was no difference between the Fruit Condition and the Veggie Condition. If this were true (in other words, if the <i>null hypothesis</i> were true), how much of a coincidence would the graph on the left be? Those group means are pretty close together, and with individual differences this large, it's not unrealistic for groups to be slightly different just by chance. But if we ask the same question about the graph on the right we get a different answer: if there is really no difference between the two interventions, how likely is it that <i>almost all of our participants</i> would weigh a little less after the Veggie Condition than after the Fruit Condition? Not likely at all!</p>
+			<p>Think of it this way: imagine that somehow we knew for a fact that there was no difference between the Fruit Condition and the Veggie Condition. If this were true (in other words, if the <i>null hypothesis</i> were true), how much of a coincidence would the graph on the left be? Those group means are pretty close together, and with individual differences this large, it's not unrealistic for groups to be slightly different just by chance. But if we ask the same question about the graph on the right we get a different answer: if there is really no difference between the two interventions, how likely is it that <i>almost all of our participants</i> would have slightly lower BP after the Veggie Condition than after the Fruit Condition? Not likely at all!</p>
 
-			<p>And that's just what our p-values tell us: if the null hypothesis is true (if there's no difference between these conditions), the odds of getting the results like the graph on the left are about 1 in 5 (p = .215). <b>But the odds of getting the results on the right are 1 in 10,000!</b></p>
+			<p>And that's just what our p-values tell us: if the null hypothesis is true (if there's no difference between these conditions), the odds of getting an effect as large or larger than the one on the left are about 1 in 4 (p = .277). <b>But the odds of getting an effect as large or larger as the one on the right are 1 in 1000!</b></p>
 		</div>
 
 		<div id="text3" style="display:none">
@@ -118,7 +117,15 @@
 
 			<p>Take a minute or two to play around with this simulator a bit. See what happens when you generate different datasets using the "Resample" button: how often is the within-subjects design significant when the between-subjects design isn’t? Is that pattern ever reversed?</p>
 		</div>
-		<button id="nextButton">Next</button>
+
+		<div id="text4" style="display:none">
+			<p>If we ran a thousand simulations with these datasets, we would end up with something like this. Notice that the within-subjects designs are significant more than 90% of the time, whereas the between subjects designs are significant at most about 60% of the time.</p>
+
+			<p>This leads us to two important conclusions. First, within-subjects designs are generally <b>more powerful</b> than between-subjects designs (they're more likely to find significant differences). Second, <b>between-subjects designs lose power when individual differences are large, but within-subjects designs do not</b>.</p>
+
+		</div>
+
+		<button id="backButton">Back</button><button id="nextButton">Next</button>
 	</div>
 
 	<div class="sidebar">
@@ -167,6 +174,8 @@ var $logout = $('#logout');
 var $text1 = $('#text1');
 var $text2 = $('#text2');
 var $text3 = $('#text3');
+var $text4 = $('#text4');
+
 var $pdiv = [$('#p1'), $('#p2'), $('#p3'), $('#p4')];
 var $pdivClass = $('.pdiv');
 var $sigTrackClass = $('.sigTrack');
@@ -177,7 +186,7 @@ var $all = [$('#text1'), $('#text2'), $('#text3'), $('.pdiv'), $('.sigTrack'), $
 
 
 var $vocabSpan = $('#vocabSpan');
-var vocabArray = ['<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br><li><i>Within-Subjects Designs</i> assign every person to every condition.</li>', '<br><li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li>','<br><li>Within-subjects designs are insensitive to individual differences</li>'];
+var vocabArray = ['<li><i>Between-Subjects Designs</i> assign each person to one condition.</li><br><li><i>Within-Subjects Designs</i> assign every person to every condition.</li>', '<br><li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li>','<br><li>Within-subjects designs are insensitive to individual differences</li>', '<br><li>Within-subjects designs are more powerful than between-subjects designs</li>'];
 
 var $nextButton = $('#nextButton');
 var $backButton = $('#backButton');
@@ -282,7 +291,7 @@ function Render(){
 
 	if(sim1Progress < 0){
 		BackPage();
-	}else if(sim1Progress == 3){
+	}else if(sim1Progress == 4){
 		MySubmit();
 	}else{
 		for(var i = 0; i < $all.length; i++){
@@ -304,11 +313,10 @@ function Render(){
 			$text2.show();
 			// $secondrow.show();
 			
-			$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
+			$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2]]);
 		}else if(sim1Progress == 2){
 			// simulations and results
 			$secondrow.show();
-			$resampleButton.show();
 			$pdivClass.show();
 			$sigTrackClass.show();
 			$firstSpan.css('visibility', 'visible');
@@ -317,6 +325,21 @@ function Render(){
 			// text
 			$text3.show();
 
+			$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2]]);
+		}else if(sim1Progress == 3){
+			// simulations/results
+			$secondrow.show();
+			$sigTrackClass.show();
+			$firstSpan.css('visibility', 'visible');
+			
+			$sigTrack[0].html('80/1000');
+			$sigTrack[1].html('920/1000');
+			$sigTrack[2].html('580/1000');
+			$sigTrack[3].html('920/1000');
+
+			$vocabSpan.html([vocabArray[0], vocabArray[1], vocabArray[2], vocabArray[3]]);
+			// text
+			$text4.show();
 		}
 		$container.show();
 	}
@@ -474,7 +497,7 @@ var FileList2 = ['/static/stimuli/WithinSubjects/widedata1.csv',
 
 // Randomly select a file from the list
 // var random = Math.floor(Math.random() * FileList.length);
-var random = 6;
+var random = 5;
 var File = FileList[random];
 var File2 = FileList2[random];
 var pList = pValues[random];
@@ -489,7 +512,7 @@ $pdiv[3].html(pList[1]);
 var	yLabel = "Weight",
 	condLabel = "Exercise routine",
 	xMax = 20,
-	yMax = 225;
+	yMax = 200;
 	
 
 /// Variables for calculating stuff
@@ -526,7 +549,7 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .range([height, 0])
-    .domain([125,yMax]);
+    .domain([60,yMax]);
 
 
 var cond = d3.scale.ordinal()
