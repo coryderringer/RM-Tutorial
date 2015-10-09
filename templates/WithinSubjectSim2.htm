@@ -104,7 +104,8 @@
 		<li><span id="list2">Between-subjects designs examine group means</span></li><br>
 		<li><span id="list3">Within-subjects designs examine difference scores</span></li><br>
 		<li><span id="list4">Within-subjects designs are insensitive to individual differences</span></li><br>
-		<li><span id="list5">Within-subjects designs can detect very small differences as long as they're consistent</span></li>
+		<li><span id="list5">Within-subjects designs are more powerful than between-subjects designs</span></li><br>
+		<li><span id="list6">Within-subjects designs can detect very small differences as long as they're consistent</span></li>
 	</ul>
 	
 	<button id="backButton" onclick="goBack()">Back</button><button onclick="MySubmit()">Next</button>
@@ -133,11 +134,15 @@
 		<img src="/static/images/WS1.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv4" style="top:-325px;left:230px; display:none; height:220px; width:443px">
-		<img src="/static/images/individualDifferences.png" style="height:220px"></img>
+	<div class="review" id="listDiv4" style="top:-325px;left:230px; display:none; height:200px; width:443px">
+		<img src="/static/images/individualDifferences.png" style="height:200px"></img>
 	</div>
 
-	<div class="review" id="listDiv5" style="top:-325px;left:230px; display:none; height:220px; width:443px">
+	<div class="review" id="listDiv5" style="top:-335px;left:260px; display:none; height:190px; width:443px">
+		<img src="/static/images/Power.png" style="height:180px"></img>
+	</div>
+
+	<div class="review" id="listDiv6" style="top:-325px;left:230px; display:none; height:220px; width:443px">
 		<img src="/static/images/Correl.png" style="height:220px"></img>
 	</div>
 </center>
@@ -187,9 +192,9 @@ var $progress1 = [$('#Text1'), $('#nextButton')];
 var $progress2 = [$('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
 var $invisibleStuff = [$('#p1'), $('#p2'), $('.pdiv'), $('#span1'), $('#span2')];
 
-var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
+var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5'), $('#list6')];
 
-var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5')];
+var $listDivs = [$('#listDiv0'),$('#listDiv1'),$('#listDiv2'),$('#listDiv3'),$('#listDiv4'),$('#listDiv5'),$('#listDiv6')];
 
 function recordQuiz4(){
 	// record the result
@@ -315,6 +320,7 @@ HoverEvents = function(){
 		$listItems[3].css('opacity', '0.4');
 		$listItems[4].css('opacity', '0.4');
 		$listItems[5].css('opacity', '0.4');
+		$listItems[6].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[0].hide();
@@ -323,6 +329,7 @@ HoverEvents = function(){
 			$listItems[3].css('opacity', '1.0');
 			$listItems[4].css('opacity', '1.0');
 			$listItems[5].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
 	});
 
 	$listItems[1].hover(function(){
@@ -332,6 +339,7 @@ HoverEvents = function(){
 		$listItems[3].css('opacity', '0.4');
 		$listItems[4].css('opacity', '0.4');
 		$listItems[5].css('opacity', '0.4');
+		$listItems[6].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[1].hide();
@@ -340,6 +348,7 @@ HoverEvents = function(){
 			$listItems[3].css('opacity', '1.0');
 			$listItems[4].css('opacity', '1.0');
 			$listItems[5].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
 	});
 
 	$listItems[2].hover(function(){
@@ -349,6 +358,7 @@ HoverEvents = function(){
 		$listItems[3].css('opacity', '0.4');
 		$listItems[4].css('opacity', '0.4');
 		$listItems[5].css('opacity', '0.4');
+		$listItems[6].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[2].hide();
@@ -357,6 +367,7 @@ HoverEvents = function(){
 			$listItems[3].css('opacity', '1.0');
 			$listItems[4].css('opacity', '1.0');
 			$listItems[5].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
 	});
 
 	$listItems[3].hover(function(){
@@ -366,6 +377,7 @@ HoverEvents = function(){
 		$listItems[0].css('opacity', '0.4');
 		$listItems[4].css('opacity', '0.4');
 		$listItems[5].css('opacity', '0.4');
+		$listItems[6].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[3].hide();
@@ -374,6 +386,7 @@ HoverEvents = function(){
 			$listItems[0].css('opacity', '1.0');
 			$listItems[4].css('opacity', '1.0');
 			$listItems[5].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
 	});
 
 	$listItems[4].hover(function(){
@@ -383,6 +396,7 @@ HoverEvents = function(){
 		$listItems[3].css('opacity', '0.4');
 		$listItems[0].css('opacity', '0.4');
 		$listItems[5].css('opacity', '0.4');
+		$listItems[6].css('opacity', '1.0');
 	},function(){
 		if(!cancel)
 			$listDivs[4].hide();
@@ -391,6 +405,7 @@ HoverEvents = function(){
 			$listItems[3].css('opacity', '1.0');
 			$listItems[0].css('opacity', '1.0');
 			$listItems[5].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
 	});
 
 	$listItems[5].hover(function(){
@@ -400,6 +415,7 @@ HoverEvents = function(){
 		$listItems[3].css('opacity', '0.4');
 		$listItems[4].css('opacity', '0.4');
 		$listItems[0].css('opacity', '0.4');
+		$listItems[6].css('opacity', '0.4');
 	},function(){
 		if(!cancel)
 			$listDivs[5].hide();
@@ -407,6 +423,26 @@ HoverEvents = function(){
 			$listItems[2].css('opacity', '1.0');
 			$listItems[3].css('opacity', '1.0');
 			$listItems[4].css('opacity', '1.0');
+			$listItems[0].css('opacity', '1.0');
+			$listItems[6].css('opacity', '1.0');
+	});
+
+	$listItems[6].hover(function(){
+		$listDivs[6].show();
+		$listItems[1].css('opacity', '0.4');
+		$listItems[2].css('opacity', '0.4');
+		$listItems[3].css('opacity', '0.4');
+		$listItems[4].css('opacity', '0.4');
+		$listItems[5].css('opacity', '0.4');
+		$listItems[0].css('opacity', '0.4');
+	},function(){
+		if(!cancel)
+			$listDivs[6].hide();
+			$listItems[1].css('opacity', '1.0');
+			$listItems[2].css('opacity', '1.0');
+			$listItems[3].css('opacity', '1.0');
+			$listItems[4].css('opacity', '1.0');
+			$listItems[5].css('opacity', '1.0');
 			$listItems[0].css('opacity', '1.0');
 	});
 

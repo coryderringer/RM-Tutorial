@@ -524,7 +524,7 @@ class DataHandler(webapp.RequestHandler):
 	def post(self):
 		password=self.request.get('password')
 
-		if password == " ": # just for now
+		if password == "Bensei": # just for now
 
 
 			que=db.Query(User)
