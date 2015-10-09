@@ -25,8 +25,8 @@
 			<div id="firstrow" style="display:none">
 				<div id="within1" style="display:inline-block">
 					<div id="graph1"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p1"></span></div>
+					<div class="sigTrack" style="visibility:hidden;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack1"></span></font></div>
+					<div class="pdiv" style="position:relative;top:0px">p = <span id="p1"></span></div>
 					
 					<!-- <div id="ttest1" class="ttest">
 						<span id="tspan1">t=1.00</span><br>
@@ -37,8 +37,8 @@
 				
 				<div id="within2" style="display:inline-block">
 					<div id="graph2"></div>
-					<div class="sigTrack" style="display:none;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
-					<div class="pdiv" style="position:relative;top:20px">p = <span id="p2"></span></div>
+					<div class="sigTrack" style="visibility:hidden;position:relative;top:-55px;left:10px"><font color="green">Significant Results: <span id="sigTrack2"></span></font></div>
+					<div class="pdiv" style="position:relative;top:0px">p = <span id="p2"></span></div>
 				</div>
 			</div>
 			<br>
@@ -88,13 +88,13 @@
 			<li>Within-subjects designs eliminate individual differences as a factor that could influence the dependent variable</li><br>
 			<li>Between-subjects designs examine group means</li><br>
 			<li>Within-subjects designs examine difference scores</li><br>
-			<li>Within-subjects designs are insensitive to individual differences</li>
+			<li>Within-subjects designs are insensitive to individual differences</li><br>
+			<li>Within-subjects designs are more powerful than between-subjects designs</li>
 		</span>
 	</div>
 </div>
 
 <div class="pg" style="width:1000px;display:none" id="review">
-	<button id="backButton" onclick="goBack()">Go Back</button>
 	<h1>Ready for the Quiz?</h1>
 	<p> Take a moment to review before the quiz. You can mouse over each bullet point to see a visual aid. Click below when you're ready!</p>
 
@@ -107,7 +107,7 @@
 		<li><span id="list5">Within-subjects designs can detect very small differences as long as they're consistent</span></li>
 	</ul>
 	
-	<button onclick="MySubmit()">Ready!</button>
+	<button id="backButton" onclick="goBack()">Back</button><button onclick="MySubmit()">Next</button>
 </div>
 
 <center>
@@ -134,7 +134,7 @@
 	</div>
 
 	<div class="review" id="listDiv4" style="top:-325px;left:230px; display:none; height:220px; width:443px">
-		<img src="/static/images/PopVar.png" style="height:220px"></img>
+		<img src="/static/images/individualDifferences.png" style="height:220px"></img>
 	</div>
 
 	<div class="review" id="listDiv5" style="top:-325px;left:230px; display:none; height:220px; width:443px">
@@ -167,7 +167,7 @@ var $all = [$('#Text1'), $('#Text2'), $('#Quiz4'), $('#ResampleButton')];
 
 var $vocabSpan = $('#vocabSpan');
 
-var $sigTrack = [$('#sigTrack1'), $('#sigTrack2'), $('#sigTrack3'), $('#sigTrack4')];
+var $sigTrack = [$('#sigTrack1'), $('#sigTrack2')];
 var $pdiv = [$('#p1'), $('#p2')];
 
 var $review = $('#review');
@@ -184,7 +184,7 @@ var $graphs = [$('#graph1'), $('#graph2')];
 
 var $progress0 = [$('#Quiz4'), $('#firstrow')];
 var $progress1 = [$('#Text1'), $('#nextButton')];
-var $progress2 = [$('.sigTrack'), $('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
+var $progress2 = [$('.pdiv'), $('#Text2'), $('#ResampleButton'), $('#SubmitButton')];
 var $invisibleStuff = [$('#p1'), $('#p2'), $('.pdiv'), $('#span1'), $('#span2')];
 
 var $listItems = [$('#list0'), $('#list1'), $('#list2'), $('#list3'), $('#list4'), $('#list5')];
@@ -256,6 +256,10 @@ function Render(){
 		for(var i = 0; i < $progress2.length; i++){
 			$progress2[i].show();
 		}
+		
+		$('.sigTrack').css('visibility', 'visible');
+		$sigTrack[0].css('visibility', 'visible');
+		$sigTrack[1].css('visibility', 'visible');
 
 		for(var i = 0; i < $invisibleStuff.length; i++){
 			$invisibleStuff[i].css("visibility", "visible");
@@ -565,7 +569,7 @@ var FileList2 = ['/static/stimuli/WithinSubjects/lowcorreldata1.csv',
 // Randomly select a file from the list
 
 // A particularly good example
-random = 11;
+random = 1;
 File = FileList[random];
 File2 = FileList2[random];
 pList = pValues[random];
@@ -580,7 +584,7 @@ $pdiv[1].html(pList[1]+',    r = '+corList[1]);
 var	yLabel = "Weight",
 	condLabel = "Exercise routine",
 	xMax = 20,
-	yMax = 225;
+	yMax = 200;
 	
 
 /// Variables for calculating stuff
@@ -614,7 +618,7 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .range([height, 0])
-    .domain([125,yMax]);
+    .domain([60,yMax]);
 
 
 var cond = d3.scale.ordinal()
