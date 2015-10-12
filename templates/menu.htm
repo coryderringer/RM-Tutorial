@@ -56,14 +56,14 @@ var M3_Progress = 0;
 
 function ButtonDisplay(){
 	if (Module1 == 'Complete') { 
-		$('#Module1_Button').html('Redo Carryover Effects Module'); 
+		$('#Module1_Button').html('Redo "Carryover Effects"'); 
 		$('#Module3_Button').attr('disabled', false);
 	}
 	if (Module2 == 'Complete') { 
-		$('#Module2_Button').html('Redo Within-Subjects Designs Module'); 
+		$('#Module2_Button').html('Redo "The Power of Within-Subjects Designs"'); 
 		$('#Module1_Button').attr('disabled', false);
 	}
-	if (Module3 == 'Complete') { $('#Module3_Button').html('Redo Practice and Fatigue Effects Module'); }
+	if (Module3 == 'Complete') { $('#Module3_Button').html('Redo "Practice and Fatigue Effects"'); }
 }
 
 function MainDisplay(){
@@ -82,34 +82,34 @@ function MainDisplay(){
 // function MainDisplay(){
 // 	if (Module1 == 'Incomplete' && Module2 == 'Incomplete'){
 // 		$('#status_span').html('You have not completed either module yet. What would you like to do?');
-// 		$('#Module1_Button').html('Begin Carryover Effects Module');
-// 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 		$('#Module1_Button').html('Begin "Carryover Effects"');
+// 		$('#Module2_Button').html('Begin "The Power of Within-Subjects Designs"');
+// 		$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 // 	}
 // 	else if (Module1 == 'Complete' && Module2 == 'Incomplete'){
 
 // 		$('#status_span').html('You have completed Single Subject Module, but not Within-Subjects Module. What would you like to do?');
-// 		$('#Module1_Button').html('Redo Carryover Effects Module');
-// 		$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 		$('#Module1_Button').html('Redo "Carryover Effects"');
+// 		$('#Module2_Button').html('Begin "The Power of Within-Subjects Designs"');
+// 		$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 // 	}
 // 	else if (Module1 == 'Incomplete' && Module2 == 'Complete'){
 // 		$('#status_span').html('You have completed the Within-Subjects Module, but not the Single Subject Module. What would you like to do?');
-// 		$('#Module1_Button').html('Begin Carryover Effects Module');
-// 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 		$('#Module1_Button').html('Begin "Carryover Effects"');
+// 		$('#Module2_Button').html('Redo "The Power of Within-Subjects Designs"');
+// 		$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 // 	}
 // 	else if (Module1 == 'Complete' && Module2 == 'Complete'){
 // 		$('#status_span').html('You have completed both modules! What would you like to do?');
-// 		$('#Module1_Button').html('Redo Carryover Effects Module');
-// 		$('#Module2_Button').html('Redo Within-Subjects Designs Module');
-// 		$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+// 		$('#Module1_Button').html('Redo "Carryover Effects"');
+// 		$('#Module2_Button').html('Redo "The Power of Within-Subjects Designs"');
+// 		$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 // 	}
 // }
 
-$('#Module1_Button').html('Begin Carryover Effects Module');
-$('#Module2_Button').html('Begin Within-Subjects Designs Module');
-$('#Module3_Button').html('Begin Practice and Fatigue Effects Module');
+$('#Module1_Button').html('Begin "Carryover Effects"');
+$('#Module2_Button').html('Begin "The Power of Within-Subjects Designs"');
+$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 
 ButtonDisplay();
 MainDisplay();
