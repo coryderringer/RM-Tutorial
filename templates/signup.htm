@@ -12,23 +12,23 @@
 <br>
 
 <form method="post" action="/signup">
-	First name: <input type="text" name="firstname"/><br><br>
-	Last name: <input type="text" name="lastname"/><br><br>
+	First name: <input type="text" name="firstname" required/><br><br>
+	Last name: <input type="text" name="lastname" required/><br><br>
 	Course instructor: 
-	<select id="instr" onchange="instruct()">
+	<select id="instr" onchange="instruct()" required>
 		<option value="" selected="true" disabled="true">Please select one</option>
 		<option value="Ben Rottman">Ben Rottman</option>
 		<option value="Barbara Kucinski">Barbara Kucinski</option>
 	</select><br><br>
 	<input name="instructor" id="instructor" type="hidden" value="">
-	<b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
+	<b><u>7-digit student ID:</u></b> <input type="text" name="username" required/><br><br>
 
 	<p>Please make sure your 7-digit student ID is accurate. You will use it to login to this tutorial in the future, and it is how credit will be assigned to you for the course. If your 7-digit student ID is inaccurately entered, the course instructor will not be able to tell if you have completed the tutorials!</p>
 
-	<input type="checkbox" name="checked" value="" onchange="$('continue').prop('disabled', false );"> My 7-digit ID is accurate<br><br>
+	<!-- <input type="checkbox" name="checked" value="" onchange="$('continue').prop('disabled', false );"> My 7-digit ID is accurate<br><br> -->
 <!-- 	Password: <input type="password" name="password1"/><br><br>
 	Re-type Password: <input type="password" name="password2"/><br><br> -->
-	<input type="submit" name="continue" id="continue" disabled="true" value="Submit"/>
+	<input type="submit" name="continue" id="continue" value="Submit"/>
 </form>
 
 <script type="text/javascript">
