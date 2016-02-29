@@ -31,6 +31,8 @@ class User(db.Model):
 	COEAnswer3 =		db.IntegerProperty()
 	COEAnswer4 =		db.IntegerProperty()
 	COEAnswer5 =		db.IntegerProperty()
+	term = 				db.StringProperty()
+	instructor = 		db.StringProperty()
 	PFEAnswer1 =		db.StringProperty()
 	PFEAnswer2 =		db.StringProperty()
 	PFEAnswer3 =		db.IntegerProperty()
@@ -132,6 +134,7 @@ class SignupHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		username = self.request.get('username')
 		firstname = self.request.get('firstname')
+		instructor = self.request.get('instructor')
 		# password1 = self.request.get('password1')
 		# password2 = self.request.get('password2')
 		exists = 2
@@ -168,6 +171,10 @@ class SignupHandler(webapp.RequestHandler):
 			username=username,
 			firstname=firstname,
 			lastname=self.request.get('lastname'),
+			# note: this is the manual input for term. Doesn't make sense at this point to have them do this themselves since it's all for Spring 2016
+			term='Spring 2016',
+			
+			instructor=instructor,
 			# password=password1,
 			Module1="Incomplete",
 			Module2="Incomplete",
@@ -350,12 +357,7 @@ class WithinSubjectHandler(webapp.RequestHandler):
 			doRender(self, "WithinSubjectIntro.htm",
 				{'progress':self.session['M2_Progress'],
 				'introProgress':0})
-		# elif self.session['M2_Progress'] == 1:
-		# 	doRender(self, "WithinSubjectSim1.htm",
-		# 		{'progress':self.session['M2_Progress']})
-		# elif self.session['M2_Progress'] == 2:
-		# 	doRender(self, "WithinSubjectSim2.htm",
-		# 		{'progress':self.session['M2_Progress']})
+
 
 	def post(self):
 		logging.info("checkpoint 1")
