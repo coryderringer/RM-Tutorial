@@ -15,11 +15,12 @@
 	First name: <input type="text" name="firstname"/><br><br>
 	Last name: <input type="text" name="lastname"/><br><br>
 	Course instructor: 
-	<select id="instructor">
+	<select id="instr" onchange="instruct()">
 		<option value="0" selected="true" disabled="true">Please select one</option>
 		<option value="Ben Rottman">Ben Rottman</option>
 		<option value="Barbara Kucinski">Barbara Kucinski</option>
 	</select><br><br>
+	<input id="instructor" type="hidden" value="">
 	<b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
 
 	<p>Please make sure your 7-digit student ID is accurate. You will use it to login to this tutorial in the future, and it is how credit will be assigned to you for the course. If your 7-digit student ID is inaccurately entered, the course instructor will not be able to tell if you have completed the tutorials!</p><br>
@@ -27,6 +28,13 @@
 	Re-type Password: <input type="password" name="password2"/><br><br> -->
 	<input type="submit" value="Submit"/>
 </form>
+
+<script type="text/javascript">
+function instruct() {
+	document.getElementById('instructor').value = document.getElementById('instr').value;
+}
+
+</script>
 
 </div>
 {% endblock %}
