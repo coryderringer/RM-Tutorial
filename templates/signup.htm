@@ -20,7 +20,7 @@
 		<option value="Ben Rottman">Ben Rottman</option>
 		<option value="Barbara Kucinski">Barbara Kucinski</option>
 	</select><br><br>
-	<input id="instructor" type="hidden" value="">
+	<input name="instructor" id="instructor" type="hidden" value="">
 	<b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
 
 	<p>Please make sure your 7-digit student ID is accurate. You will use it to login to this tutorial in the future, and it is how credit will be assigned to you for the course. If your 7-digit student ID is inaccurately entered, the course instructor will not be able to tell if you have completed the tutorials!</p><br>
@@ -30,6 +30,7 @@
 </form>
 
 <script type="text/javascript">
+
 function instruct() {
 	document.getElementById('instructor').value = document.getElementById('instr').value;
 }

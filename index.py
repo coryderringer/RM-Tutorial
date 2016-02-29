@@ -134,7 +134,9 @@ class SignupHandler(webapp.RequestHandler):
 		self.session = get_current_session()
 		username = self.request.get('username')
 		firstname = self.request.get('firstname')
-		instructor = str(self.request.get('instructor'))
+		instructor = self.request.get('instructor')
+
+		logging.info('INSTRUCTOR: '+instructor)
 		
 		# password1 = self.request.get('password1')
 		# password2 = self.request.get('password2')
