@@ -132,6 +132,35 @@ class SignupHandler(webapp.RequestHandler):
 
 	def post(self):
 		self.session = get_current_session()
+
+		if self.request.get('guest') == 1:
+			usernum = create_or_increment_NumOfUsers()
+			username = str('Guest'+usernum)
+			firstname = 'Guest'
+			lastname = 'Guest'
+			instructor = 'Guest'
+
+			self.session = get_current_session() 
+			self.session['usernum']    	= usernum
+			self.session['username']   	= username
+			self.session['firstname']	= firstname
+			# self.session['password']    = password1
+			self.session['Module1']   	= 'Incomplete'
+			self.session['Module2']  	= 'Incomplete'
+			self.session['Module3']  	= 'Incomplete'
+			self.session['Logged_In']	= True
+			self.session['M1_Progress'] = 0
+			self.session['M2_Progress'] = 0
+			self.session['M3_Progress'] = 0
+
+			doRender(self, 'menu.htm',
+				{'firstname':self.session['firstname'],
+				'Module1':self.session['Module1'],
+				'Module2':self.session['Module2'],
+				'Module3':self.session['Module3']})
+
+			return
+			
 		username = self.request.get('username')
 		firstname = self.request.get('firstname')
 		instructor = self.request.get('instructor')
@@ -142,12 +171,12 @@ class SignupHandler(webapp.RequestHandler):
 		# password2 = self.request.get('password2')
 		exists = 2
 
-		if username == '' or firstname == '':# or password1 == '' or password2 == '':
-			doRender(self,
-				'signupfail.htm',
-				{'error': 'Please fill in all fields.'})
-		# this keeps it from continuing with the rest of the handler if the "if" condition is met
-			return
+		# if username == '' or firstname == '':# or password1 == '' or password2 == '':
+		# 	doRender(self,
+		# 		'signupfail.htm',
+		# 		{'error': 'Please fill in all fields.'})
+		# # this keeps it from continuing with the rest of the handler if the "if" condition is met
+		# 	return
 
 		# Check whether user already exists
 		que = db.Query(User)
@@ -155,11 +184,11 @@ class SignupHandler(webapp.RequestHandler):
 		results = que.fetch(limit=1)
 
 		# If the user already exists in the datastore
-		if len(results) > 0:
-			doRender(self,
-				'signupfail.htm',
-				{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
-			return
+		# if len(results) > 0:
+		# 	doRender(self,
+		# 		'signupfail.htm',
+		# 		{'error': 'This username already exists. Please contact your professor if you need to reset your password.'})
+		# 	return
 
 		# If the two passwords they entered do not match
 		# if password1 != password2:
