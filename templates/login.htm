@@ -15,7 +15,11 @@
 <form method="post" action="/login">
 <b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
 <!-- Password: <input type="password" name="password"/><br><br> -->
-<input type="submit" value="Submit"/>
+<input type="submit" value="Log in as student"/><br><br>
+
+<input type="submit" onclick="document.getElementById('guest').value=1" value="Log in as guest (no progress is recorded)"/>
+
+<input name="guest" id="guest" type="hidden" value="0">
 </form>
 
 <center><a href="/signup">create an account.</a></center>
