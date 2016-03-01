@@ -132,34 +132,6 @@ class SignupHandler(webapp.RequestHandler):
 
 	def post(self):
 		self.session = get_current_session()
-
-		if self.request.get('guest') == 1:
-			usernum = create_or_increment_NumOfUsers()
-			username = str('Guest'+usernum)
-			firstname = 'Guest'
-			lastname = 'Guest'
-			instructor = 'Guest'
-
-			self.session = get_current_session() 
-			self.session['usernum']    	= usernum
-			self.session['username']   	= username
-			self.session['firstname']	= firstname
-			# self.session['password']    = password1
-			self.session['Module1']   	= 'Incomplete'
-			self.session['Module2']  	= 'Incomplete'
-			self.session['Module3']  	= 'Incomplete'
-			self.session['Logged_In']	= True
-			self.session['M1_Progress'] = 0
-			self.session['M2_Progress'] = 0
-			self.session['M3_Progress'] = 0
-
-			doRender(self, 'menu.htm',
-				{'firstname':self.session['firstname'],
-				'Module1':self.session['Module1'],
-				'Module2':self.session['Module2'],
-				'Module3':self.session['Module3']})
-
-			return
 			
 		username = self.request.get('username')
 		firstname = self.request.get('firstname')
@@ -580,6 +552,7 @@ class DataHandler(webapp.RequestHandler):
 class LoginHandler(webapp.RequestHandler):
 	def get(self):
 		self.session = get_current_session()
+		
 		self.session['M1_Progress'] = 0
 		self.session['M2_Progress'] = 0
 		self.session['M3_Progress'] = 0
@@ -603,6 +576,54 @@ class LoginHandler(webapp.RequestHandler):
 	def post(self):
 		self.session = get_current_session()
 		
+		if int(self.request.get('guest')) == 1:
+			usernum = create_or_increment_NumOfUsers()
+			username = str('Guest'+str(usernum))
+
+			logging.info('USERNAME: '+username)
+
+			firstname = 'Guest'
+			lastname = 'Guest'
+			instructor = 'Guest'
+
+			self.session = get_current_session() 
+			self.session['usernum']    	= usernum
+			self.session['username']   	= username
+			self.session['firstname']	= firstname
+			# self.session['password']    = password1
+			self.session['Module1']   	= 'Incomplete'
+			self.session['Module2']  	= 'Incomplete'
+			self.session['Module3']  	= 'Incomplete'
+			self.session['Logged_In']	= True
+			self.session['M1_Progress'] = 0
+			self.session['M2_Progress'] = 0
+			self.session['M3_Progress'] = 0
+
+			newuser = User(usernum=usernum, 
+				username=username,
+				firstname=firstname,
+				lastname=self.request.get('lastname'),
+				# note: this is the manual input for term. Doesn't make sense at this point to have them do this themselves since it's all for Spring 2016
+				term='Spring 2016',
+				
+				instructor=instructor,
+				# password=password1,
+				Module1="Incomplete",
+				Module2="Incomplete",
+				Module3="Incomplete");
+
+			newuser.put();
+
+			doRender(self, 'menu.htm',
+				{'firstname':self.session['firstname'],
+				'Module1':self.session['Module1'],
+				'Module2':self.session['Module2'],
+				'Module3':self.session['Module3']})
+
+
+
+			return
+
 		username = self.request.get('username')
 		# password = self.request.get('password')
 		

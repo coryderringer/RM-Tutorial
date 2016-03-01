@@ -12,17 +12,36 @@
 <br>
 
 
-<form method="post" action="/login">
-<b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
-<!-- Password: <input type="password" name="password"/><br><br> -->
-<input type="submit" value="Log in as student"/><br><br>
+<form id="signin" method="post" action="/login">
+	<b><u>7-digit student ID:</u></b> <input type="text" name="username"/><br><br>
+	<!-- Password: <input type="password" name="password"/><br><br> -->
+	<input type="submit" value="Log in as student"/><br><br>
 
-<input type="submit" onclick="document.getElementById('guest').value=1" value="Log in as guest (no progress is recorded)"/>
-
-<input name="guest" id="guest" type="hidden" value="0">
+	<input name="guest" id="guest" type="hidden" value="0">
 </form>
+<button onclick="guest()">Log in as guest (no progress is recorded)</button>
 
 <center><a href="/signup">create an account.</a></center>
 
 </div>
+
+<script>
+test = 0;
+function guest(){
+	$('#guest').val(1);
+
+	$('#signin').submit();
+}
+
+
+
+
+</script>
+
+
+
+
+
+
+
 {% endblock %}
