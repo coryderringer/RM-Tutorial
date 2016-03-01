@@ -113,6 +113,18 @@ $('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
 ButtonDisplay();
 MainDisplay();
 
+// Guest exception
+var firstname = '{{firstname}}'
+if (firstname=='Guest') {
+	$('#Module1_Button').html('Begin "Carryover Effects"');
+	$('#Module2_Button').html('Begin "The Power of Within-Subjects Designs"');
+	$('#Module3_Button').html('Begin "Practice and Fatigue Effects"');
+	$('#Module1_Button').attr('disabled', false);
+	$('#Module2_Button').attr('disabled', false);
+	$('#Module3_Button').attr('disabled', false);
+	$('#status_span').html('Try out the modules below!');
+}
+
 
 
 
